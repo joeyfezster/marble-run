@@ -1,0 +1,115 @@
+{
+  "code": "M-59",
+  "names": {
+    "plan": null,
+    "family": "T-Rex ring-sided leg",
+    "spoken": "dino leg"
+  },
+  "sets": {
+    "5716": {
+      "count": 1,
+      "color": "#2f9e4f",
+      "colorWord": "green leg, orange toes, grey foot base"
+    }
+  },
+  "role": "support",
+  "shape": {
+    "description": "One T-Rex leg, the ring-sided one in the plan's inset: rounded green thigh with hip buckle, orange ribbed toes, standing on a grey two-arch foot base. Snaps to the M-58 hip. The two legs stand 2 cells apart, with one empty cell between.",
+    "footprintCells": [
+      2,
+      1
+    ],
+    "heightSlots": 3,
+    "sizeMm": [
+      105,
+      52,
+      110
+    ],
+    "sizeBasis": "Rough estimate: one cell about 52 mm and one slot about 36 mm, scaled from Joey's hand in IMG_0954 and IMG_0956; no ruler measurement."
+  },
+  "ports": [
+    {
+      "id": "hip",
+      "at": [
+        0,
+        0,
+        2.5
+      ],
+      "faces": "N",
+      "type": "clip",
+      "accepts": [
+        "M-58 hip"
+      ],
+      "flow": "both"
+    },
+    {
+      "id": "foot",
+      "at": [
+        0,
+        0,
+        0
+      ],
+      "faces": "E",
+      "type": "floor-peg",
+      "accepts": [
+        "two floor cells in a line",
+        "or two blocks of equal height"
+      ],
+      "flow": "both"
+    }
+  ],
+  "marblePaths": [],
+  "physics": {
+    "surface": "none",
+    "bank": "none",
+    "wallHeight": "low",
+    "energy": "none",
+    "needsMetalMarble": false,
+    "batteries": null,
+    "behaviour": "Holds the T-Rex up. No marble touches it. Part of the T-Rex, which stays assembled in every level."
+  },
+  "stacking": {
+    "stacksOnTop": true,
+    "canHoldStackAbove": false,
+    "marbleCrossesTop": false,
+    "usableAsHeightOnly": false
+  },
+  "evidence": [
+    {
+      "source": "trex_plans_01.png M-59",
+      "shows": "Leg with a ring at the top of the thigh"
+    },
+    {
+      "source": "trex.pdf p6",
+      "shows": "Dinosaur's legs align with the buckle and snap in"
+    },
+    {
+      "source": "trex_plans_07.png step 1-6 inset, trex_plans_12.png step 2-8 inset, trex_plans_19.png step 3-11 inset",
+      "shows": "M-57, M-58, M-59 assemble into one T-Rex"
+    },
+    {
+      "source": "trex_plans_07.png step 1-6 map",
+      "shows": "Level 1: feet on the floor at rows E-F, columns 3 and 5"
+    },
+    {
+      "source": "trex_plans_12.png steps 2-7, 2-8",
+      "shows": "Level 2: feet on one block each at H and I, columns 1 and 3 (B-01, B-02, B-01, B-05)"
+    },
+    {
+      "source": "trex_plans_19.png step 3-11 map",
+      "shows": "Level 3: feet on the floor at rows D-E, columns 4 and 6"
+    }
+  ],
+  "confidence": {
+    "shape": "medium",
+    "ports": "medium",
+    "behaviour": "high"
+  },
+  "assumptions": [
+    "Which leg goes on which side is read from the inset only.",
+    "faces uses E=+x, W=-x, S=+y, N=-y, in the piece's own frame. Heights are slots above the floor when the piece stands on the floor or, where stated, above the top of its supports."
+  ],
+  "openQuestions": [
+    "Does the leg come off for storage, or stay on after the adult assembly?"
+  ]
+}

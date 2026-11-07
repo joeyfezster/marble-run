@@ -1,0 +1,118 @@
+{
+  "code": "T-08",
+  "names": {
+    "plan": "T-08",
+    "family": "S slide",
+    "spoken": "slide"
+  },
+  "sets": {
+    "5716": {
+      "count": 2,
+      "color": "#e0262c",
+      "colorWord": "red"
+    },
+    "5422": {
+      "count": 3,
+      "color": "#e0262c",
+      "colorWord": "red"
+    }
+  },
+  "role": "track",
+  "shape": {
+    "description": "Rigid S-shaped falling chute with two pairs of floor slots: flat at each end, steep in the middle. Plugs into a cup end or a joint hole. Open flat band with low side walls and long slots in the floor; tongue with small slot at each end, hooked foot under it.",
+    "footprintCells": [
+      2,
+      1
+    ],
+    "heightSlots": 1,
+    "sizeMm": [
+      84,
+      25,
+      57
+    ],
+    "sizeBasis": "Scaled from the floor cell (about 45 mm, one block width) against VTech parts drawings and Joey's photos; +-10%. No ruler in any photo. Track width about 25 mm (straights) and 31 mm (curved bands), read against block width in IMG_0952/0953 and lp manual p5."
+  },
+  "ports": [
+    {
+      "id": "hi",
+      "at": [
+        0,
+        0,
+        1
+      ],
+      "faces": "W",
+      "type": "track-end",
+      "accepts": [
+        "block cup end (top notch or joint hole) with its side tab",
+        "another piece overlapped by tongue"
+      ],
+      "flow": "both"
+    },
+    {
+      "id": "lo",
+      "at": [
+        2,
+        0,
+        0
+      ],
+      "faces": "E",
+      "type": "track-end",
+      "accepts": [
+        "block cup end (top notch or joint hole) with its side tab",
+        "another piece overlapped by tongue"
+      ],
+      "flow": "both"
+    }
+  ],
+  "marblePaths": [
+    {
+      "from": "hi",
+      "to": "lo",
+      "dropSlots": 1,
+      "shape": "S-drop",
+      "lengthCells": 2
+    }
+  ],
+  "physics": {
+    "surface": "open U",
+    "bank": "none",
+    "wallHeight": "low",
+    "energy": "none",
+    "needsMetalMarble": false,
+    "batteries": null,
+    "behaviour": "Drops the marble one slot across a gap and gains speed: the main energy source between tower and floor."
+  },
+  "stacking": {
+    "stacksOnTop": false,
+    "canHoldStackAbove": false,
+    "marbleCrossesTop": false,
+    "usableAsHeightOnly": false
+  },
+  "evidence": [
+    {
+      "source": "trex_plans_17 step 3-8",
+      "shows": "blue h3 to blue h2"
+    },
+    {
+      "source": "trex_plans_16 step 3-5",
+      "shows": "F7 M-04 side to D7"
+    },
+    {
+      "source": "reference/pieces/2026_11_01_IMG_0963.jpg",
+      "shows": "end plugged into the round hole at the tan-on-blue joint"
+    }
+  ],
+  "confidence": {
+    "shape": "high",
+    "ports": "high",
+    "behaviour": "medium"
+  },
+  "assumptions": [
+    "Connection: the track end is a thin tongue that overlaps the next piece. A small slot in the tongue takes a small peg on that piece, and a hooked foot under the end drops into the block's side tab (photos IMG_0959, 0963; foot on trex_plans_02).",
+    "Rigid drop of 1 slot; 1.5 in the extraction was M-04 height uncertainty.",
+    "Scale is estimated, not measured: one cell = one block width (top-down maps, trex_plans_27). A cell of about 45 mm is judged from hand and laptop-key size in IMG_0960/0963, +-5 mm. No ruler was in any photo."
+  ],
+  "openQuestions": [
+    "Is the drop exactly 1 slot, or does the rigid part accept 1 or 2?"
+  ]
+}

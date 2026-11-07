@@ -1,0 +1,113 @@
+{
+  "code": "T-01",
+  "names": {
+    "plan": "T-01",
+    "family": "big yellow half loop",
+    "spoken": "big rainbow"
+  },
+  "sets": {
+    "5422": {
+      "count": 1,
+      "color": "#f7c600",
+      "colorWord": "yellow"
+    }
+  },
+  "role": "track",
+  "shape": {
+    "description": "Large half ring, wider than T-02, with two slot rows and a raised outer rim. Open flat band with low side walls and long slots in the floor; tongue with small slot at each end, hooked foot under it.",
+    "footprintCells": [
+      3,
+      3
+    ],
+    "heightSlots": 1,
+    "sizeMm": [
+      166,
+      98,
+      15
+    ],
+    "sizeBasis": "Scaled from the floor cell (about 45 mm, one block width) against VTech parts drawings and Joey's photos; +-10%. No ruler in any photo. Track width about 25 mm (straights) and 31 mm (curved bands), read against block width in IMG_0952/0953 and lp manual p5."
+  },
+  "ports": [
+    {
+      "id": "hi",
+      "at": [
+        0,
+        0,
+        1
+      ],
+      "faces": "W",
+      "type": "track-end",
+      "accepts": [
+        "block cup end (top notch or joint hole) with its side tab",
+        "another piece overlapped by tongue"
+      ],
+      "flow": "both"
+    },
+    {
+      "id": "lo",
+      "at": [
+        2,
+        0,
+        0
+      ],
+      "faces": "W",
+      "type": "track-end",
+      "accepts": [
+        "block cup end (top notch or joint hole) with its side tab",
+        "another piece overlapped by tongue"
+      ],
+      "flow": "both"
+    }
+  ],
+  "marblePaths": [
+    {
+      "from": "hi",
+      "to": "lo",
+      "dropSlots": 1,
+      "shape": "half-turn",
+      "lengthCells": 4.5
+    }
+  ],
+  "physics": {
+    "surface": "open U",
+    "bank": "steep",
+    "wallHeight": "low",
+    "energy": "none",
+    "needsMetalMarble": false,
+    "batteries": null,
+    "behaviour": "Big falling U-turn, leaning. High end sits on a stack; low end comes in near the bottom."
+  },
+  "stacking": {
+    "stacksOnTop": false,
+    "canHoldStackAbove": false,
+    "marbleCrossesTop": false,
+    "usableAsHeightOnly": false
+  },
+  "evidence": [
+    {
+      "source": "Joey, 2026-11-01, app screenshot",
+      "shows": "the real half loop drops only 1 block between its ends"
+    },
+    {
+      "source": "lp_plans_06 step 3-6",
+      "shows": "high end on the stack top, low end near the M-02 base, about 3 slots lower, rim outward"
+    },
+    {
+      "source": "reference/family_builds/2026_11_01_IMG_0950.jpg",
+      "shows": "T-01 near vertical against a tower, low tongue at a grey block"
+    }
+  ],
+  "confidence": {
+    "shape": "medium",
+    "ports": "low",
+    "behaviour": "medium"
+  },
+  "assumptions": [
+    "Connection: the track end is a thin tongue that overlaps the next piece. A small slot in the tongue takes a small peg on that piece, and a hooked foot under the end drops into the block's side tab (photos IMG_0959, 0963; foot on trex_plans_02).",
+    "Origin is the high end's seat, not a centre.",
+    "Scale is estimated, not measured: one cell = one block width (top-down maps, trex_plans_27). A cell of about 45 mm is judged from hand and laptop-key size in IMG_0960/0963, +-5 mm. No ruler was in any photo."
+  ],
+  "openQuestions": [
+    "What are the fixed end heights? Is it rigid at one drop, or does it lean to suit?"
+  ]
+}

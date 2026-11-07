@@ -1,0 +1,176 @@
+{
+  "code": "M-13",
+  "names": {
+    "plan": null,
+    "family": "rocket",
+    "spoken": "the rocket"
+  },
+  "sets": {
+    "5422": {
+      "count": 1,
+      "color": "#e0262c",
+      "colorWord": "red with white nose and fins"
+    }
+  },
+  "role": "sensor",
+  "shape": {
+    "description": "Electronic rocket that stands on ONE block (owner, IMG_0952/0953). Egg-shaped red body, white dome nose with vents, white skirt with four fins at the base, chequered panel and VTech badge low on the front. Round white button high on the side, yellow three-position sound slider below it, battery cover on the back. Two round ports low on opposite sides of the body, just above the skirt, at the same height a block cup would have; a track end plugs into each.",
+    "footprintCells": [
+      1,
+      1
+    ],
+    "heightSlots": 4.5,
+    "sizeMm": [
+      85,
+      85,
+      205
+    ],
+    "sizeBasis": "Scaled from the floor cell (about 45 mm, one block width) against VTech parts drawings and Joey's photos; +-10%. No ruler in any photo. Rocket height about 4.5 block widths and width about 1.8 in IMG_0952/0953."
+  },
+  "ports": [
+    {
+      "id": "west",
+      "at": [
+        -0.5,
+        0,
+        0.68
+      ],
+      "faces": "W",
+      "type": "port-hole",
+      "accepts": [
+        "T-06 clip end",
+        "T-08 end",
+        "M-07 end"
+      ],
+      "flow": "both"
+    },
+    {
+      "id": "east",
+      "at": [
+        0.5,
+        0,
+        0.68
+      ],
+      "faces": "E",
+      "type": "port-hole",
+      "accepts": [
+        "T-06 clip end",
+        "T-08 end",
+        "M-07 end"
+      ],
+      "flow": "both"
+    },
+    {
+      "id": "foot",
+      "at": [
+        0,
+        0,
+        0
+      ],
+      "faces": "down",
+      "type": "stack-bottom",
+      "accepts": [
+        "top of a single block"
+      ],
+      "flow": "both"
+    }
+  ],
+  "marblePaths": [
+    {
+      "from": "west",
+      "to": "east",
+      "dropSlots": 0,
+      "shape": "straight",
+      "lengthCells": 1
+    },
+    {
+      "from": "east",
+      "to": "west",
+      "dropSlots": 0,
+      "shape": "straight",
+      "lengthCells": 1
+    }
+  ],
+  "physics": {
+    "surface": "tube",
+    "bank": "none",
+    "wallHeight": "high",
+    "energy": "loses",
+    "needsMetalMarble": false,
+    "batteries": "2 AA",
+    "behaviour": "A marble enters one low side port, passes through the body and leaves the opposite port. It does not stay in the rocket and does not enter from the top. Inside it trips the Rocket Sensor, and the unit plays sound effects and lights up. Adds no energy to the marble."
+  },
+  "stacking": {
+    "stacksOnTop": true,
+    "canHoldStackAbove": false,
+    "marbleCrossesTop": false,
+    "usableAsHeightOnly": false
+  },
+  "evidence": [
+    {
+      "source": "Joey, 2026-11-01",
+      "shows": "The rocket does not receive marbles from the top. Round side port low on the body, on opposite sides, with T-06 tracks meeting it; it stands on one light-blue block."
+    },
+    {
+      "source": "IMG_0952, IMG_0953",
+      "shows": "Close views: T-06 clipped into the round port, block under the base, second T-06 leaving on the far side."
+    },
+    {
+      "source": "reference/family_builds IMG_0948, IMG_0950",
+      "shows": "Placement 3: M-11 low end, T-06, rocket, T-06, B-01, spiral T-17 holding marbles after the rocket. Marbles reach the far side, so they pass through."
+    },
+    {
+      "source": "lp_plans_12 step 3-12 and crop of lp_plans_15",
+      "shows": "Placement 1: rocket on tower of B-01, B-01, B-02, B-01, B-01 (z 5). T-08 comes down from z 7 into the far port. T-06 leaves the near port to M-05. Nothing else feeds that T-06, so marbles must pass through."
+    },
+    {
+      "source": "extreme_06 step 1-3 and extreme_09 map",
+      "shows": "Placement 2: rocket at A4 on a 3-block stack, T-08 to a block at A2, then T-03. Dark red arrow points away from the rocket, so marbles leave by this port."
+    },
+    {
+      "source": "extreme_20",
+      "shows": "Part 2's yellow M-07 trough ends at the rocket's other port when the parts join: entry on one side, exit on the other."
+    },
+    {
+      "source": "lp_man_5 and lp_man_6 product features",
+      "shows": "Rocket Sensor detects a ball and plays sound effects; Rocket Button selects background music; selector sets off, SFX, or music plus SFX; On/Off switch; auto shut-off."
+    },
+    {
+      "source": "lp_man_2, lp_man_3",
+      "shows": "2 AA batteries, cover on the back, secured by a screw."
+    },
+    {
+      "source": "crop of lp_plans_12 (step 3-11)",
+      "shows": "Clip recess directly under the port at base level."
+    },
+    {
+      "source": "reference/pieces/2026_11_01_IMG_0952.jpg",
+      "shows": "rocket on one light-blue block; blue T-06 plugs into the low side port just above the white skirt"
+    },
+    {
+      "source": "reference/pieces/2026_11_01_IMG_0953.jpg",
+      "shows": "same port from the other side; port centre about 0.6 to 0.7 block heights above the rocket foot"
+    },
+    {
+      "source": "lp_plans_12 step 3-12",
+      "shows": "T-06 enters the rocket port from M-05 side; red T-08 from the hood block reaches the opposite side"
+    }
+  ],
+  "confidence": {
+    "shape": "high",
+    "ports": "high",
+    "behaviour": "high"
+  },
+  "assumptions": [
+    "Origin at footprint centre at foot level (the top plane of whatever the piece stands on). East is +x, south is +y, z in slots.",
+    "Internal path assumed straight and level because the ports look equal in height. No opening shows daylight through in IMG_0952.",
+    "Sensor location inside the body is not shown.",
+    "Marble needs incoming speed since the ports are level; T-08 gives it in Level 3, T-06 from M-11 in the family build.",
+    "Port height 1.1 slots measured from extreme_06 and matched to the family note.",
+    "Port z is in slots above the rocket's own foot, like a block cup seat (0.68). The second B-01 in step 3-11 goes on another stack, not under the rocket (owner: it stands on one block)."
+  ],
+  "openQuestions": [
+    "Roll one marble in slowly: does it get through, or stop inside?",
+    "Does it sound for both directions?"
+  ]
+}

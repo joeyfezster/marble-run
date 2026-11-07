@@ -1,0 +1,109 @@
+{
+  "code": "T-07",
+  "names": {
+    "plan": "T-07",
+    "family": "long straight",
+    "spoken": "long track"
+  },
+  "sets": {
+    "5716": {
+      "count": 1,
+      "color": "#b9bdc2",
+      "colorWord": "silver"
+    }
+  },
+  "role": "track",
+  "shape": {
+    "description": "As T-06, with two floor slots. Fits stacks 3 cells apart. Open flat band with low side walls and long slots in the floor; tongue with small slot at each end, hooked foot under it.",
+    "footprintCells": [
+      3,
+      1
+    ],
+    "heightSlots": 0.3,
+    "sizeMm": [
+      116,
+      25,
+      12
+    ],
+    "sizeBasis": "Scaled from the floor cell (about 45 mm, one block width) against VTech parts drawings and Joey's photos; +-10%. No ruler in any photo. Track width about 25 mm (straights) and 31 mm (curved bands), read against block width in IMG_0952/0953 and lp manual p5."
+  },
+  "ports": [
+    {
+      "id": "a",
+      "at": [
+        0,
+        0,
+        0
+      ],
+      "faces": "W",
+      "type": "track-end",
+      "accepts": [
+        "block cup end (top notch or joint hole) with its side tab",
+        "another piece overlapped by tongue"
+      ],
+      "flow": "both"
+    },
+    {
+      "id": "b",
+      "at": [
+        3,
+        0,
+        0
+      ],
+      "faces": "E",
+      "type": "track-end",
+      "accepts": [
+        "block cup end (top notch or joint hole) with its side tab",
+        "another piece overlapped by tongue"
+      ],
+      "flow": "both"
+    }
+  ],
+  "marblePaths": [
+    {
+      "from": "a",
+      "to": "b",
+      "dropSlots": 0,
+      "shape": "straight",
+      "lengthCells": 2
+    }
+  ],
+  "physics": {
+    "surface": "open U",
+    "bank": "none",
+    "wallHeight": "low",
+    "energy": "none",
+    "needsMetalMarble": false,
+    "batteries": null,
+    "behaviour": "Level long straight."
+  },
+  "stacking": {
+    "stacksOnTop": false,
+    "canHoldStackAbove": false,
+    "marbleCrossesTop": false,
+    "usableAsHeightOnly": false
+  },
+  "evidence": [
+    {
+      "source": "trex_plans_16 step 3-6",
+      "shows": "I7 h2 blue to F7 at joint under M-04, h2; rails on floor axis, so level"
+    },
+    {
+      "source": "trex_plans_07 step 1-6",
+      "shows": "from under M-10 foot toward the truck"
+    }
+  ],
+  "confidence": {
+    "shape": "high",
+    "ports": "medium",
+    "behaviour": "medium"
+  },
+  "assumptions": [
+    "Connection: the track end is a thin tongue that overlaps the next piece. A small slot in the tongue takes a small peg on that piece, and a hooked foot under the end drops into the block's side tab (photos IMG_0959, 0963; foot on trex_plans_02).",
+    "Height finding: equal-height ports give a truly level track. Side elevations on trex_plans_02 draw T-06 horizontal, and iso rails on T-06 match the floor axis (0.66-0.69 vs 0.68-0.70 rise/run, read by eye, so a slope under about 0.1 slot per cell cannot be excluded). No built-in slope was found in blocks or straights. A marble crosses level runs on speed from an earlier drop, launcher or lift. It will not start from rest there.",
+    "Scale is estimated, not measured: one cell = one block width (top-down maps, trex_plans_27). A cell of about 45 mm is judged from hand and laptop-key size in IMG_0960/0963, +-5 mm. No ruler was in any photo."
+  ],
+  "openQuestions": [
+    "extracted_trex.json gives F7 to I7 a 1.5 drop from M-04. The drawing shows level from the F7 tan joint at h2. Confirm on the real build."
+  ]
+}

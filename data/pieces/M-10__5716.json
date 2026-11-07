@@ -1,0 +1,140 @@
+{
+  "code": "M-10",
+  "names": {
+    "plan": null,
+    "family": "the orange ramp",
+    "spoken": "the jump ramp"
+  },
+  "sets": {
+    "5716": {
+      "count": 1,
+      "color": "#f07f1e",
+      "colorWord": "orange ramp on a blue base"
+    }
+  },
+  "role": "stunt",
+  "shape": {
+    "description": "Orange ramp (same mould as the Launchpad green one, T-Rex colours): a wide shallow trough on a blue two-cell base that looks like two fused low blocks, carried on short posts. The low end is a tongue at base height where a track arrives; the trough curves up along the base. Its far end is cut on a slant: one side wall rises into a pointed fin with a small round hole, the other ends lower in a curled lip resting on a post. Three cells long overall; only the low cell of the base sits on a stack.",
+    "footprintCells": [
+      3,
+      1
+    ],
+    "heightSlots": 1.5,
+    "sizeMm": [
+      156,
+      70,
+      55
+    ],
+    "sizeBasis": "Rough estimate: one cell about 52 mm and one slot about 36 mm, scaled from Joey's hand in IMG_0954 and IMG_0956; no ruler measurement. Footprint from the maps of steps 1-6, 2-8, 3-11."
+  },
+  "ports": [
+    {
+      "id": "low",
+      "at": [
+        0,
+        0,
+        1
+      ],
+      "faces": "W",
+      "type": "track-end",
+      "accepts": [
+        "T-06",
+        "T-07",
+        "T-04"
+      ],
+      "flow": "in"
+    },
+    {
+      "id": "lip",
+      "at": [
+        3,
+        0,
+        1.5
+      ],
+      "faces": "E",
+      "type": "open-drop",
+      "accepts": [
+        "a flying marble toward the M-58 mouth"
+      ],
+      "flow": "out"
+    },
+    {
+      "id": "base",
+      "at": [
+        0.5,
+        0,
+        0
+      ],
+      "faces": "E",
+      "type": "stack-bottom",
+      "accepts": [
+        "top of a block stack under the low cell"
+      ],
+      "flow": "both"
+    }
+  ],
+  "marblePaths": [
+    {
+      "from": "low",
+      "to": "lip",
+      "dropSlots": -0.5,
+      "shape": "straight",
+      "lengthCells": 3
+    }
+  ],
+  "physics": {
+    "surface": "open U",
+    "bank": "none",
+    "wallHeight": "low",
+    "energy": "loses",
+    "needsMetalMarble": false,
+    "batteries": null,
+    "behaviour": "A launched marble climbs the ramp and flies off the lip into the T-Rex mouth. Needs launcher speed. In the T-Rex set, it always sits between M-28 and the mouth."
+  },
+  "stacking": {
+    "stacksOnTop": true,
+    "canHoldStackAbove": false,
+    "marbleCrossesTop": true,
+    "usableAsHeightOnly": false
+  },
+  "evidence": [
+    {
+      "source": "trex_plans_02.png T-Rex panel",
+      "shows": "Side view: ramp on base on a blue stack, red arrow up the ramp toward the open mouth; stack under the low arch only"
+    },
+    {
+      "source": "trex_plans_07.png step 1-6",
+      "shows": "Level 1: T-07 from M-28 into low end; base on I4 (B-02, B-01); high lip at the Rex mouth; H4 outlined as covered"
+    },
+    {
+      "source": "trex_plans_12.png step 2-8",
+      "shows": "Level 2: T-04 from M-28 into low end; base on L2 height 3; lip at the mouth"
+    },
+    {
+      "source": "trex_plans_19.png step 3-11",
+      "shows": "Level 3: T-06 from M-28 into low end; base on H5 height 2; lip at the mouth"
+    },
+    {
+      "source": "IMG_0951, IMG_0944",
+      "shows": "Real orange ramp beside the T-Rex; a green version of this shape, from the Launchpad set, on a dark blue base"
+    },
+    {
+      "source": "lp_plans_04 M-10 parts box and trex_plans_01 M-10",
+      "shows": "trough of near-constant width; pointed fin with hole on one side of the high end, curled lip on a post on the other"
+    }
+  ],
+  "confidence": {
+    "shape": "high",
+    "ports": "medium",
+    "behaviour": "high"
+  },
+  "assumptions": [
+    "Split as a T-Rex file because Launchpad also has M-10, in green; same shape by appearance only. Family build uses the Launchpad one rising and it may also run downhill.",
+    "The lip rises about half a slot, read from the side view on plan page 02.",
+    "faces uses E=+x, W=-x, S=+y, N=-y, in the piece's own frame. Heights are slots above the floor when the piece stands on the floor or, where stated, above the top of its supports."
+  ],
+  "openQuestions": [
+    "Exact launch speed needed to reach the mouth; test with M-28 at each distance.",
+    "What is the round hole by the lip for?"
+  ]
+}

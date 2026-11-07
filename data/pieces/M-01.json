@@ -1,0 +1,199 @@
+{
+  "code": "M-01",
+  "names": {
+    "plan": null,
+    "family": "yellow lever launcher",
+    "spoken": "the push lever"
+  },
+  "sets": {
+    "5422": {
+      "count": 1,
+      "color": "#f7c600",
+      "colorWord": "yellow with orange lever"
+    }
+  },
+  "role": "energy",
+  "shape": {
+    "description": "Hollow yellow body, tapered: about one cell square at a foot band, narrowing upward, on four short block-style legs. Three sides have an arched opening down to a shared low bowl floor: the front and both flanks. The rear wall is solid. The bowl floor has a round hole in its centre, smaller than a marble. On top a long curved orange seesaw lever pivots on a pin through the upper body (screw visible on each side). Its long tail, with a double-arrow mark, sticks out about 0.7 cell behind the rear wall and rests raised; its short nose ends just past the front wall. Under the lever a toothed section enters a slot in the top. A yellow tongue with a small arrow mark hangs at the top of the front arch, directly over the outlet, with a row of small teeth under it.",
+    "footprintCells": [
+      1,
+      1
+    ],
+    "heightSlots": 2.4,
+    "sizeMm": [
+      115,
+      65,
+      115
+    ],
+    "sizeBasis": "Estimated, not measured: cell about 62 mm and slot about 47 mm, from block width against a hand and marbles (IMG_0951, IMG_0952) and the plan drawing proportion slot/cell about 0.76. src/catalog/parts.js uses a 50 mm cell, also an estimate. Ratios to cell and slot are better known than the millimetres."
+  },
+  "ports": [
+    {
+      "id": "front",
+      "at": [
+        0.5,
+        0,
+        0.75
+      ],
+      "faces": "E",
+      "type": "port-hole",
+      "accepts": [
+        "T-06 clip end"
+      ],
+      "flow": "out"
+    },
+    {
+      "id": "left",
+      "at": [
+        0,
+        -0.5,
+        0.75
+      ],
+      "faces": "N",
+      "type": "port-hole",
+      "accepts": [
+        "T-02 end",
+        "T-06 end",
+        "M-12 low end"
+      ],
+      "flow": "in"
+    },
+    {
+      "id": "right",
+      "at": [
+        0,
+        0.5,
+        0.75
+      ],
+      "faces": "S",
+      "type": "port-hole",
+      "accepts": [
+        "T-02 end",
+        "T-06 end",
+        "M-12 low end"
+      ],
+      "flow": "in"
+    },
+    {
+      "id": "foot",
+      "at": [
+        0,
+        0,
+        0
+      ],
+      "faces": "down",
+      "type": "stack-bottom",
+      "accepts": [
+        "floor plate peg",
+        "top of a block"
+      ],
+      "flow": "both"
+    },
+    {
+      "id": "lever",
+      "at": [
+        -1.2,
+        0,
+        2.4
+      ],
+      "faces": "W",
+      "type": "open-catch",
+      "accepts": [
+        "a finger pressing the tail down"
+      ],
+      "flow": "in"
+    }
+  ],
+  "marblePaths": [
+    {
+      "from": "left",
+      "to": "front",
+      "dropSlots": 0,
+      "shape": "quarter-turn",
+      "lengthCells": 0.5
+    },
+    {
+      "from": "right",
+      "to": "front",
+      "dropSlots": 0,
+      "shape": "quarter-turn",
+      "lengthCells": 0.5
+    }
+  ],
+  "physics": {
+    "surface": "bowl",
+    "bank": "none",
+    "wallHeight": "high",
+    "energy": "adds-by-hand",
+    "needsMetalMarble": false,
+    "batteries": null,
+    "behaviour": "A marble rolling in through either flank arch settles in the low bowl and waits at the front outlet, under the yellow tongue. It does not fall through the hole: the hole is narrower than the marble and acts as a seat. Pressing the raised lever tail down pivots the lever, and its toothed section drives the mechanism behind the tongue, which shoves the marble out of the front. It is a holding point as well as a launcher, and two tracks can merge into it. The launch is strong enough to climb M-10 and jump to M-11."
+  },
+  "stacking": {
+    "stacksOnTop": true,
+    "canHoldStackAbove": false,
+    "marbleCrossesTop": false,
+    "usableAsHeightOnly": false
+  },
+  "evidence": [
+    {
+      "source": "IMG_0962",
+      "shows": "Flank view, M-01 stacked on B-04 on B-01. Curved lever, side pin, tail raised. Flank arch open, orange T-02 clipped to the bowl rim, round hole in the bowl floor with light showing through. T-06 leaves the front under a yellow tongue. Rear wall solid."
+    },
+    {
+      "source": "IMG_0963",
+      "shows": "Front view: T-06 clips into the bowl under the yellow tongue with its row of teeth; lever tail above with chevrons pointing to the outlet; orange tracks visible at both flanks."
+    },
+    {
+      "source": "IMG_0964",
+      "shows": "Rear three-quarter view: lever pivot and toothed section entering the top slot; T-02 mating on the near flank, another orange track on the far flank, rear face plain."
+    },
+    {
+      "source": "Joey, 2026-11-01",
+      "shows": "The yellow-and-orange lever piece pushes marbles toward the rocket and can be fed by two tracks."
+    },
+    {
+      "source": "reference/family_builds/AGENTS.md and IMG_0948, IMG_0950",
+      "shows": "Two orange curves reach the box, one per flank; the blue T-06 leaves the front toward M-10; a gold marble sits at the outlet. The piece stands raised on a stack, not on the floor."
+    },
+    {
+      "source": "lp_plans_04 step 3-4 and lp_plans_15",
+      "shows": "Placement 1: M-12 low end enters one flank; T-06 leaves the front to the low end of M-10. M-01 stands on the floor at the front corner of the long edge. The other flank window is empty."
+    },
+    {
+      "source": "extreme_24 step 3-3 and extreme_25 map",
+      "shows": "Placement 2: M-01 at cell B7, T-06 leaves west at B6 to M-10 at B4-B5. Lever and arrows point west toward the outlet; lever tail overhangs B8. Nothing feeds it in Part 3 itself."
+    },
+    {
+      "source": "lp_man_5 product page item 14",
+      "shows": "Part named M-01 with label 14 on the body."
+    },
+    {
+      "source": "IMG_0944",
+      "shows": "Underside view shows a one-cell body with the lever hinged to it."
+    },
+    {
+      "source": "reference/pieces/2026_11_01_IMG_0962.jpg, 0963, 0964",
+      "shows": "Tall tapered yellow housing on block feet, flank and front arches over a bowl, small hood over the front arch, long thick orange paddle lever pivoting near the front with its tail raised behind"
+    }
+  ],
+  "confidence": {
+    "shape": "high",
+    "ports": "high",
+    "behaviour": "medium"
+  },
+  "assumptions": [
+    "Origin at footprint centre at foot level (the top plane of whatever the piece stands on). East is +x, south is +y, z in slots.",
+    "Port height 0.75 slot: IMG_0962 shows the bowl floor about 0.6 slot above the leg feet, and T-06 runs about level to the M-10 low seat at 0.75 in step 3-4. Estimated, not measured. It replaces the 1 slot first read from the drawing's window.",
+    "Hole narrower than the marble is judged from photos: hole about 125 px against a marble about 170 px at the same depth, scaled from the channel width. The marble was not tested on it.",
+    "Which part strikes the marble is inferred: the toothed lever section and the tongue teeth suggest a geared hammer, but no photo shows the inside. The tongue may instead be a keeper that lifts away.",
+    "Inlet to outlet are assumed to share one bowl, since all three arches open onto it (IMG_0962, IMG_0963)."
+  ],
+  "openQuestions": [
+    "Drop a marble on the hole with M-01 lifted off the floor: does it stay in the bowl?",
+    "Press slowly with the marble seated: does the tongue swing forward, or does something behind the marble move?",
+    "Can the front arch accept an inlet, or a flank arch act as an outlet?",
+    "Do two marbles waiting from the two flanks jam, or queue?",
+    "How far does a full press send a marble on the flat?"
+  ]
+}

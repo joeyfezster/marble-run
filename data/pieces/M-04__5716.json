@@ -1,0 +1,235 @@
+{
+  "code": "M-04",
+  "names": {
+    "plan": null,
+    "family": "the orange toggle tower",
+    "spoken": "the flip-flop tower"
+  },
+  "sets": {
+    "5716": {
+      "count": 2,
+      "color": "#f07f1e",
+      "colorWord": "orange"
+    }
+  },
+  "role": "turn",
+  "shape": {
+    "description": "Orange open-frame tower, one cell square, two tiers. Top tier: a dished cup with a U notch on each of its four sides and a hole in the middle, four corner posts rising into crown points that hold a block above. Bottom tier: a cup with a U notch on two opposite sides and a T-shaped flap on a pivot in the middle. Arched block feet nest on a block below. Open windows between the tiers.",
+    "footprintCells": [
+      1,
+      1
+    ],
+    "heightSlots": 2,
+    "sizeMm": [
+      45,
+      45,
+      74
+    ],
+    "sizeBasis": "Height to width read from Joey's photo (uploads/M-04_1793563262414.jpg): rim about 1.6 widths above the feet, crown points about 1.75. Width taken as one cell (45 mm). No block in that photo, so the height is a ratio, not a measurement."
+  },
+  "ports": [
+    {
+      "id": "inN",
+      "at": [
+        0,
+        -0.5,
+        1.68
+      ],
+      "faces": "N",
+      "type": "track-end",
+      "accepts": [
+        "track end resting in the top-tier notch"
+      ],
+      "flow": "in"
+    },
+    {
+      "id": "inE",
+      "at": [
+        0.5,
+        0,
+        1.68
+      ],
+      "faces": "E",
+      "type": "track-end",
+      "accepts": [
+        "track end resting in the top-tier notch"
+      ],
+      "flow": "in"
+    },
+    {
+      "id": "inS",
+      "at": [
+        0,
+        0.5,
+        1.68
+      ],
+      "faces": "S",
+      "type": "track-end",
+      "accepts": [
+        "track end resting in the top-tier notch"
+      ],
+      "flow": "in"
+    },
+    {
+      "id": "inW",
+      "at": [
+        -0.5,
+        0,
+        1.68
+      ],
+      "faces": "W",
+      "type": "track-end",
+      "accepts": [
+        "track end resting in the top-tier notch"
+      ],
+      "flow": "in"
+    },
+    {
+      "id": "outE",
+      "at": [
+        0.5,
+        0,
+        0.68
+      ],
+      "faces": "E",
+      "type": "track-end",
+      "accepts": [
+        "track end resting in the bottom-tier notch"
+      ],
+      "flow": "out"
+    },
+    {
+      "id": "outW",
+      "at": [
+        -0.5,
+        0,
+        0.68
+      ],
+      "faces": "W",
+      "type": "track-end",
+      "accepts": [
+        "track end resting in the bottom-tier notch"
+      ],
+      "flow": "out"
+    },
+    {
+      "id": "top",
+      "at": [
+        0,
+        0,
+        2
+      ],
+      "faces": "up",
+      "type": "stack-top",
+      "accepts": [
+        "a block above: B-01, B-03"
+      ],
+      "flow": "in"
+    },
+    {
+      "id": "foot",
+      "at": [
+        0,
+        0,
+        0
+      ],
+      "faces": "down",
+      "type": "stack-bottom",
+      "accepts": [
+        "top of a block: B-01, B-02"
+      ],
+      "flow": "both"
+    }
+  ],
+  "marblePaths": [
+    {
+      "from": "inW",
+      "to": "outE",
+      "dropSlots": 1,
+      "shape": "fall",
+      "lengthCells": 0.5
+    },
+    {
+      "from": "inN",
+      "to": "outE",
+      "dropSlots": 1,
+      "shape": "fall",
+      "lengthCells": 0.5
+    },
+    {
+      "from": "inS",
+      "to": "outE",
+      "dropSlots": 1,
+      "shape": "fall",
+      "lengthCells": 0.5
+    },
+    {
+      "from": "inE",
+      "to": "outE",
+      "dropSlots": 1,
+      "shape": "fall",
+      "lengthCells": 0.5
+    }
+  ],
+  "physics": {
+    "surface": "bowl",
+    "bank": "none",
+    "wallHeight": "high",
+    "energy": "loses",
+    "needsMetalMarble": false,
+    "batteries": null,
+    "behaviour": "Two-tier switch. A marble comes in over any of the four notches of the top tier, drops through to the bottom tier and lands on a pivoting T-shaped flap. The flap tips and sends it out one side, and stays tipped, so the next marble goes out the other side: left, right, left, right. The flap can be pushed by hand to choose the first side. Passive; gravity only.",
+    "exitRule": "alternate"
+  },
+  "stacking": {
+    "stacksOnTop": true,
+    "canHoldStackAbove": true,
+    "marbleCrossesTop": false,
+    "usableAsHeightOnly": true
+  },
+  "evidence": [
+    {
+      "source": "trex_plans_11.png step 2-5",
+      "shows": "Level 2 A5: on B-01; T-14 on E side; T-04 to C3 (h4) on S side; B-03 above in step 2-6"
+    },
+    {
+      "source": "trex_plans_16.png step 3-5",
+      "shows": "Level 3 F7: on B-02; T-14 on E side; T-08 on N side to D7; B-03 above in step 3-12"
+    },
+    {
+      "source": "trex_plans_17.png steps 3-7, 3-8",
+      "shows": "Level 3 I7: on B-01; T-14 on E side; T-05 joins from the I6 block"
+    },
+    {
+      "source": "trex_plans_19.png step 3-11 map",
+      "shows": "Level 3: T-04 leaves I7 southward and curves to the M-28 side window"
+    },
+    {
+      "source": "reference/uploads/M-04_1793563262414.jpg",
+      "shows": "Real piece: two tiers, four U notches on the top tier, a T-shaped flap on a pivot in the bottom tier, crown points, arched feet"
+    },
+    {
+      "source": "data/piece_review.json M-04 (Joey, 2026-11-01)",
+      "shows": "Marbles come in from any of four directions on the top tier and fall to the bottom; one M-04 kind sends them randomly one way or the other, the other has a toggle that alternates sides"
+    }
+  ],
+  "confidence": {
+    "shape": "medium",
+    "ports": "medium",
+    "behaviour": "medium"
+  },
+  "assumptions": [
+    "Which set has the toggle: the photographed piece has the pivoting flap and matches the T-Rex parts drawing (crown points, trex_plans_01), and it was photographed with the T-Rex pieces. So the T-Rex mould is the toggle and the Launchpad mould the random splitter. Not confirmed by Joey.",
+    "Bottom exits on two opposite sides (E and W in the piece frame); the photo shows one bottom notch facing the camera, the flap pivots across it.",
+    "Height kept at 2 slots for stacking: the T-Rex plans need 2 (stacks I7, D3 and A2 all reach h8 at the M-61 outlet). The photo ratio says the rim is about 1.6 slots high, so the real pitch may be 1.5; a side-by-side photo with two stacked blocks would settle it.",
+    "Top tier inlets meet a track at level 2 (z 1.68) and bottom exits at level 1 (z 0.68) above what the tower stands on, like a block's cup seat.",
+    "Split as a T-Rex file because the Launchpad set also lists M-04.",
+    "faces uses E=+x, W=-x, S=+y, N=-y, in the piece's own frame.",
+    "marblePaths list the four ways into the E exit (straight through, from either side, and back out the side it came in). The W exit takes the same four, mirrored: the tower is the same turned half round, so the engine turns it instead of listing them twice."
+  ],
+  "openQuestions": [
+    "Photo it beside two stacked blocks: is the tower 1.5 or 2 blocks tall?",
+    "Which sides are the two bottom exits, relative to the flap's pivot?",
+    "In the T-Rex plans a T-14 sits on one side: does it bounce the marble back onto the flap?"
+  ]
+}

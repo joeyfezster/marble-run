@@ -1,0 +1,110 @@
+{
+  "code": "T-14",
+  "names": {
+    "plan": "T-14",
+    "family": "up-curve, banana",
+    "spoken": "banana"
+  },
+  "sets": {
+    "5716": {
+      "count": 3,
+      "color": "#f7c600",
+      "colorWord": "yellow"
+    }
+  },
+  "role": "stunt",
+  "shape": {
+    "description": "Short open scoop. Low end is a tongue with slot; the other end curves UP to a rounded free lip, with no foot. Clips to one port and hangs free, tip above the port.",
+    "footprintCells": [
+      1,
+      1
+    ],
+    "heightSlots": 1.5,
+    "sizeMm": [
+      60,
+      28,
+      66
+    ],
+    "sizeBasis": "Rise about 1.5 block heights above the tongue and reach about 1.3 block widths, from uploads/T-14_1793563852236.jpg (clipped to a two-block stack). Perspective makes the reach the less certain number."
+  },
+  "ports": [
+    {
+      "id": "lo",
+      "at": [
+        0,
+        0,
+        0
+      ],
+      "faces": "W",
+      "type": "track-end",
+      "accepts": [
+        "block cup end (top notch or joint hole) with its side tab",
+        "another piece overlapped by tongue"
+      ],
+      "flow": "both"
+    }
+  ],
+  "marblePaths": [
+    {
+      "from": "lo",
+      "to": "lo",
+      "dropSlots": 0,
+      "shape": "half-turn",
+      "lengthCells": 1
+    }
+  ],
+  "physics": {
+    "surface": "bowl",
+    "bank": "steep",
+    "wallHeight": "high",
+    "energy": "none",
+    "needsMetalMarble": false,
+    "batteries": null,
+    "behaviour": "Not a downhill exit. Marble runs out of the port up the scoop, slows, and rolls back in. It re-enters that block and goes on: into the hole, or across. Tip rises above the port on all pages."
+  },
+  "stacking": {
+    "stacksOnTop": false,
+    "canHoldStackAbove": false,
+    "marbleCrossesTop": false,
+    "usableAsHeightOnly": false
+  },
+  "evidence": [
+    {
+      "source": "trex_plans_05 step 1-2",
+      "shows": "tip well above grey top, low end at cup end"
+    },
+    {
+      "source": "trex_plans_05 step 1-3 inset",
+      "shows": "low end at joint, tip up"
+    },
+    {
+      "source": "trex_plans_16 step 3-5",
+      "shows": "on M-04, tip up, T-08 on the adjacent face"
+    },
+    {
+      "source": "trex_plans_19 step 3-12",
+      "shows": "on blue top, tip up"
+    },
+    {
+      "source": "trex_plans_03",
+      "shows": "finished builds show tips up"
+    },
+    {
+      "source": "reference/uploads/T-14_1793563852236.jpg",
+      "shows": "Real piece clipped to a two-block stack: the lip rises about 1.5 block heights above the tongue"
+    }
+  ],
+  "confidence": {
+    "shape": "high",
+    "ports": "medium",
+    "behaviour": "low"
+  },
+  "assumptions": [
+    "Connection: the track end is a thin tongue that overlaps the next piece. A small slot in the tongue takes a small peg on that piece, and a hooked foot under the end drops into the block's side tab (photos IMG_0959, 0963; foot on trex_plans_02).",
+    "Up-and-back is inferred from shape and placement. extracted_trex.json calls it a slide dropping about 1 slot; every drawing shows the tip going up.",
+    "Scale is estimated, not measured: one cell = one block width (top-down maps, trex_plans_27). A cell of about 45 mm is judged from hand and laptop-key size in IMG_0960/0963, +-5 mm. No ruler was in any photo."
+  ],
+  "openQuestions": [
+    "Roll a marble in: does it return, or does it hop out?"
+  ]
+}

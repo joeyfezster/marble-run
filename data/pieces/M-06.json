@@ -1,0 +1,131 @@
+{
+  "code": "M-06",
+  "names": {
+    "plan": null,
+    "family": "yellow hood",
+    "spoken": "the catching roof"
+  },
+  "sets": {
+    "5422": {
+      "count": 1,
+      "color": "#f7c600",
+      "colorWord": "yellow"
+    }
+  },
+  "role": "turn",
+  "shape": {
+    "description": "Yellow hollow hood with flat vertical sides, open underneath. The back stands on a block (block-style feet) and is the tallest part; the roof falls in a convex curve from there to a low front edge that overhangs about 1.5 cells past the block. A row of small slits on the roof; warning-stripe stickers on the sides.",
+    "footprintCells": [
+      1,
+      2.5
+    ],
+    "heightSlots": 1.5,
+    "sizeMm": [
+      100,
+      155,
+      75
+    ],
+    "sizeBasis": "Estimated, not measured: cell about 62 mm and slot about 47 mm, from block width against a hand and marbles (IMG_0951, IMG_0952) and the plan drawing proportion slot/cell about 0.76. src/catalog/parts.js uses a 50 mm cell, also an estimate. Ratios to cell and slot are better known than the millimetres."
+  },
+  "ports": [
+    {
+      "id": "mouth",
+      "at": [
+        1.5,
+        0,
+        0.5
+      ],
+      "faces": "down",
+      "type": "open-catch",
+      "accepts": [
+        "marble launched up from the M-02 tube"
+      ],
+      "flow": "in"
+    },
+    {
+      "id": "throat",
+      "at": [
+        0,
+        0,
+        0
+      ],
+      "faces": "down",
+      "type": "open-drop",
+      "accepts": [
+        "cup of the B-02 below"
+      ],
+      "flow": "out"
+    },
+    {
+      "id": "foot",
+      "at": [
+        0,
+        0,
+        0
+      ],
+      "faces": "down",
+      "type": "stack-bottom",
+      "accepts": [
+        "top of a B-02"
+      ],
+      "flow": "both"
+    }
+  ],
+  "marblePaths": [
+    {
+      "from": "mouth",
+      "to": "throat",
+      "dropSlots": 0,
+      "shape": "carried",
+      "lengthCells": 1.5
+    }
+  ],
+  "physics": {
+    "surface": "none",
+    "bank": "none",
+    "wallHeight": "high",
+    "energy": "loses",
+    "needsMetalMarble": false,
+    "batteries": null,
+    "behaviour": "A catcher. Stands on top of a tower and hangs over the M-02 tube. A marble fired up hits the inside of the hood and is steered back to the block under it, then rolls off down the next track. Does nothing for a rolling marble."
+  },
+  "stacking": {
+    "stacksOnTop": true,
+    "canHoldStackAbove": false,
+    "marbleCrossesTop": false,
+    "usableAsHeightOnly": false
+  },
+  "evidence": [
+    {
+      "source": "lp_plans_12 step 3-12 and crop of lp_plans_15",
+      "shows": "Placement 1: M-06 on a B-02 on top of the 6-block tower, z 7. T-08 leaves that B-02 to the rocket. The hood overhangs toward M-02's tube."
+    },
+    {
+      "source": "extreme_61 step 7-10 and extreme_62 map",
+      "shows": "Placement 2: M-06 on a B-02 at A6, reaching across B6 to C6 over the tube of M-02. T-07 leaves the B-02 at A6 (arrows in step 7-9 extreme_60)."
+    },
+    {
+      "source": "lp_man_5 product page item 8",
+      "shows": "Part named M-06 with label 8 stripes on two faces."
+    },
+    {
+      "source": "launchpad.pdf p5 render of M-06",
+      "shows": "flat sticker-covered sides, sloping roof, block-style legs at the back"
+    }
+  ],
+  "confidence": {
+    "shape": "medium",
+    "ports": "medium",
+    "behaviour": "medium"
+  },
+  "assumptions": [
+    "Origin at footprint centre at foot level (the top plane of whatever the piece stands on). East is +x, south is +y, z in slots.",
+    "Catcher role is inferred: both placements put it over the M-02 tube, on a B-02 that feeds a track. Nothing in the plans labels it.",
+    "Assumed that marble is steered down inside to the B-02 throat. The underside is not shown in any picture.",
+    "Height and overhang measured from the drawings only."
+  ],
+  "openQuestions": [
+    "Photo of the underside: is there an internal rib or slope?",
+    "Does the marble need to hit a certain spot to land in the B-02?"
+  ]
+}

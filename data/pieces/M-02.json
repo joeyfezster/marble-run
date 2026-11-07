@@ -1,0 +1,168 @@
+{
+  "code": "M-02",
+  "names": {
+    "plan": null,
+    "family": "big button launcher",
+    "spoken": "the big orange button"
+  },
+  "sets": {
+    "5422": {
+      "count": 1,
+      "color": "#1c3fb0",
+      "colorWord": "dark blue with orange button and tube"
+    }
+  },
+  "role": "energy",
+  "shape": {
+    "description": "Long dark blue box, one cell by two, low and flat. At one end a thick orange mushroom button stands on a round collar. At the other end a blue ring stands across the box, open at both ends, and a straight orange tube rises from its middle, leaning back away from the button by about 25 degrees, about one slot taller than the box. The tube is open at the top.",
+    "footprintCells": [
+      1,
+      2
+    ],
+    "heightSlots": 2,
+    "sizeMm": [
+      45,
+      90,
+      95
+    ],
+    "sizeBasis": "Footprint one cell by two (45 mm cells). Box height about a quarter of its length and tube top about 1.1 lengths above the floor, from uploads/M-02_1793563229817.jpg; no block in that photo, so heights are ratios."
+  },
+  "ports": [
+    {
+      "id": "west",
+      "at": [
+        -0.5,
+        0,
+        1
+      ],
+      "faces": "W",
+      "type": "port-hole",
+      "accepts": [
+        "T-02 end",
+        "T-03 end",
+        "T-06 end"
+      ],
+      "flow": "in"
+    },
+    {
+      "id": "east",
+      "at": [
+        0.5,
+        0,
+        1
+      ],
+      "faces": "E",
+      "type": "port-hole",
+      "accepts": [
+        "T-02 end",
+        "T-03 end",
+        "T-06 end"
+      ],
+      "flow": "in"
+    },
+    {
+      "id": "tube",
+      "at": [
+        0,
+        0,
+        2
+      ],
+      "faces": "up",
+      "type": "open-drop",
+      "accepts": [
+        "M-06 hood mouth above it"
+      ],
+      "flow": "out"
+    },
+    {
+      "id": "foot",
+      "at": [
+        0,
+        0.5,
+        0
+      ],
+      "faces": "down",
+      "type": "stack-bottom",
+      "accepts": [
+        "floor plate pegs in two cells",
+        "two blocks side by side"
+      ],
+      "flow": "both"
+    }
+  ],
+  "marblePaths": [
+    {
+      "from": "west",
+      "to": "tube",
+      "dropSlots": -5.5,
+      "shape": "flight",
+      "lengthCells": 0
+    },
+    {
+      "from": "east",
+      "to": "tube",
+      "dropSlots": -5.5,
+      "shape": "flight",
+      "lengthCells": 0
+    }
+  ],
+  "physics": {
+    "surface": "tube",
+    "bank": "none",
+    "wallHeight": "high",
+    "energy": "adds-by-hand",
+    "needsMetalMarble": false,
+    "batteries": null,
+    "behaviour": "A marble rolling in either end of the cross cylinder stops under the tube and waits. Pressing the orange button fires it straight up out of the tube, about 5 to 6 slots, into the M-06 hood. It is the set's elevator: no other piece in Level 3 lifts a marble that high."
+  },
+  "stacking": {
+    "stacksOnTop": true,
+    "canHoldStackAbove": false,
+    "marbleCrossesTop": false,
+    "usableAsHeightOnly": false
+  },
+  "evidence": [
+    {
+      "source": "lp_plans_05 step 3-5 and lp_plans_15",
+      "shows": "Placement 1: M-02 on the floor at the far end of the set. T-02 comes from the B-01 at the end of the M-11 line and wraps behind the tube to the far cylinder end. Tube stands under the overhang of M-06."
+    },
+    {
+      "source": "extreme_07 step 1-4 and extreme_09 map",
+      "shows": "Placement 2: M-02 at B1-C1, on the floor. T-03 runs from a one-block stack at C2 into the ring end. Dark red arrow points along that T-03 into the ring."
+    },
+    {
+      "source": "extreme_61 step 7-10 and extreme_62 map",
+      "shows": "Placement 3: M-02 on two B-02 side by side in B6-C6, T-06 enters the end opposite the visible ring, and M-06 is placed in the same step with its wide end over the tube."
+    },
+    {
+      "source": "lp_man_5 product page",
+      "shows": "Part named M-02 with a warning-stripe label on the box."
+    },
+    {
+      "source": "IMG_0951",
+      "shows": "Real piece: dark blue box and orange mushroom button."
+    },
+    {
+      "source": "reference/uploads/M-02_1793563229817.jpg",
+      "shows": "Real piece: low box, orange mushroom button, open blue ring, orange tube leaning back"
+    }
+  ],
+  "confidence": {
+    "shape": "high",
+    "ports": "high",
+    "behaviour": "medium"
+  },
+  "assumptions": [
+    "Origin at footprint centre at foot level (the top plane of whatever the piece stands on). East is +x, south is +y, z in slots.",
+    "Upward launch is inferred: no track ever connects to the tube, and M-06 appears over it in both builds that use both pieces (Level 3 and Extreme step 7-10). No document says it.",
+    "Lift of 5 to 6 slots is the gap from tube top (z about 2) to the hood (z about 7.5) in Level 3.",
+    "Side port height of 1 slot from one-block feeders in steps 1-4 and 3-5.",
+    "dropSlots is negative here because the marble rises.",
+    "The tube's lean is read from the photo; the launch is still treated as straight up into the M-06 hood, as the plans show."
+  ],
+  "openQuestions": [
+    "Fire the real button: how high does the marble go, and does it need the hood to stay on course?",
+    "Spring plunger or air?",
+    "Can both side ports be used at once?"
+  ]
+}

@@ -1,0 +1,74 @@
+{
+  "code": "marble_plain",
+  "names": {
+    "plan": null,
+    "family": "plain marble",
+    "spoken": "marble"
+  },
+  "sets": {
+    "5716": {
+      "count": 5,
+      "color": "#e0262c",
+      "colorWord": "five printed colours"
+    },
+    "5422": {
+      "count": 10,
+      "color": "#e0262c",
+      "colorWord": "printed colours"
+    }
+  },
+  "role": "decor",
+  "shape": {
+    "description": "Solid plastic ball with a printed picture.",
+    "footprintCells": [
+      0.45,
+      0.45
+    ],
+    "heightSlots": 0.45,
+    "sizeMm": [
+      20,
+      20,
+      20
+    ],
+    "sizeBasis": "Scale is estimated, not measured: one cell = one block width (top-down maps, trex_plans_27). A cell of about 45 mm is judged from hand and laptop-key size in IMG_0960/0963, +-5 mm. No ruler was in any photo."
+  },
+  "ports": [],
+  "marblePaths": [],
+  "physics": {
+    "surface": "none",
+    "bank": "none",
+    "wallHeight": "low",
+    "energy": "none",
+    "needsMetalMarble": false,
+    "batteries": null,
+    "behaviour": "Rolls everywhere. Falls away at the magnetic bridge M-56 and is not lifted by magnets."
+  },
+  "stacking": {
+    "stacksOnTop": false,
+    "canHoldStackAbove": false,
+    "marbleCrossesTop": false,
+    "usableAsHeightOnly": false
+  },
+  "evidence": [
+    {
+      "source": "trex_plans_02",
+      "shows": "plain MarBalls pictured with print; plain marble falls at M-56; both shown in M-61 cradle"
+    },
+    {
+      "source": "data/sets/*.json",
+      "shows": "counts"
+    }
+  ],
+  "confidence": {
+    "shape": "medium",
+    "ports": "high",
+    "behaviour": "medium"
+  },
+  "assumptions": [
+    "Size is estimated from cup width, about 0.65 cell, and photos; 20 mm is not measured.",
+    "role has no marble value in the schema; 'decor' is a placeholder."
+  ],
+  "openQuestions": [
+    "Weigh and measure one of each."
+  ]
+}

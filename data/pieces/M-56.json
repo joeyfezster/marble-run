@@ -1,0 +1,155 @@
+{
+  "code": "M-56",
+  "names": {
+    "plan": null,
+    "family": "the see-through magnet bridge",
+    "spoken": "the magnet zip line"
+  },
+  "sets": {
+    "5716": {
+      "count": 2,
+      "color": "#e8a317",
+      "colorWord": "see-through amber"
+    }
+  },
+  "role": "stunt",
+  "shape": {
+    "description": "Straight see-through amber beam, a flat top bar with a black magnetic strip along its underside, snapped at each end into a buckle with a round ring and clip. Each ring clips to the end face of a block near its top, so the ring lines up with the block's channel. It spans 2 cells of air between blocks 3 apart and slopes down one slot. There is no channel: a metal marble hangs from the magnet strip underneath.",
+    "footprintCells": [
+      2,
+      1
+    ],
+    "heightSlots": 1,
+    "sizeMm": [
+      124,
+      45,
+      40
+    ],
+    "sizeBasis": "Length about 2.75 block widths between the outer ring faces, from uploads/M-56_1793563491231.jpg (blocks at both ends); cell 45 mm. Height from the same photo, rough."
+  },
+  "ports": [
+    {
+      "id": "high",
+      "at": [
+        0,
+        0,
+        0
+      ],
+      "faces": "W",
+      "type": "block-side-slot",
+      "accepts": [
+        "top block end at the upper stack: B-01, B-05 seen"
+      ],
+      "flow": "in"
+    },
+    {
+      "id": "low",
+      "at": [
+        3,
+        0,
+        -1
+      ],
+      "faces": "E",
+      "type": "block-side-slot",
+      "accepts": [
+        "top block end at the lower stack: B-01, B-02, B-03 seen"
+      ],
+      "flow": "out"
+    },
+    {
+      "id": "dropPoint",
+      "at": [
+        0.2,
+        0,
+        -0.3
+      ],
+      "faces": "E",
+      "type": "open-drop",
+      "accepts": [
+        "plain marbles fall from here to a catcher below"
+      ],
+      "flow": "out"
+    }
+  ],
+  "marblePaths": [
+    {
+      "from": "high",
+      "to": "low",
+      "dropSlots": 1,
+      "shape": "straight",
+      "lengthCells": 3
+    },
+    {
+      "from": "high",
+      "to": "dropPoint",
+      "dropSlots": 0.3,
+      "shape": "fall",
+      "lengthCells": 0.2
+    }
+  ],
+  "physics": {
+    "surface": "magnet strip (the marble hangs under it)",
+    "bank": "none",
+    "wallHeight": "low",
+    "energy": "none",
+    "needsMetalMarble": true,
+    "batteries": null,
+    "behaviour": "Magnet zip line, metal marbles only. A metal marble leaving the upper block's end is pulled up against the magnet strip and hangs from it, sliding under the beam down to the lower block, where it drops into the cup and carries on. A plain marble is not held and falls straight down at the start of the beam.",
+    "marbleHangs": true
+  },
+  "stacking": {
+    "stacksOnTop": false,
+    "canHoldStackAbove": false,
+    "marbleCrossesTop": false,
+    "usableAsHeightOnly": false
+  },
+  "evidence": [
+    {
+      "source": "trex_plans_02.png sorter panel",
+      "shows": "Metal marble follows a solid arrow under the beam, reappears on T-06 beyond the lower block; plain marble follows a dashed arrow straight down from the upper block"
+    },
+    {
+      "source": "trex.pdf p6",
+      "shows": "Adult assembly: both ends of the transparent magnetic cable snap into two buckles"
+    },
+    {
+      "source": "trex_plans_11.png step 2-6",
+      "shows": "Level 2: high A2 B-05 (h8), low A5 B-03 (h6). T-14 from step 2-2 and T-07 from step 2-4 lie below"
+    },
+    {
+      "source": "trex_plans_15.png step 3-3",
+      "shows": "Level 3 west: high A3 B-01 (h2), low D3 B-01 (h1); B3 and C3 blocks at h1 lie below"
+    },
+    {
+      "source": "trex_plans_20.png step 3-14",
+      "shows": "Level 3 east: high I7 B-05 (h8), low F7 B-02 (h7); T-14 from step 3-12 and T-07 from step 3-6 lie below. Not used in Level 1"
+    },
+    {
+      "source": "IMG_0945",
+      "shows": "Real piece: see-through amber, rings at both ends"
+    },
+    {
+      "source": "reference/uploads/M-56_1793563491231.jpg",
+      "shows": "Real piece clipped between a one-block and a two-block stack with two cells of air between them: span 3, drop 1; black magnet strip on the underside"
+    },
+    {
+      "source": "data/piece_review.json M-56 (Joey, 2026-11-01)",
+      "shows": "This piece is just for magnetic balls and the balls kind of hang from it"
+    }
+  ],
+  "confidence": {
+    "shape": "medium",
+    "ports": "medium",
+    "behaviour": "high"
+  },
+  "assumptions": [
+    "Rides under, not on top: read from page 02, where the marble sits below the beam; a shop listing's phrase magnetic zipline agrees but that source is weak.",
+    "Port z values are relative to the upper block's top, with the 1 slot drop as the default.",
+    "Level 2 drop of 2 depends on M-04 being 2 slots tall.",
+    "faces uses E=+x, W=-x, S=+y, N=-y, in the piece's own frame. Heights are slots above the floor when the piece stands on the floor or, where stated, above the top of its supports."
+  ],
+  "openQuestions": [
+    "Largest and smallest drop that still works, and does the beam tilt freely on its rings?",
+    "Is a metal marble always held at any speed? Does it let go on arrival or need a block lip to scrape it off?"
+  ]
+}

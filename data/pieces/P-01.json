@@ -1,0 +1,107 @@
+{
+  "code": "P-01",
+  "names": {
+    "plan": "P-01",
+    "family": "floor plate",
+    "spoken": "floor"
+  },
+  "sets": {
+    "5716": {
+      "count": 2,
+      "color": "#3b3d42",
+      "colorWord": "dark grey"
+    },
+    "5422": {
+      "count": 5,
+      "color": "#f4f4f2",
+      "colorWord": "white"
+    }
+  },
+  "role": "floor",
+  "shape": {
+    "description": "Flat jigsaw-edged plate. Each cell has a raised square frame with a square window through to the table and four small corner studs. Block legs sit around the frame. Plates interlock by jigsaw tabs on their edges. 4 by 2 cells.",
+    "footprintCells": [
+      4,
+      2
+    ],
+    "heightSlots": 0,
+    "sizeMm": [
+      180,
+      90,
+      6
+    ],
+    "sizeBasis": "Scale is estimated, not measured: one cell = one block width (top-down maps, trex_plans_27). A cell of about 45 mm is judged from hand and laptop-key size in IMG_0960/0963, +-5 mm. No ruler was in any photo."
+  },
+  "ports": [
+    {
+      "id": "cells",
+      "at": [
+        0,
+        0,
+        0
+      ],
+      "faces": "up",
+      "type": "floor-peg",
+      "accepts": [
+        "feet of blocks and base modules, one per cell"
+      ],
+      "flow": "both"
+    },
+    {
+      "id": "edge",
+      "at": [
+        2.0,
+        0,
+        0
+      ],
+      "faces": "E",
+      "type": "clip",
+      "accepts": [
+        "jigsaw edge of another plate"
+      ],
+      "flow": "both"
+    }
+  ],
+  "marblePaths": [],
+  "physics": {
+    "surface": "none",
+    "bank": "none",
+    "wallHeight": "low",
+    "energy": "none",
+    "needsMetalMarble": false,
+    "batteries": null,
+    "behaviour": "Holds the build. A marble can drop through a window."
+  },
+  "stacking": {
+    "stacksOnTop": false,
+    "canHoldStackAbove": true,
+    "marbleCrossesTop": false,
+    "usableAsHeightOnly": false
+  },
+  "evidence": [
+    {
+      "source": "lp_plans_02 step 3-2",
+      "shows": "plate studs, windows, jigsaw edges; legs straddle frames"
+    },
+    {
+      "source": "trex_plans_05 step 1-2 map",
+      "shows": "cells and isolated rows from short plates"
+    },
+    {
+      "source": "reference/family_builds/2026_11_01_IMG_0950.jpg",
+      "shows": "real plates"
+    }
+  ],
+  "confidence": {
+    "shape": "high",
+    "ports": "medium",
+    "behaviour": "high"
+  },
+  "assumptions": [
+    "Scale is estimated, not measured: one cell = one block width (top-down maps, trex_plans_27). A cell of about 45 mm is judged from hand and laptop-key size in IMG_0960/0963, +-5 mm. No ruler was in any photo.",
+    "Footprint split between P-01 and P-02 follows extracted_trex.json and the box counts; the plate outline was not recounted piece by piece."
+  ],
+  "openQuestions": [
+    "Measure one cell with a ruler: every size in this catalogue scales from it."
+  ]
+}

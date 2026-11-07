@@ -1,0 +1,116 @@
+{
+  "code": "T-15",
+  "names": {
+    "plan": "T-15",
+    "family": "long yellow chute",
+    "spoken": "big chute"
+  },
+  "sets": {
+    "5716": {
+      "count": 1,
+      "color": "#f7c600",
+      "colorWord": "yellow"
+    }
+  },
+  "role": "track",
+  "shape": {
+    "description": "Long straight channel with high walls and two raised ridges along the floor, no slots. Tongue at low end; top end sits in the M-60 clip.",
+    "footprintCells": [
+      4,
+      1
+    ],
+    "heightSlots": 0.4,
+    "sizeMm": [
+      150,
+      23,
+      13
+    ],
+    "sizeBasis": "Scaled from the floor cell (about 45 mm, one block width) against VTech parts drawings and Joey's photos; +-10%. No ruler in any photo. Track width about 25 mm (straights) and 31 mm (curved bands), read against block width in IMG_0952/0953 and lp manual p5."
+  },
+  "ports": [
+    {
+      "id": "hi",
+      "at": [
+        0,
+        0,
+        2
+      ],
+      "faces": "W",
+      "type": "clip",
+      "accepts": [
+        "M-60 pole clip"
+      ],
+      "flow": "in"
+    },
+    {
+      "id": "lo",
+      "at": [
+        3.5,
+        0,
+        0
+      ],
+      "faces": "E",
+      "type": "track-end",
+      "accepts": [
+        "block cup end (top notch or joint hole) with its side tab",
+        "another piece overlapped by tongue"
+      ],
+      "flow": "both"
+    }
+  ],
+  "marblePaths": [
+    {
+      "from": "hi",
+      "to": "lo",
+      "dropSlots": 2,
+      "shape": "straight",
+      "lengthCells": 3.5
+    }
+  ],
+  "physics": {
+    "surface": "open U",
+    "bank": "none",
+    "wallHeight": "high",
+    "energy": "none",
+    "needsMetalMarble": false,
+    "batteries": null,
+    "behaviour": "Rigid sloped run from the elevator down to a block."
+  },
+  "stacking": {
+    "stacksOnTop": false,
+    "canHoldStackAbove": false,
+    "marbleCrossesTop": false,
+    "usableAsHeightOnly": false
+  },
+  "evidence": [
+    {
+      "source": "trex_plans_03 level 3",
+      "shows": "steep from pole head to F7 top"
+    },
+    {
+      "source": "trex_plans_20 step 3-13",
+      "shows": "lands on blue cup over grey B-03; T-17 clipped beyond"
+    },
+    {
+      "source": "trex_plans_02",
+      "shows": "elevator delivers metal marbles to this chute"
+    },
+    {
+      "source": "extracted_trex.json 1-7",
+      "shows": "pole to D3 tower"
+    }
+  ],
+  "confidence": {
+    "shape": "medium",
+    "ports": "medium",
+    "behaviour": "medium"
+  },
+  "assumptions": [
+    "Connection: the track end is a thin tongue that overlaps the next piece. A small slot in the tongue takes a small peg on that piece, and a hooked foot under the end drops into the block's side tab (photos IMG_0959, 0963; foot on trex_plans_02).",
+    "dropSlots 2 is the Level 3 case read by eye; it depends on the pole-clip height and is not fixed. The extraction's 0 to 0.5 looks too small for Level 3.",
+    "Scale is estimated, not measured: one cell = one block width (top-down maps, trex_plans_27). A cell of about 45 mm is judged from hand and laptop-key size in IMG_0960/0963, +-5 mm. No ruler was in any photo."
+  ],
+  "openQuestions": [
+    "Measure the chute length and pole clip height."
+  ]
+}

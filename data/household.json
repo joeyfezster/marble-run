@@ -1,0 +1,15 @@
+{
+  "about": "Pieces this household owns but does not build with. The set files keep VTech's counts; the app leaves these out of the pile it builds from. Delete an entry to use the piece again. count limits how many are left out (all of them when missing).",
+  "notUsed": {
+    "M-60": {
+      "reason": "Breaks easily, it does not work for us anymore",
+      "who": "Joey",
+      "since": "2026-11-01"
+    },
+    "M-64": {
+      "reason": "Removed from our builds",
+      "who": "Joey",
+      "since": "2026-11-01"
+    }
+  }
+}

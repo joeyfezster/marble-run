@@ -1,0 +1,152 @@
+{
+  "code": "M-07",
+  "names": {
+    "plan": null,
+    "family": "the tan tray",
+    "spoken": "the finish tray"
+  },
+  "sets": {
+    "5716": {
+      "count": 1,
+      "color": "#c98a3a",
+      "colorWord": "tan"
+    },
+    "5422": {
+      "count": 1,
+      "color": "#f7c600",
+      "colorWord": "yellow"
+    }
+  },
+  "role": "end",
+  "shape": {
+    "description": "Long flat tray, open on top: a flat floor with two long slots and LOW straight side walls (about a third of a slot). Each end turns up into a taller end wall, about one slot high, with a U notch in its top edge and a small downward hook at each top corner. The hooks hang the end on the cup end of a block, so the notch lines up with the block's channel and a marble rolls over the notch into the tray. Lies on the floor or plates between hooked ends. No exit. T-Rex tan and Launchpad yellow are the same mould.",
+    "footprintCells": [
+      2,
+      1
+    ],
+    "heightSlots": 1,
+    "sizeMm": [
+      108,
+      46,
+      41
+    ],
+    "sizeBasis": "Width one cell (45 mm). End wall height about 0.9 of the tray width and side walls about a third of it, read from pieces/2026_11_01_IMG_0956.jpg; length about 2.4 widths from the same photo. No ruler."
+  },
+  "ports": [
+    {
+      "id": "a",
+      "at": [
+        -1,
+        0,
+        1
+      ],
+      "faces": "W",
+      "type": "track-end",
+      "accepts": [
+        "hooks over the cup end of a block: B-01, B-02",
+        "M-60 pocket port"
+      ],
+      "flow": "in"
+    },
+    {
+      "id": "b",
+      "at": [
+        1,
+        0,
+        1
+      ],
+      "faces": "E",
+      "type": "track-end",
+      "accepts": [
+        "hooks over the cup end of a block: B-01",
+        "or nothing: may rest free"
+      ],
+      "flow": "in"
+    }
+  ],
+  "marblePaths": [
+    {
+      "from": "a",
+      "to": "b",
+      "dropSlots": 1,
+      "shape": "straight",
+      "lengthCells": 1
+    },
+    {
+      "from": "b",
+      "to": "a",
+      "dropSlots": 1,
+      "shape": "straight",
+      "lengthCells": 1
+    }
+  ],
+  "physics": {
+    "surface": "open U",
+    "bank": "none",
+    "wallHeight": "low",
+    "energy": "loses",
+    "needsMetalMarble": false,
+    "batteries": null,
+    "behaviour": "End piece. A marble rolls out of the block the tray hangs on, over the end notch, drops to the flat floor and stops. Marbles collect here. Both ends hook onto blocks the same way and both are inlets; nothing leaves. In paths above, to means where the marble settles, not an exit."
+  },
+  "stacking": {
+    "stacksOnTop": false,
+    "canHoldStackAbove": false,
+    "marbleCrossesTop": false,
+    "usableAsHeightOnly": false
+  },
+  "evidence": [
+    {
+      "source": "IMG_0956 (Joey)",
+      "shows": "Real tray: flat floor, two slots, tall walls, curved lips with clip tabs at both ends"
+    },
+    {
+      "source": "trex_plans_07.png step 1-7 main view and inset",
+      "shows": "Level 1: clips to the M-60 base pocket on the side opposite the T-06; other end free. Last piece of the level"
+    },
+    {
+      "source": "trex_plans_10.png step 2-4",
+      "shows": "Level 2: north end clips to the C3 stack at height 1; south end free near the floor"
+    },
+    {
+      "source": "trex_plans_15.png step 3-4",
+      "shows": "Level 3: lies between B-01 blocks at C1 and F1; T-04 feeds C1, T-02 feeds F1, so two inlets and no onward piece"
+    },
+    {
+      "source": "family_builds/AGENTS.md, IMG_0949",
+      "shows": "Family use: tray alone on the floor as a catch basin, Josh's hand in it"
+    },
+    {
+      "source": "launchpad.pdf p5 (Label Application, product renders)",
+      "shows": "yellow M-07 tray in the Launchpad set, sticker 4 on its floor"
+    },
+    {
+      "source": "launchpad.pdf p4 (sticker sheet)",
+      "shows": "exactly one sticker 4 (the tray scoreboard), so one M-07 in 5422"
+    },
+    {
+      "source": "reference/pieces/2026_11_01_IMG_0956.jpg",
+      "shows": "tall straight walls, two floor slots, curved end lip with clip tab"
+    },
+    {
+      "source": "data/piece_review.json M-07 (Joey, 2026-11-01)",
+      "shows": "The basket is a little flatter, and the connectors in the old model made no sense"
+    }
+  ],
+  "confidence": {
+    "shape": "high",
+    "ports": "medium",
+    "behaviour": "medium"
+  },
+  "assumptions": [
+    "End piece in all three levels by tracing flow: every level's lines finish here and no track leaves it. VTech does not label it.",
+    "Level 3 direction, into the tray from both ends, is inferred; a level track there would instead run C1 to F1, but that makes a closed ring with no way down.",
+    "The Launchpad Level 3 plan never uses M-07; its count comes from the manual's label page, not the plan parts boxes.",
+    "The end hooks hang on the rail of a block's open cup end, read from the hook shape in IMG_0956; no photo shows it hooked on.",
+    "faces uses E=+x, W=-x, S=+y, N=-y, in the piece's own frame."
+  ],
+  "openQuestions": [
+    "Roll a fast marble in: does it stop, or jump the far lip? Decides whether it can ever act as a through track.",
+    "Do the floor slots let anything through or are they only grip or decoration?"
+  ]
+}

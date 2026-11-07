@@ -1,0 +1,120 @@
+{
+  "code": "T-02",
+  "names": {
+    "plan": "T-02",
+    "family": "big half circle",
+    "spoken": "big rainbow"
+  },
+  "sets": {
+    "5716": {
+      "count": 4,
+      "color": "#f07f1e",
+      "colorWord": "orange"
+    },
+    "5422": {
+      "count": 2,
+      "color": "#f07f1e",
+      "colorWord": "orange"
+    }
+  },
+  "role": "track",
+  "shape": {
+    "description": "Half ring, ends two cells apart. Two arcs of slots. Open flat band with low side walls and long slots in the floor; tongue with small slot at each end, hooked foot under it.",
+    "footprintCells": [
+      3,
+      2
+    ],
+    "heightSlots": 0.3,
+    "sizeMm": [
+      121,
+      76,
+      15
+    ],
+    "sizeBasis": "Scaled from the floor cell (about 45 mm, one block width) against VTech parts drawings and Joey's photos; +-10%. No ruler in any photo. Track width about 25 mm (straights) and 31 mm (curved bands), read against block width in IMG_0952/0953 and lp manual p5."
+  },
+  "ports": [
+    {
+      "id": "a",
+      "at": [
+        0,
+        0,
+        0
+      ],
+      "faces": "W",
+      "type": "track-end",
+      "accepts": [
+        "block cup end (top notch or joint hole) with its side tab",
+        "another piece overlapped by tongue"
+      ],
+      "flow": "both"
+    },
+    {
+      "id": "b",
+      "at": [
+        0,
+        2,
+        0
+      ],
+      "faces": "W",
+      "type": "track-end",
+      "accepts": [
+        "block cup end (top notch or joint hole) with its side tab",
+        "another piece overlapped by tongue"
+      ],
+      "flow": "both"
+    }
+  ],
+  "marblePaths": [
+    {
+      "from": "a",
+      "to": "b",
+      "dropSlots": 0,
+      "shape": "half-turn",
+      "lengthCells": 3.1
+    }
+  ],
+  "physics": {
+    "surface": "open U",
+    "bank": "none",
+    "wallHeight": "low",
+    "energy": "none",
+    "needsMetalMarble": false,
+    "batteries": null,
+    "behaviour": "Level 180 degree U-turn between two equal ports. Slows a marble by rubbing the outer wall."
+  },
+  "stacking": {
+    "stacksOnTop": false,
+    "canHoldStackAbove": false,
+    "marbleCrossesTop": false,
+    "usableAsHeightOnly": false
+  },
+  "evidence": [
+    {
+      "source": "lp_plans_02 step 3-2",
+      "shows": "blue h2 to orange B-02 h2"
+    },
+    {
+      "source": "lp_plans_03 step 3-3",
+      "shows": "both ends then roofed by B-04, so they sit at joint holes"
+    },
+    {
+      "source": "trex_plans_16 step 3-6",
+      "shows": "B-01 to tower foot"
+    },
+    {
+      "source": "trex_plans_18 step 3-10",
+      "shows": "T-02 tail on blue, equal height"
+    }
+  ],
+  "confidence": {
+    "shape": "high",
+    "ports": "high",
+    "behaviour": "medium"
+  },
+  "assumptions": [
+    "Connection: the track end is a thin tongue that overlaps the next piece. A small slot in the tongue takes a small peg on that piece, and a hooked foot under the end drops into the block's side tab (photos IMG_0959, 0963; foot on trex_plans_02).",
+    "Height finding: equal-height ports give a truly level track. Side elevations on trex_plans_02 draw T-06 horizontal, and iso rails on T-06 match the floor axis (0.66-0.69 vs 0.68-0.70 rise/run, read by eye, so a slope under about 0.1 slot per cell cannot be excluded). No built-in slope was found in blocks or straights. A marble crosses level runs on speed from an earlier drop, launcher or lift. It will not start from rest there.",
+    "Scale is estimated, not measured: one cell = one block width (top-down maps, trex_plans_27). A cell of about 45 mm is judged from hand and laptop-key size in IMG_0960/0963, +-5 mm. No ruler was in any photo."
+  ],
+  "openQuestions": []
+}

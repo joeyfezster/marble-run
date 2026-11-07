@@ -1,0 +1,252 @@
+{
+  "code": "B-04",
+  "names": {
+    "plan": "B-04",
+    "family": "hole block",
+    "spoken": "hole block"
+  },
+  "sets": {
+    "5422": {
+      "count": 5,
+      "color": "#f4f4f2",
+      "colorWord": "white"
+    }
+  },
+  "role": "support",
+  "shape": {
+    "description": "Same body, legs, arches, rails and two opposite tabs as B-01, with a round hole through the cup floor at its centre, marble-sized or bigger. Stacked on a block, it looks into that block's cup.",
+    "footprintCells": [
+      1,
+      1
+    ],
+    "heightSlots": 1,
+    "sizeMm": [
+      45,
+      45,
+      53
+    ],
+    "sizeBasis": "Scale is estimated, not measured: one cell = one block width (top-down maps, trex_plans_27). A cell of about 45 mm is judged from hand and laptop-key size in IMG_0960/0963, +-5 mm. No ruler was in any photo."
+  },
+  "ports": [
+    {
+      "id": "w",
+      "at": [
+        -0.5,
+        0,
+        0.68
+      ],
+      "faces": "W",
+      "type": "block-top-slot",
+      "accepts": [
+        "track-end tongue and foot",
+        "T-17 tail via arch of block above"
+      ],
+      "flow": "in"
+    },
+    {
+      "id": "e",
+      "at": [
+        0.5,
+        0,
+        0.68
+      ],
+      "faces": "E",
+      "type": "block-top-slot",
+      "accepts": [
+        "track-end tongue and foot"
+      ],
+      "flow": "in"
+    },
+    {
+      "id": "tabW",
+      "at": [
+        -0.56,
+        0,
+        0.57
+      ],
+      "faces": "W",
+      "type": "block-side-slot",
+      "accepts": [
+        "track end hooked foot",
+        "T-17 clip"
+      ],
+      "flow": "both"
+    },
+    {
+      "id": "tabE",
+      "at": [
+        0.56,
+        0,
+        0.57
+      ],
+      "faces": "E",
+      "type": "block-side-slot",
+      "accepts": [
+        "track end hooked foot",
+        "T-17 clip"
+      ],
+      "flow": "both"
+    },
+    {
+      "id": "drop",
+      "at": [
+        0,
+        0,
+        0.6
+      ],
+      "faces": "down",
+      "type": "open-drop",
+      "accepts": [
+        "marble leaves downward into the block below"
+      ],
+      "flow": "out"
+    },
+    {
+      "id": "top",
+      "at": [
+        0,
+        0,
+        1
+      ],
+      "faces": "up",
+      "type": "stack-top",
+      "accepts": [
+        "feet of any block or base module"
+      ],
+      "flow": "both"
+    },
+    {
+      "id": "bottom",
+      "at": [
+        0,
+        0,
+        0
+      ],
+      "faces": "down",
+      "type": "stack-bottom",
+      "accepts": [
+        "top of any block",
+        "floor plate cell frame"
+      ],
+      "flow": "both"
+    },
+    {
+      "id": "archN",
+      "at": [
+        0,
+        -0.5,
+        0
+      ],
+      "faces": "N",
+      "type": "port-hole",
+      "accepts": [
+        "with the block below: forms the round joint hole if that block's cup end faces this way"
+      ],
+      "flow": "both"
+    },
+    {
+      "id": "archS",
+      "at": [
+        0,
+        0.5,
+        0
+      ],
+      "faces": "S",
+      "type": "port-hole",
+      "accepts": [
+        "with the block below: forms the round joint hole if that block's cup end faces this way"
+      ],
+      "flow": "both"
+    },
+    {
+      "id": "archE",
+      "at": [
+        0.5,
+        0,
+        0
+      ],
+      "faces": "E",
+      "type": "port-hole",
+      "accepts": [
+        "with the block below: forms the round joint hole if that block's cup end faces this way"
+      ],
+      "flow": "both"
+    },
+    {
+      "id": "archW",
+      "at": [
+        -0.5,
+        0,
+        0
+      ],
+      "faces": "W",
+      "type": "port-hole",
+      "accepts": [
+        "with the block below: forms the round joint hole if that block's cup end faces this way"
+      ],
+      "flow": "both"
+    }
+  ],
+  "marblePaths": [
+    {
+      "from": "w",
+      "to": "drop",
+      "dropSlots": 1,
+      "shape": "fall",
+      "lengthCells": 0.5
+    },
+    {
+      "from": "e",
+      "to": "drop",
+      "dropSlots": 1,
+      "shape": "fall",
+      "lengthCells": 0.5
+    }
+  ],
+  "physics": {
+    "surface": "open U",
+    "bank": "none",
+    "wallHeight": "low",
+    "energy": "none",
+    "needsMetalMarble": false,
+    "batteries": null,
+    "behaviour": "Drops the marble down inside the stack; it does not carry it across. It falls one slot per hole block to the next solid cup, usually a B-02 whose mouth leads to the exit track. Chained hole blocks make a chimney."
+  },
+  "stacking": {
+    "stacksOnTop": true,
+    "canHoldStackAbove": true,
+    "marbleCrossesTop": false,
+    "usableAsHeightOnly": true
+  },
+  "evidence": [
+    {
+      "source": "lp_plans_03 step 3-3",
+      "shows": "white B-04 on B-02 and on B-01, over T-02 ends; hole visible in cup floor"
+    },
+    {
+      "source": "reference/pieces/2026_11_01_IMG_0964.jpg",
+      "shows": "real white block in a stack: rails, tab, arch"
+    },
+    {
+      "source": "reference/pieces/2026_11_01_IMG_0963.jpg",
+      "shows": "round side hole sits exactly at a joint: arch of upper block over cup end of lower block; red T-08 plugs in there"
+    }
+  ],
+  "confidence": {
+    "shape": "high",
+    "ports": "medium",
+    "behaviour": "medium"
+  },
+  "assumptions": [
+    "Axes: +x = E, +y = S, z up; z is in slots above this block's own feet. Marble seat in a cup is z=0.68.",
+    "Joint rule: a block body is about a cube; pitch is 1 slot; rails stand 0.17 slot higher and nest inside the block above. Each face has a low arch, as tall as the cup is deep (0.33 slot). So the arch of an upper block plus the cup end of the lower block make a round hole at the joint, about 0.65 slot across. The cup-end port and the side round hole are the SAME port: it is a notch when the stack ends there and a hole when a block sits on top. Height is the same either way, n-0.32 slots for the nth block.",
+    "The owner states the round hole goes through the cup. Falling through is inferred from that plus the plan stacks; no plan page labels it.",
+    "Marble dropping into a B-01 below: seats and rolls out either cup end, direction uncertain.",
+    "Extreme plans print this white block as B-03 (extracted_extreme.json); Launchpad prints B-04. Treated as the same shape as B-03 by drawing, colour differs.",
+    "Not traced in a second distinct Launchpad joint beyond step 3-3 tops; steps 3-13/3-14 not re-read."
+  ],
+  "openQuestions": [
+    "Does a marble crossing fast jump the hole? Roll one in along a track at speed.",
+    "Exact hole diameter against marble."
+  ]
+}

@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+<title>Marble Run Maker</title>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<canvas id="world" aria-label="3D marble track"></canvas>
+<div id="thinking" hidden><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+
+<header id="progress" hidden aria-label="Build progress"></header>
+<aside id="tray" hidden aria-label="Pieces for this step"></aside>
+<figure id="map" hidden aria-label="Where it goes on the floor"></figure>
+
+<nav id="dock" aria-label="Main controls">
+  <div id="sizes" role="group" aria-label="How long"></div>
+  <button id="newBtn" class="marble red" aria-label="New track"><svg viewBox="0 0 100 100"><path d="M50 22a28 28 0 1 0 28 28" /><path d="M64 12l14 10-12 12" /></svg></button>
+  <button id="goBtn" class="marble blue big" aria-label="Drop the marble"><svg viewBox="0 0 100 100"><path class="fill" d="M36 24l42 26-42 26z" /></svg></button>
+  <button id="buildBtn" class="marble yellow" aria-label="Build it"><svg viewBox="0 0 100 100"><g class="fill"><path d="M20 80V58h26v22zM54 80V58h26v22zM37 48V26h26v22z"/></g></svg></button>
+</nav>
+
+<nav id="stepdock" hidden aria-label="Build steps">
+  <button id="prevBtn" class="marble white small" aria-label="Back one step"><svg viewBox="0 0 100 100"><path class="fill" d="M64 24L22 50l42 26z" /></svg></button>
+  <button id="repeatBtn" class="marble white small" aria-label="Say it again"><svg viewBox="0 0 100 100"><path class="fill" d="M20 40h16l22-18v56L36 60H20z"/><path d="M68 38a16 16 0 0 1 0 24"/></svg></button>
+  <button id="nextBtn" class="marble green big" aria-label="Next step"><svg viewBox="0 0 100 100"><path class="fill" d="M36 24l42 26-42 26z" /></svg></button>
+  <button id="exitBtn" class="marble white small" aria-label="Stop building"><svg viewBox="0 0 100 100"><path d="M30 30l40 40M70 30L30 70"/></svg></button>
+</nav>
+
+<div id="grownbar">
+  
+  <button id="viewBtn" aria-expanded="false">View</button>
+  <button id="gear" aria-label="Grown-ups">Grown-ups</button>
+</div>
+<div id="viewbar" hidden role="group" aria-label="Camera views">
+  <button data-look="spin" aria-pressed="true">Spin</button>
+  <button data-look="front">Front</button>
+  <button data-look="right">Right</button>
+  <button data-look="back">Back</button>
+  <button data-look="left">Left</button>
+  <button data-look="top">Top</button>
+  <button data-look="home">Reset</button>
+</div>
+<div id="tag" hidden></div>
+<section id="panel" hidden aria-label="Grown-ups">
+  <button id="closePanel" aria-label="Close">Close</button>
+  <div id="panelBody"></div>
+</section>
+<script type="module" src="src/main.js"></script>
+</body>
+</html>

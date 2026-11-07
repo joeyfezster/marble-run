@@ -1,0 +1,156 @@
+{
+  "code": "T-17",
+  "names": {
+    "plan": "T-17",
+    "family": "spiral",
+    "spoken": "spiral"
+  },
+  "sets": {
+    "5716": {
+      "count": 3,
+      "color": "#a9adb2",
+      "colorWord": "grey"
+    }
+  },
+  "role": "stunt",
+  "shape": {
+    "description": "Wide grey band with a high outer wall and arc slots, lying BESIDE its host block: a short straight tongue rests in the host's cup end, with a side clip gripping the host's tab; the band winds inward about one and a half turns over the two by two cells ahead of the host and to one side, falling gently, and its inner tail dips under the band and comes back into the block under the host through the same face. About one slot of drop in all.",
+    "footprintCells": [
+      2,
+      2
+    ],
+    "heightSlots": 1,
+    "sizeMm": [
+      115,
+      125,
+      58
+    ],
+    "sizeBasis": "Scaled from the floor cell (about 45 mm, one block width) against VTech parts drawings and Joey's photos; +-10%. No ruler in any photo. Track width about 25 mm (straights) and 31 mm (curved bands), read against block width in IMG_0952/0953 and lp manual p5."
+  },
+  "ports": [
+    {
+      "id": "in",
+      "at": [
+        0,
+        0,
+        1
+      ],
+      "faces": "W",
+      "type": "track-end",
+      "accepts": [
+        "cup end of upper block"
+      ],
+      "flow": "in"
+    },
+    {
+      "id": "tail",
+      "at": [
+        0,
+        0.5,
+        0
+      ],
+      "faces": "N",
+      "type": "open-drop",
+      "accepts": [
+        "through the arch of the upper block into the cup of the block below"
+      ],
+      "flow": "out"
+    },
+    {
+      "id": "clip",
+      "at": [
+        0.5,
+        0.5,
+        0.2
+      ],
+      "faces": "N",
+      "type": "clip",
+      "accepts": [
+        "side tab of the block below, on the adjacent face"
+      ],
+      "flow": "both"
+    }
+  ],
+  "marblePaths": [
+    {
+      "from": "in",
+      "to": "tail",
+      "dropSlots": 1,
+      "shape": "spiral",
+      "lengthCells": 4
+    }
+  ],
+  "physics": {
+    "surface": "open U",
+    "bank": "steep",
+    "wallHeight": "high",
+    "energy": "loses",
+    "needsMetalMarble": false,
+    "batteries": null,
+    "behaviour": "Whirls the marble around and delivers it one slot lower into the top of the block under its host. What happens next depends on that block: a hole block or M-04 lets it fall inside the tower to a B-02 and out low; a plain cup rolls it out as a tunnel."
+  },
+  "stacking": {
+    "stacksOnTop": false,
+    "canHoldStackAbove": false,
+    "marbleCrossesTop": false,
+    "usableAsHeightOnly": false
+  },
+  "evidence": [
+    {
+      "source": "reference/pieces/2026_11_01_IMG_0959.jpg",
+      "shows": "band, peg through tongue slot, clip at lower block tab"
+    },
+    {
+      "source": "reference/pieces/2026_11_01_IMG_0960.jpg",
+      "shows": "lower block turned 90 degrees, its tab beside the clip"
+    },
+    {
+      "source": "reference/pieces/2026_11_01_IMG_0961.jpg",
+      "shows": "arch beside the band end"
+    },
+    {
+      "source": "trex_plans_20 step 3-13",
+      "shows": "T-15 into blue, on grey B-03, on M-04, tan and red; T-17 clipped: hypothesis case"
+    },
+    {
+      "source": "trex_plans_19 step 3-12",
+      "shows": "T-17 at I7 blue over M-04"
+    },
+    {
+      "source": "trex_plans_14 step 3-2",
+      "shows": "T-17 on red over blue, top of low stack: plain tunnel case"
+    },
+    {
+      "source": "trex_plans_06 step 1-4 inset",
+      "shows": "T-17 on red"
+    },
+    {
+      "source": "trex_plans_11 step 2-5",
+      "shows": "T-17 on blue under M-04"
+    },
+    {
+      "source": "reference/pieces/2026_11_01_IMG_0961.jpg",
+      "shows": "the host block stands inside the spiral; the band wraps round it"
+    },
+    {
+      "source": "reference/pieces/2026_11_01_IMG_0959.jpg, 0960, 0961",
+      "shows": "One flat band beside a blue host block, tongue in its cup end, inner tail curling down toward the host's lower block"
+    }
+  ],
+  "confidence": {
+    "shape": "high",
+    "ports": "medium",
+    "behaviour": "medium"
+  },
+  "assumptions": [
+    "Connection: the track end is a thin tongue that overlaps the next piece. A small slot in the tongue takes a small peg on that piece, and a hooked foot under the end drops into the block's side tab (photos IMG_0959, 0963; foot on trex_plans_02).",
+    "Entry at outer end and exit at tail come from the owner's photos and the chute feed; no plan arrow shows it.",
+    "Needs adjacent-face tabs: either host block plus a block turned 90 degrees below, or a B-05. Inferred from IMG_0960.",
+    "Extraction's 'collector cup' is wrong: it passes the marble on.",
+    "Scale is estimated, not measured: one cell = one block width (top-down maps, trex_plans_27). A cell of about 45 mm is judged from hand and laptop-key size in IMG_0960/0963, +-5 mm. No ruler was in any photo."
+  ],
+  "openQuestions": [
+    "Follow one marble through: does it really leave by the tail into the lower cup?",
+    "Does a host of B-01 over B-01 unrotated hold it?"
+  ]
+}

@@ -1,0 +1,158 @@
+{
+  "code": "M-14",
+  "names": {
+    "plan": null,
+    "family": "funnel",
+    "spoken": "the funnel"
+  },
+  "sets": {
+    "5422": {
+      "count": 1,
+      "color": "#f7c600",
+      "colorWord": "yellow with clear funnel and orange gate"
+    }
+  },
+  "role": "start",
+  "shape": {
+    "description": "Clear flared funnel, rim about 105 mm wide, seated in a round collar on a yellow house-shaped body, which stands on block-style arched legs. The funnel lifts out of the collar. The front of the body has a tall arched opening; at its top a flat orange slider gate sticks out through a slot. Below the gate a round dished bowl forms the floor of the opening, with a track clip under its lip, exactly as on a block.",
+    "footprintCells": [
+      1,
+      1
+    ],
+    "heightSlots": 3.6,
+    "sizeMm": [
+      105,
+      105,
+      170
+    ],
+    "sizeBasis": "Estimated, not measured: cell about 62 mm and slot about 47 mm, from block width against a hand and marbles (IMG_0951, IMG_0952) and the plan drawing proportion slot/cell about 0.76. src/catalog/parts.js uses a 50 mm cell, also an estimate. Ratios to cell and slot are better known than the millimetres."
+  },
+  "ports": [
+    {
+      "id": "funnel",
+      "at": [
+        0,
+        0,
+        3.6
+      ],
+      "faces": "up",
+      "type": "open-catch",
+      "accepts": [
+        "marbles dropped by hand",
+        "an open drop from above"
+      ],
+      "flow": "in"
+    },
+    {
+      "id": "bowl",
+      "at": [
+        0.5,
+        0,
+        1
+      ],
+      "faces": "E",
+      "type": "port-hole",
+      "accepts": [
+        "T-03 end",
+        "other track ends with a clip"
+      ],
+      "flow": "out"
+    },
+    {
+      "id": "gate",
+      "at": [
+        0.6,
+        0,
+        1.8
+      ],
+      "faces": "E",
+      "type": "clip",
+      "accepts": [
+        "finger on the orange slider"
+      ],
+      "flow": "in"
+    },
+    {
+      "id": "foot",
+      "at": [
+        0,
+        0,
+        0
+      ],
+      "faces": "down",
+      "type": "stack-bottom",
+      "accepts": [
+        "top of a block"
+      ],
+      "flow": "both"
+    }
+  ],
+  "marblePaths": [
+    {
+      "from": "funnel",
+      "to": "bowl",
+      "dropSlots": 2.6,
+      "shape": "fall",
+      "lengthCells": 0.5
+    }
+  ],
+  "physics": {
+    "surface": "bowl",
+    "bank": "steep",
+    "wallHeight": "high",
+    "energy": "none",
+    "needsMetalMarble": false,
+    "batteries": null,
+    "behaviour": "The start of a run. Marbles go in the funnel by hand and queue in the neck behind the orange slider gate. Moving the gate lets one or more fall into the body, where the bowl turns them out of the front opening onto the track. All the energy is the height it stands at: it is the highest gravity start in Level 3."
+  },
+  "stacking": {
+    "stacksOnTop": true,
+    "canHoldStackAbove": false,
+    "marbleCrossesTop": false,
+    "usableAsHeightOnly": false
+  },
+  "evidence": [
+    {
+      "source": "IMG_0957, IMG_0958",
+      "shows": "Owner close-ups: clear flared funnel, round collar, yellow house body, orange slider gate through a slot at the top of the front opening, round bowl port below it with a clip under the lip, arched block legs."
+    },
+    {
+      "source": "reference/photos/IMG_0942, IMG_0943, IMG_0944",
+      "shows": "The yellow body and the clear funnel lie separately in the pile, so the funnel detaches."
+    },
+    {
+      "source": "lp_plans_14 step 3-14 and crop of lp_plans_15",
+      "shows": "Placement 1: M-14 on a B-04 on top of the 7-block front-left tower, foot at z 7. T-03 runs from under the gate to a B-04 on the neighbouring tower at z 8, level with the bowl. Highest point a marble reaches without M-02."
+    },
+    {
+      "source": "extreme_48 step 6-3 and extreme_49 map",
+      "shows": "Placement 2: M-14 on a 9-block tower at B4. T-03 to a B-03 at A3 at z 10, level with the bowl, again +1 over the foot. The dark red arrow points away from M-14 along the T-03."
+    },
+    {
+      "source": "lp_man_5 product page item 10",
+      "shows": "Part named M-14 with a porthole label, not a port. Nothing feeds it in either plan."
+    },
+    {
+      "source": "derived from lp_plans_01 to 15",
+      "shows": "Marble lane: official Level 3 reads as a closed circuit: M-14 gate, T-03, drop through B-04, T-03, drop through B-04, T-03, T-08, T-03, M-04, T-06, T-01, T-06, T-04, T-02, M-12, M-01 (hand), T-06, M-10, jump, M-11, T-06, T-02, M-02 (hand), tube, M-06, T-08, M-13, T-06, M-05, M-04, T-06, B-04 drop, T-02, M-12, M-01 again."
+    }
+  ],
+  "confidence": {
+    "shape": "high",
+    "ports": "high",
+    "behaviour": "medium"
+  },
+  "assumptions": [
+    "Origin at footprint centre at foot level (the top plane of whatever the piece stands on). East is +x, south is +y, z in slots.",
+    "Port height +1 slot comes from both plan placements; the photo agrees (bowl floor at the top of the leg band).",
+    "Whether the gate opens by pushing in or pulling out is not visible; both photos show it in the same position.",
+    "Queue-and-release is inferred from where the gate sits, right under the neck. A one-at-a-time release is not established.",
+    "The bowl faces one way only. T-03 curves away in both plans.",
+    "Level 3 is read as a loop from the plan connections; there is no end piece in it. M-01 and M-02 are the waiting points. Which route M-04 gives each marble is an inference."
+  ],
+  "openQuestions": [
+    "Does the gate release one marble per stroke, or all of them?",
+    "Does it stay open by itself?",
+    "How many marbles fit in the funnel?"
+  ]
+}

@@ -1,0 +1,119 @@
+{
+  "code": "T-03",
+  "names": {
+    "plan": "T-03",
+    "family": "small corner",
+    "spoken": "little corner"
+  },
+  "sets": {
+    "5716": {
+      "count": 2,
+      "color": "#f07f1e",
+      "colorWord": "orange"
+    },
+    "5422": {
+      "count": 4,
+      "color": "#f07f1e",
+      "colorWord": "orange"
+    }
+  },
+  "role": "track",
+  "shape": {
+    "description": "Short 90 degree ring segment, about one cell across. Open flat band with low side walls and long slots in the floor; tongue with small slot at each end, hooked foot under it.",
+    "footprintCells": [
+      1,
+      1
+    ],
+    "heightSlots": 0.3,
+    "sizeMm": [
+      56,
+      56,
+      15
+    ],
+    "sizeBasis": "Scaled from the floor cell (about 45 mm, one block width) against VTech parts drawings and Joey's photos; +-10%. No ruler in any photo. Track width about 25 mm (straights) and 31 mm (curved bands), read against block width in IMG_0952/0953 and lp manual p5."
+  },
+  "ports": [
+    {
+      "id": "a",
+      "at": [
+        0,
+        0,
+        0
+      ],
+      "faces": "W",
+      "type": "track-end",
+      "accepts": [
+        "block cup end (top notch or joint hole) with its side tab",
+        "another piece overlapped by tongue"
+      ],
+      "flow": "both"
+    },
+    {
+      "id": "b",
+      "at": [
+        0.7,
+        0.7,
+        0
+      ],
+      "faces": "S",
+      "type": "track-end",
+      "accepts": [
+        "block cup end (top notch or joint hole) with its side tab",
+        "another piece overlapped by tongue"
+      ],
+      "flow": "both"
+    }
+  ],
+  "marblePaths": [
+    {
+      "from": "a",
+      "to": "b",
+      "dropSlots": 0,
+      "shape": "quarter-turn",
+      "lengthCells": 1.1
+    }
+  ],
+  "physics": {
+    "surface": "open U",
+    "bank": "none",
+    "wallHeight": "low",
+    "energy": "none",
+    "needsMetalMarble": false,
+    "batteries": null,
+    "behaviour": "Level 90 degree bend between neighbouring ports."
+  },
+  "stacking": {
+    "stacksOnTop": false,
+    "canHoldStackAbove": false,
+    "marbleCrossesTop": false,
+    "usableAsHeightOnly": false
+  },
+  "evidence": [
+    {
+      "source": "trex_plans_14 step 3-1",
+      "shows": "B-01 cup end to pole foot port at 90 degrees"
+    },
+    {
+      "source": "reference/pieces/2026_11_01_IMG_0962.jpg",
+      "shows": "orange curve tongue with slot lying into M-01 cup"
+    },
+    {
+      "source": "extracted_launchpad.json step 3-10",
+      "shows": "T-03 between adjacent tops (transcription, not re-read)"
+    }
+  ],
+  "confidence": {
+    "shape": "high",
+    "ports": "medium",
+    "behaviour": "medium"
+  },
+  "assumptions": [
+    "Connection: the track end is a thin tongue that overlaps the next piece. A small slot in the tongue takes a small peg on that piece, and a hooked foot under the end drops into the block's side tab (photos IMG_0959, 0963; foot on trex_plans_02).",
+    "Height finding: equal-height ports give a truly level track. Side elevations on trex_plans_02 draw T-06 horizontal, and iso rails on T-06 match the floor axis (0.66-0.69 vs 0.68-0.70 rise/run, read by eye, so a slope under about 0.1 slot per cell cannot be excluded). No built-in slope was found in blocks or straights. A marble crosses level runs on speed from an earlier drop, launcher or lift. It will not start from rest there.",
+    "IMG_0962 piece may be T-02 or T-03; its curve looks like the smaller.",
+    "Scale is estimated, not measured: one cell = one block width (top-down maps, trex_plans_27). A cell of about 45 mm is judged from hand and laptop-key size in IMG_0960/0963, +-5 mm. No ruler was in any photo."
+  ],
+  "openQuestions": [
+    "Which exact cell offset does T-03 span between two blocks?"
+  ]
+}

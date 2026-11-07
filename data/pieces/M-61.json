@@ -1,0 +1,222 @@
+{
+  "code": "M-61",
+  "names": {
+    "plan": null,
+    "family": "the elevator tower",
+    "spoken": "the big orange lift"
+  },
+  "sets": {
+    "5716": {
+      "count": 1,
+      "color": "#f07f1e",
+      "colorWord": "orange tower, yellow arms, black head and base"
+    }
+  },
+  "role": "start",
+  "shape": {
+    "description": "Upright orange faceted tower about 8 slots tall on a black battery base with four short legs. Two floor cells long: back cell holds the tower, front cell holds an orange bowl tray whose rim is high at the front and whose floor slopes back to the tower foot. A black head caps the tower and reaches forward over the arms, with a curved groove on top. Three yellow arms, each with a C-shaped scoop at both ends, turn on horizontal axles sticking out of the tower front at three heights, one arm length apart, so a scoop at the top of one arm's turn meets a scoop at the bottom of the next; neighbouring arms turn opposite ways (IMG_0954, IMG_0955). A black dome sits at the tower foot behind the tray. On/off slide switch on the base front. M-63 sign plugs into the head back.",
+    "footprintCells": [
+      2,
+      1
+    ],
+    "heightSlots": 8.3,
+    "sizeMm": [
+      105,
+      190,
+      300
+    ],
+    "sizeBasis": "Rough estimate: one cell about 52 mm and one slot about 36 mm, scaled from Joey's hand in IMG_0954 and IMG_0956; no ruler measurement. Width includes arms and tray horns. Slot height cross-check: on trex_plans_02 outlet to foot divided by inlet to foot is 8 to 2, matching the h8 and h2 stacks."
+  },
+  "ports": [
+    {
+      "id": "inLeft",
+      "at": [
+        0,
+        0.5,
+        2
+      ],
+      "faces": "S",
+      "type": "track-end",
+      "accepts": [
+        "T-02",
+        "T-06",
+        "T-07 and other track ends"
+      ],
+      "flow": "in"
+    },
+    {
+      "id": "inRight",
+      "at": [
+        0,
+        -0.5,
+        2
+      ],
+      "faces": "N",
+      "type": "track-end",
+      "accepts": [
+        "T-02",
+        "T-06",
+        "T-07 and other track ends"
+      ],
+      "flow": "in"
+    },
+    {
+      "id": "tray",
+      "at": [
+        1.5,
+        0,
+        2
+      ],
+      "faces": "E",
+      "type": "open-catch",
+      "accepts": [
+        "a marble placed by hand",
+        "a marble rolling off a block at the tray front (inferred, Level 2 E2)"
+      ],
+      "flow": "in"
+    },
+    {
+      "id": "out",
+      "at": [
+        0,
+        0.5,
+        8
+      ],
+      "faces": "S",
+      "type": "track-end",
+      "accepts": [
+        "T-04",
+        "T-02",
+        "T-06"
+      ],
+      "flow": "out"
+    },
+    {
+      "id": "sign",
+      "at": [
+        -0.5,
+        0,
+        8.3
+      ],
+      "faces": "W",
+      "type": "clip",
+      "accepts": [
+        "M-63"
+      ],
+      "flow": "both"
+    },
+    {
+      "id": "feet",
+      "at": [
+        0.5,
+        0,
+        0
+      ],
+      "faces": "E",
+      "type": "floor-peg",
+      "accepts": [
+        "two floor cells in a line"
+      ],
+      "flow": "both"
+    }
+  ],
+  "marblePaths": [
+    {
+      "from": "inLeft",
+      "to": "out",
+      "dropSlots": -6,
+      "shape": "carried",
+      "lengthCells": 1
+    },
+    {
+      "from": "inRight",
+      "to": "out",
+      "dropSlots": -6,
+      "shape": "carried",
+      "lengthCells": 1
+    },
+    {
+      "from": "tray",
+      "to": "out",
+      "dropSlots": -6,
+      "shape": "carried",
+      "lengthCells": 2
+    }
+  ],
+  "physics": {
+    "surface": "bowl",
+    "bank": "none",
+    "wallHeight": "high",
+    "energy": "adds-by-motor",
+    "needsMetalMarble": false,
+    "batteries": "3 AAA in the base, screw cover on the back; slide Off/On switch",
+    "behaviour": "Marbles travel UP, never down. The motor turns the three scoop arms like wheels. The lowest arm's scoop dips into the tray at the foot and scoops up a marble, half a turn carries it to the top, where it rolls into the next arm's scoop coming round at the bottom; the top arm tips it into the head groove, and it leaves at the top on the left side as you face the tower. Adds about 6 slots of height. Carries plain and metal marbles alike. Start piece: the tray takes marbles by hand. Also works mid-line as a lift: in Levels 1 and 2 the T-Rex feeds it."
+  },
+  "stacking": {
+    "stacksOnTop": false,
+    "canHoldStackAbove": false,
+    "marbleCrossesTop": true,
+    "usableAsHeightOnly": false
+  },
+  "evidence": [
+    {
+      "source": "trex.pdf p4-5",
+      "shows": "The piece is named Elevator; 3 AAA batteries, cover on back"
+    },
+    {
+      "source": "trex.pdf p2",
+      "shows": "Off/On switch on the base"
+    },
+    {
+      "source": "trex_plans_02.png elevator panel",
+      "shows": "Inward red arrows at the foot from both sides on T-06 tracks, plain and metal marbles both at the foot; red curved arrow from head to a T-06 at the top left, ghost marble leaving; plain marble in lowest arm, metal in top arm"
+    },
+    {
+      "source": "IMG_0954, IMG_0955 (Joey)",
+      "shows": "Real tower: head reaches over arms, three axled arms in alternating tilt, tray, dome, base switch with power symbol"
+    },
+    {
+      "source": "trex_plans_04.png step 1-1 and trex_plans_07.png",
+      "shows": "Level 1: stands on B1-B2 facing E. T-02 from top of B3 (h2) wraps round the tray into the S side of the tower cell. Upstream is T-05 from B4 under the Rex tail, so the Rex feeds the foot"
+    },
+    {
+      "source": "trex_plans_06.png step 1-4",
+      "shows": "Level 1: T-04 joins the S side of the head to the D3 stack top (h8): the outlet"
+    },
+    {
+      "source": "trex_plans_09.png step 2-1, trex_plans_11.png step 2-6",
+      "shows": "Level 2: stands on C2-D2 facing S. T-02 from A2 (h2) enters W side of foot; second T-02 joins W side of head to A2 top (h8)"
+    },
+    {
+      "source": "trex_plans_16.png step 3-6, trex_plans_20.png step 3-14",
+      "shows": "Level 3: stands on K8-K9 facing W. T-02 from K7 enters S side of foot (viewer's right, the other inlet); T-04 joins N side of head to I7 top: outlet on viewer's left again"
+    },
+    {
+      "source": "trex_plans_10.png step 2-4",
+      "shows": "Level 2: E2 stack stands directly in front of the tray, C3 stack directly right of the tower cell"
+    },
+    {
+      "source": "data/piece_review.json M-61 (Joey, 2026-11-01)",
+      "shows": "It scoops up a ball from the bottom and spins it up to the top"
+    }
+  ],
+  "confidence": {
+    "shape": "high",
+    "ports": "medium",
+    "behaviour": "high"
+  },
+  "assumptions": [
+    "Role start is inferred from Joey saying the app begins with a starting piece and his photographing this piece; he did not say the words. In Levels 1 and 2 the first piece upstream is M-28, and this tower is mid-line there.",
+    "Arms are driven by the base motor: no document states the drive, but the batteries, the name Elevator and the moving arms point there.",
+    "Tray port height and the Level 2 tray feed from E2 are inferred from the map and from no other route for the tail marble.",
+    "Height 8 for the outlet comes from all three levels joining it to a stack of height 8 (D3, A2, I7).",
+    "faces uses E=+x, W=-x, S=+y, N=-y, in the piece's own frame. Heights are slots above the floor when the piece stands on the floor or, where stated, above the top of its supports.",
+    "Arms turn all the way round (Joey: spins it up), each one arm length above the last so the scoops meet; the turning direction alternates, read from neighbouring arms leaning opposite ways in IMG_0955."
+  ],
+  "openQuestions": [
+    "Does a marble dropped on the tray roll back to the arm pickup by itself?",
+    "Does the C3 stack in Level 2 feed the right inlet, or only hold M-07?",
+    "Are the right-hand cups used to lift, or only for balance? Plan page 02 shows marbles only in left cups.",
+    "How many marbles a minute does it lift, and does it hold a queue at the foot?"
+  ]
+}

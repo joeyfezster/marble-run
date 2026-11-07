@@ -1,0 +1,184 @@
+{
+  "code": "M-28",
+  "names": {
+    "plan": null,
+    "family": "the red launcher",
+    "spoken": "the red shooter"
+  },
+  "sets": {
+    "5716": {
+      "count": 1,
+      "color": "#e0262c",
+      "colorWord": "red with white dome"
+    }
+  },
+  "role": "energy",
+  "shape": {
+    "description": "Red barrel body three cells long, shaped like a little truck: a threaded white or grey knob sticks out of the back end, a white dome sits on top at the middle, a rounded window opens in each side under the dome, the front end is an open-top channel. White-tipped legs at each end stand on two stacks with one empty cell between.",
+    "footprintCells": [
+      3,
+      1
+    ],
+    "heightSlots": 2,
+    "sizeMm": [
+      160,
+      52,
+      75
+    ],
+    "sizeBasis": "Rough estimate: one cell about 52 mm and one slot about 36 mm, scaled from Joey's hand in IMG_0954 and IMG_0956; no ruler measurement. Footprint from maps 1-6, 2-8, 3-11; IMG_0942 shows it on floor plates, about 3 cells plus knob."
+  },
+  "ports": [
+    {
+      "id": "muzzle",
+      "at": [
+        -1.5,
+        0,
+        1
+      ],
+      "faces": "W",
+      "type": "track-end",
+      "accepts": [
+        "T-07",
+        "T-06",
+        "T-04"
+      ],
+      "flow": "out"
+    },
+    {
+      "id": "sideRight",
+      "at": [
+        0,
+        -0.5,
+        1.3
+      ],
+      "faces": "N",
+      "type": "port-hole",
+      "accepts": [
+        "T-04"
+      ],
+      "flow": "in"
+    },
+    {
+      "id": "sideLeft",
+      "at": [
+        0,
+        0.5,
+        1.3
+      ],
+      "faces": "S",
+      "type": "port-hole",
+      "accepts": [
+        "unknown: window seen on plan page 01, no plan use"
+      ],
+      "flow": "in"
+    },
+    {
+      "id": "knob",
+      "at": [
+        1.6,
+        0,
+        1.3
+      ],
+      "faces": "E",
+      "type": "clip",
+      "accepts": [
+        "a child's hand"
+      ],
+      "flow": "both"
+    },
+    {
+      "id": "legFront",
+      "at": [
+        -1,
+        0,
+        0
+      ],
+      "faces": "W",
+      "type": "stack-bottom",
+      "accepts": [
+        "top of a stack"
+      ],
+      "flow": "both"
+    },
+    {
+      "id": "legBack",
+      "at": [
+        1,
+        0,
+        0
+      ],
+      "faces": "E",
+      "type": "stack-bottom",
+      "accepts": [
+        "top of a stack of the same height"
+      ],
+      "flow": "both"
+    }
+  ],
+  "marblePaths": [
+    {
+      "from": "sideRight",
+      "to": "muzzle",
+      "dropSlots": 0,
+      "shape": "straight",
+      "lengthCells": 1.5
+    }
+  ],
+  "physics": {
+    "surface": "tube",
+    "bank": "none",
+    "wallHeight": "high",
+    "energy": "adds-by-hand",
+    "needsMetalMarble": false,
+    "batteries": null,
+    "behaviour": "Hand launcher. A marble waits in the chamber, a child works the back knob and the marble shoots out of the front along a track, up M-10 and into the T-Rex. No marble passes through it without the hand. First piece of the line in Levels 1 and 2 (nothing feeds it, so marbles go in by hand); mid-line in Level 3, where T-04 feeds the side window."
+  },
+  "stacking": {
+    "stacksOnTop": true,
+    "canHoldStackAbove": false,
+    "marbleCrossesTop": false,
+    "usableAsHeightOnly": false
+  },
+  "evidence": [
+    {
+      "source": "trex.pdf p3",
+      "shows": "Warnings: do not aim at eyes or face, do not discharge other objects: the set has a projectile launcher"
+    },
+    {
+      "source": "trex_plans_07.png step 1-6, trex_plans_06.png step 1-5",
+      "shows": "Level 1: stands on L4 and N4 (both height 2), knob south; T-07 from front to M-10; no feed"
+    },
+    {
+      "source": "trex_plans_12.png step 2-8",
+      "shows": "Level 2: stands on N4 and N6 (both height 3), knob east; front into T-04, curving to M-10; no feed"
+    },
+    {
+      "source": "trex_plans_19.png step 3-11",
+      "shows": "Level 3: stands on J5 and L5 (both height 2), knob south; T-06 to M-10; T-04 arrives from the I7 side and enters the window under the dome"
+    },
+    {
+      "source": "IMG_0942",
+      "shows": "Real piece on plates: threaded knob, dome, window, open channel at front"
+    },
+    {
+      "source": "vtechkids product text, via web search result only",
+      "shows": "Dino-snack launcher; propel marbles into the jaws. Page could not be opened directly; treat as weak"
+    }
+  ],
+  "confidence": {
+    "shape": "high",
+    "ports": "medium",
+    "behaviour": "medium"
+  },
+  "assumptions": [
+    "Port heights assume track level is one slot above the supports: M-10 base adds one slot on the same height stack, and the track between them is level in every placement.",
+    "Knob mechanism unknown: pull or push, spring assumed.",
+    "Hand loading in Levels 1 and 2 is assumed since nothing feeds it there; where the marble goes in is unconfirmed.",
+    "faces uses E=+x, W=-x, S=+y, N=-y, in the piece's own frame. Heights are slots above the floor when the piece stands on the floor or, where stated, above the top of its supports."
+  ],
+  "openQuestions": [
+    "Pull or press the knob, or press the white dome? A short video settles it.",
+    "Where does a hand load the marble: dome, side window or front channel?",
+    "Do both windows work as inlets? Does a marble rolling through a window sit ready to shoot?"
+  ]
+}

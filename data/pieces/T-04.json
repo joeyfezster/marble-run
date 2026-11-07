@@ -1,0 +1,118 @@
+{
+  "code": "T-04",
+  "names": {
+    "plan": "T-04",
+    "family": "big quarter curve",
+    "spoken": "big corner"
+  },
+  "sets": {
+    "5716": {
+      "count": 4,
+      "color": "#b6dc2c",
+      "colorWord": "lime green"
+    },
+    "5422": {
+      "count": 1,
+      "color": "#e0262c",
+      "colorWord": "red"
+    }
+  },
+  "role": "track",
+  "shape": {
+    "description": "Quarter ring, ends two cells apart on each axis. Raised outer lip mid-arc. Open flat band with low side walls and long slots in the floor; tongue with small slot at each end, hooked foot under it.",
+    "footprintCells": [
+      3,
+      3
+    ],
+    "heightSlots": 0.3,
+    "sizeMm": [
+      94,
+      94,
+      15
+    ],
+    "sizeBasis": "Scaled from the floor cell (about 45 mm, one block width) against VTech parts drawings and Joey's photos; +-10%. No ruler in any photo. Track width about 25 mm (straights) and 31 mm (curved bands), read against block width in IMG_0952/0953 and lp manual p5."
+  },
+  "ports": [
+    {
+      "id": "a",
+      "at": [
+        0,
+        0,
+        0
+      ],
+      "faces": "W",
+      "type": "track-end",
+      "accepts": [
+        "block cup end (top notch or joint hole) with its side tab",
+        "another piece overlapped by tongue"
+      ],
+      "flow": "both"
+    },
+    {
+      "id": "b",
+      "at": [
+        2,
+        2,
+        0
+      ],
+      "faces": "S",
+      "type": "track-end",
+      "accepts": [
+        "block cup end (top notch or joint hole) with its side tab",
+        "another piece overlapped by tongue"
+      ],
+      "flow": "both"
+    }
+  ],
+  "marblePaths": [
+    {
+      "from": "a",
+      "to": "b",
+      "dropSlots": 0,
+      "shape": "quarter-turn",
+      "lengthCells": 3.1
+    }
+  ],
+  "physics": {
+    "surface": "open U",
+    "bank": "none",
+    "wallHeight": "low",
+    "energy": "none",
+    "needsMetalMarble": false,
+    "batteries": null,
+    "behaviour": "Level wide 90 degree bend."
+  },
+  "stacking": {
+    "stacksOnTop": false,
+    "canHoldStackAbove": false,
+    "marbleCrossesTop": false,
+    "usableAsHeightOnly": false
+  },
+  "evidence": [
+    {
+      "source": "trex_plans_10 step 2-4",
+      "shows": "grey B-03 to red B-05, equal height 2"
+    },
+    {
+      "source": "trex_plans_11 step 2-5",
+      "shows": "grey top to M-04"
+    },
+    {
+      "source": "trex_plans_18 step 3-10",
+      "shows": "blue to red, level"
+    }
+  ],
+  "confidence": {
+    "shape": "high",
+    "ports": "high",
+    "behaviour": "medium"
+  },
+  "assumptions": [
+    "Connection: the track end is a thin tongue that overlaps the next piece. A small slot in the tongue takes a small peg on that piece, and a hooked foot under the end drops into the block's side tab (photos IMG_0959, 0963; foot on trex_plans_02).",
+    "Height finding: equal-height ports give a truly level track. Side elevations on trex_plans_02 draw T-06 horizontal, and iso rails on T-06 match the floor axis (0.66-0.69 vs 0.68-0.70 rise/run, read by eye, so a slope under about 0.1 slot per cell cannot be excluded). No built-in slope was found in blocks or straights. A marble crosses level runs on speed from an earlier drop, launcher or lift. It will not start from rest there.",
+    "Scale is estimated, not measured: one cell = one block width (top-down maps, trex_plans_27). A cell of about 45 mm is judged from hand and laptop-key size in IMG_0960/0963, +-5 mm. No ruler was in any photo."
+  ],
+  "openQuestions": [
+    "extracted_trex.json has one T-04 falling 1 slot (3-4, A3 to C1). Not checked; does it tilt, or is the stack reading off?"
+  ]
+}

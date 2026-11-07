@@ -1,0 +1,151 @@
+{
+  "code": "M-05",
+  "names": {
+    "plan": null,
+    "family": "green flag cup",
+    "spoken": "the flag"
+  },
+  "sets": {
+    "5422": {
+      "count": 1,
+      "color": "#8cc63f",
+      "colorWord": "green"
+    }
+  },
+  "role": "stunt",
+  "shape": {
+    "description": "Lime-green block-footed cup that stands on a stack. Its top is a round dished funnel with an entry notch over a tab loop on one face and a hole in the middle; a small flap sits in the funnel throat. On the back edge, two hinge knuckles hold a thin green flagpole with a ball on top and a small pennant, which swings up when the flap is tripped.",
+    "footprintCells": [
+      1,
+      1
+    ],
+    "heightSlots": 1,
+    "sizeMm": [
+      45,
+      45,
+      78
+    ],
+    "sizeBasis": "Cup body about 0.9 of its width high and flagpole about 0.8 widths above the rim, from uploads/M-05_1793563317901.jpg; width one cell (45 mm)."
+  },
+  "ports": [
+    {
+      "id": "in",
+      "at": [
+        0.5,
+        0,
+        1
+      ],
+      "faces": "E",
+      "type": "track-end",
+      "accepts": [
+        "T-06 end",
+        "T-08 end"
+      ],
+      "flow": "in"
+    },
+    {
+      "id": "hole",
+      "at": [
+        0,
+        0,
+        0
+      ],
+      "faces": "down",
+      "type": "open-drop",
+      "accepts": [
+        "cup of a block below",
+        "M-04 heart hole"
+      ],
+      "flow": "out"
+    },
+    {
+      "id": "foot",
+      "at": [
+        0,
+        0,
+        0
+      ],
+      "faces": "down",
+      "type": "stack-bottom",
+      "accepts": [
+        "top of a block",
+        "top of M-04"
+      ],
+      "flow": "both"
+    }
+  ],
+  "marblePaths": [
+    {
+      "from": "in",
+      "to": "hole",
+      "dropSlots": 1,
+      "shape": "spiral",
+      "lengthCells": 0.75
+    }
+  ],
+  "physics": {
+    "surface": "bowl",
+    "bank": "shallow",
+    "wallHeight": "high",
+    "energy": "none",
+    "needsMetalMarble": false,
+    "batteries": null,
+    "behaviour": "A marble enters by the notch, curls round the funnel and falls through the centre hole into whatever is below. On the way it trips the flap, which flips the hinged flag. A mechanical show: no electronics, no energy added."
+  },
+  "stacking": {
+    "stacksOnTop": true,
+    "canHoldStackAbove": false,
+    "marbleCrossesTop": false,
+    "usableAsHeightOnly": false
+  },
+  "evidence": [
+    {
+      "source": "lp_plans_12 step 3-12",
+      "shows": "Placement 1: M-05 stands on M-04. T-06 runs from the rocket's side port to its notch."
+    },
+    {
+      "source": "extreme_60 step 7-9",
+      "shows": "Placement 2: M-05 stands on B-03 at C3. T-08 comes down to it from a B-03 at A3, fed by T-07 with arrows along the line."
+    },
+    {
+      "source": "extreme_53 step 7-2",
+      "shows": "Placement 3: M-05 on a B-02, B-01, B-02 stack. The arrow at the B-02 under it points out of the stack, so the marble continues from the cup below."
+    },
+    {
+      "source": "lp_man_4 and lp_man_5, item 3 and item 11",
+      "shows": "Label 3 has up and down triangles and goes on M-05's body; label 11 is the flag sticker."
+    },
+    {
+      "source": "extreme_53 icon and crop of lp_plans_15",
+      "shows": "Rod with ball, flag at the corner, lever foot at the bottom of the rod."
+    },
+    {
+      "source": "launchpad.pdf p5 render of M-05",
+      "shows": "green cup piece with a long diagonal rod: ring at the low end, star flag (stickers 11 and 3) at the high end"
+    },
+    {
+      "source": "lp_plans_12 step 3-12",
+      "shows": "M-05 on top of the M-04 tower, fed by T-06 from the rocket; rod and flag on its far side"
+    },
+    {
+      "source": "reference/uploads/M-05_1793563317901.jpg",
+      "shows": "Real piece: funnel cup with a flap in the throat, flagpole with ball and pennant on a two-knuckle hinge at the back edge; no see-saw rod, no ring"
+    }
+  ],
+  "confidence": {
+    "shape": "medium",
+    "ports": "medium",
+    "behaviour": "medium"
+  },
+  "assumptions": [
+    "Origin at footprint centre at foot level (the top plane of whatever the piece stands on). East is +x, south is +y, z in slots.",
+    "Flag movement on a marble is inferred from the rod, the lever foot and the up and down arrows on label 3. No plan says it.",
+    "Seat at +1 slot from the rocket port level in Level 3.",
+    "Nothing is recorded stacked above it in any plan; the flag rod makes that unlikely.",
+    "How the marble moves the rod (tripping the ring, or a lever inside the cup) is inferred, not seen."
+  ],
+  "openQuestions": [
+    "Does the flag go up, down or spin, and does it reset by itself?",
+    "Is the flag side always the opposite corner from the notch?"
+  ]
+}

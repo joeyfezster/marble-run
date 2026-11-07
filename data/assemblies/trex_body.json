@@ -1,0 +1,19 @@
+{
+  "key": "trex_body",
+  "names": { "family": "the T-Rex on its legs", "spoken": "T-Rex" },
+  "description": "The T-Rex body only works standing on both legs: M-57 clips to one hip and M-59 to the other, each leg standing on two floor cells in a line, side by side under the body. It behaves as the body: it catches marbles flying off a ramp lip and lets them out down the tail.",
+  "acts": "M-58",
+  "parts": [
+    { "piece": "M-58", "at": [0.5, 0, 0] },
+    { "piece": "M-57", "at": [0.5, -1, 0] },
+    { "piece": "M-59", "at": [0.5, 1, 0] }
+  ],
+  "evidence": [
+    { "source": "trex_plans_02", "shows": "both legs clip to the hips, feet two cells long on the floor, body between them" },
+    { "source": "M-58 record", "shows": "origin midpoint between the feet; hip clips at y +1 and -1" }
+  ],
+  "assumptions": [
+    "Coordinates are the M-58 frame shifted half a cell so each leg's two foot cells sit on whole cells, as in T-Rex Levels 1 and 2.",
+    "The legs may stand on equal block stacks to raise the body, as Level 2 does by one slot."
+  ]
+}

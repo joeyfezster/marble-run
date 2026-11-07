@@ -1,0 +1,146 @@
+{
+  "code": "M-10",
+  "names": {
+    "plan": null,
+    "family": "green jump ramp",
+    "spoken": "the green ramp"
+  },
+  "sets": {
+    "5422": {
+      "count": 1,
+      "color": "#8cc63f",
+      "colorWord": "green on dark blue base"
+    }
+  },
+  "role": "stunt",
+  "shape": {
+    "description": "Bright green ramp: a wide shallow trough on a blue two-cell base that looks like two fused low blocks, carried on short posts. The low end is a tongue at base height where a track arrives; the trough curves up along the base. Its far end is cut on a slant: one side wall rises into a pointed fin with a small round hole, the other ends lower in a curled lip resting on a post.",
+    "footprintCells": [
+      2,
+      1
+    ],
+    "heightSlots": 1.4,
+    "sizeMm": [
+      124,
+      93,
+      65
+    ],
+    "sizeBasis": "Estimated, not measured: cell about 62 mm and slot about 47 mm, from block width against a hand and marbles (IMG_0951, IMG_0952) and the plan drawing proportion slot/cell about 0.76. src/catalog/parts.js uses a 50 mm cell, also an estimate. Ratios to cell and slot are better known than the millimetres."
+  },
+  "ports": [
+    {
+      "id": "low",
+      "at": [
+        -1,
+        0,
+        0.75
+      ],
+      "faces": "W",
+      "type": "track-end",
+      "accepts": [
+        "T-06 clip end"
+      ],
+      "flow": "in"
+    },
+    {
+      "id": "lip",
+      "at": [
+        1,
+        0,
+        1.3
+      ],
+      "faces": "E",
+      "type": "open-drop",
+      "accepts": [
+        "open air, marble flies to M-11"
+      ],
+      "flow": "out"
+    },
+    {
+      "id": "foot",
+      "at": [
+        0,
+        0,
+        0
+      ],
+      "faces": "down",
+      "type": "stack-bottom",
+      "accepts": [
+        "floor plate pegs",
+        "two supports side by side, as two blue blocks"
+      ],
+      "flow": "both"
+    }
+  ],
+  "marblePaths": [
+    {
+      "from": "low",
+      "to": "lip",
+      "dropSlots": -0.55,
+      "shape": "flight",
+      "lengthCells": 2
+    }
+  ],
+  "physics": {
+    "surface": "open U",
+    "bank": "none",
+    "wallHeight": "low",
+    "energy": "loses",
+    "needsMetalMarble": false,
+    "batteries": null,
+    "behaviour": "Takes a fast marble from T-06 and tips it upward off the lip into the air. Adds no energy: the speed comes from M-01. A marble without enough speed rolls back. In the family build the marble must clear a stack, and in Extreme it must fly under a track bridge."
+  },
+  "stacking": {
+    "stacksOnTop": true,
+    "canHoldStackAbove": false,
+    "marbleCrossesTop": false,
+    "usableAsHeightOnly": false
+  },
+  "evidence": [
+    {
+      "source": "lp_plans_04 step 3-4 and lp_plans_15",
+      "shows": "Placement 1: T-06 from M-01 meets the low end; base on the floor two cells along. The lip faces M-11 across one empty floor cell, in the same line."
+    },
+    {
+      "source": "extreme_24 step 3-3, extreme_25 map, extreme_26 and extreme_73",
+      "shows": "Placement 2: M-10 at B4-B5 with T-06 and M-01 behind it. Across the join to Part 1 it faces M-11; about 3 cells separate lip and ring, and a T-06 bridge crosses over the flight line. The box label prints T-10, a misprint of M-10."
+    },
+    {
+      "source": "reference/family_builds IMG_0948, IMG_0950",
+      "shows": "Placement 3: base stands on two blue blocks side by side, lip faces M-11 over one cell holding an orange cup block on two blocks."
+    },
+    {
+      "source": "IMG_0944",
+      "shows": "Real piece: dark blue two-wide base, light green ramp, posts visible."
+    },
+    {
+      "source": "Joey, 2026-11-01",
+      "shows": "Ramps need two supports side by side."
+    },
+    {
+      "source": "data/sets/5716_trex.json",
+      "shows": "T-Rex set also lists M-10, count 1. Check whether it is the same mould; extracted_trex.json calls it a foot."
+    },
+    {
+      "source": "lp_plans_04 M-10 parts box and trex_plans_01 M-10",
+      "shows": "trough of near-constant width; pointed fin with hole on one side of the high end, curled lip on a post on the other"
+    }
+  ],
+  "confidence": {
+    "shape": "high",
+    "ports": "medium",
+    "behaviour": "medium"
+  },
+  "assumptions": [
+    "Origin at footprint centre at foot level (the top plane of whatever the piece stands on). East is +x, south is +y, z in slots.",
+    "Flow direction low to lip: M-01 feeds it, and the only part beyond is M-11.",
+    "Heights are from drawings: low seat 0.75 slot, lip 1.3 slots above the base foot. Base height and lip height were measured off lp_plans_15.",
+    "dropSlots is negative because the marble climbs.",
+    "Filename carries __5422 because T-Rex uses the same code."
+  ],
+  "openQuestions": [
+    "What minimum press clears a 1-cell gap, and a 3-cell gap?",
+    "What are the two lip corner posts for?",
+    "Is the marble meant to fly over the family build's middle cup, or land in it?"
+  ]
+}

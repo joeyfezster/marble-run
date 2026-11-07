@@ -1,0 +1,48 @@
+{
+  "id": "5422",
+  "name": "Launchpad Set",
+  "short": "Launchpad",
+  "emoji": "🚀",
+  "source": "Level 3 parts boxes (lp_plans 3-1 to 3-14) sum to 74, plus 5 floor plates (lp_plans_00) = 79; plus one M-07 tray, which Level 3 never uses but the manual shows with its own sticker (launchpad.pdf p4 sticker 4, p5 render): 80 building pieces. Retail listings say 89 with 10 marbles (79): one piece unexplained, see openQuestion.",
+  "confidence": "inferred",
+  "marbles": {
+    "plain": 10,
+    "magic": 0
+  },
+  "colors": {
+    "B-01": "#35a7e0",
+    "B-02": "#f07f1e",
+    "B-04": "#f4f4f2",
+    "T-01": "#f7c600",
+    "T-02": "#f07f1e",
+    "T-03": "#f07f1e",
+    "T-04": "#e0262c",
+    "T-06": "#1c3fb0",
+    "T-08": "#e0262c",
+    "P-01": "#f4f4f2",
+    "M-07": "#f7c600"
+  },
+  "parts": {
+    "B-01": 31,
+    "B-02": 11,
+    "B-04": 5,
+    "T-01": 1,
+    "T-02": 2,
+    "T-03": 4,
+    "T-04": 1,
+    "T-06": 6,
+    "T-08": 3,
+    "P-01": 5,
+    "M-01": 1,
+    "M-02": 1,
+    "M-04": 1,
+    "M-05": 1,
+    "M-06": 1,
+    "M-10": 1,
+    "M-11": 1,
+    "M-12": 1,
+    "M-13": 1,
+    "M-14": 1,
+    "M-07": 1
+  }
+}

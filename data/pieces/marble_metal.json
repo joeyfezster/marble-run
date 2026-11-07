@@ -1,0 +1,73 @@
+{
+  "code": "marble_metal",
+  "names": {
+    "plan": "Metal Stunt Marbles/Mega Marbles",
+    "family": "magic marble",
+    "spoken": "magnet marble"
+  },
+  "sets": {
+    "5716": {
+      "count": 5,
+      "color": "#e0262c",
+      "colorWord": "five printed colours"
+    }
+  },
+  "role": "decor",
+  "shape": {
+    "description": "Solid plastic ball with a printed picture. Metal core inside.",
+    "footprintCells": [
+      0.45,
+      0.45
+    ],
+    "heightSlots": 0.45,
+    "sizeMm": [
+      20,
+      20,
+      20
+    ],
+    "sizeBasis": "Scale is estimated, not measured: one cell = one block width (top-down maps, trex_plans_27). A cell of about 45 mm is judged from hand and laptop-key size in IMG_0960/0963, +-5 mm. No ruler was in any photo."
+  },
+  "ports": [],
+  "marblePaths": [],
+  "physics": {
+    "surface": "none",
+    "bank": "none",
+    "wallHeight": "low",
+    "energy": "none",
+    "needsMetalMarble": true,
+    "batteries": null,
+    "behaviour": "Same size and rolling as plain, plus it clings to magnetic parts: crosses M-56 and rides magnetic lifts."
+  },
+  "stacking": {
+    "stacksOnTop": false,
+    "canHoldStackAbove": false,
+    "marbleCrossesTop": false,
+    "usableAsHeightOnly": false
+  },
+  "evidence": [
+    {
+      "source": "trex_plans_02",
+      "shows": "magnet icon; M-56 holds the metal marble along it; elevator M-60 lifts it"
+    },
+    {
+      "source": "reference/trex.pdf",
+      "shows": "5 Magic Stunt Marbles (metal core)"
+    },
+    {
+      "source": "data/sets/*.json",
+      "shows": "counts"
+    }
+  ],
+  "confidence": {
+    "shape": "medium",
+    "ports": "high",
+    "behaviour": "high"
+  },
+  "assumptions": [
+    "Size is estimated from cup width, about 0.65 cell, and photos; 20 mm is not measured.",
+    "role has no marble value in the schema; 'decor' is a placeholder."
+  ],
+  "openQuestions": [
+    "Weigh and measure one of each."
+  ]
+}

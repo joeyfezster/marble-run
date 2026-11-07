@@ -1,0 +1,159 @@
+{
+  "code": "M-58",
+  "names": {
+    "plan": null,
+    "family": "the T-Rex",
+    "spoken": "T-Rex"
+  },
+  "sets": {
+    "5716": {
+      "count": 1,
+      "color": "#2f9e4f",
+      "colorWord": "green with orange spikes"
+    }
+  },
+  "role": "stunt",
+  "shape": {
+    "description": "T-Rex body without legs: big blocky green head on a hinge with an open toothy mouth, a square hole through the top of the head, a brown ribbed marble channel down the back between orange spikes, and a long flat sawtooth tail that is the exit ramp. Speaker grille, switch and button on the chest and belly. Hip sockets each take one leg (M-57, M-59). Armed, head and tail are bent up; fired, the body straightens, head and tail down.",
+    "footprintCells": [
+      5,
+      3
+    ],
+    "heightSlots": 5,
+    "sizeMm": [
+      300,
+      150,
+      220
+    ],
+    "sizeBasis": "Rough estimate: one cell about 52 mm and one slot about 36 mm, scaled from Joey's hand in IMG_0954 and IMG_0956; no ruler measurement. Footprint with legs, from maps 1-6, 2-8, 3-11."
+  },
+  "ports": [
+    {
+      "id": "mouth",
+      "at": [
+        -1,
+        0,
+        3.5
+      ],
+      "faces": "W",
+      "type": "open-catch",
+      "accepts": [
+        "a marble flying off the M-10 lip"
+      ],
+      "flow": "in"
+    },
+    {
+      "id": "tail",
+      "at": [
+        3.5,
+        0,
+        2.5
+      ],
+      "faces": "E",
+      "type": "open-drop",
+      "accepts": [
+        "top of a block under the tail tip"
+      ],
+      "flow": "out"
+    },
+    {
+      "id": "hipLeft",
+      "at": [
+        0,
+        1,
+        2
+      ],
+      "faces": "S",
+      "type": "clip",
+      "accepts": [
+        "M-57 or M-59"
+      ],
+      "flow": "both"
+    },
+    {
+      "id": "hipRight",
+      "at": [
+        0,
+        -1,
+        2
+      ],
+      "faces": "N",
+      "type": "clip",
+      "accepts": [
+        "M-59 or M-57"
+      ],
+      "flow": "both"
+    }
+  ],
+  "marblePaths": [
+    {
+      "from": "mouth",
+      "to": "tail",
+      "dropSlots": 1,
+      "shape": "straight",
+      "lengthCells": 4.5
+    }
+  ],
+  "physics": {
+    "surface": "open U",
+    "bank": "none",
+    "wallHeight": "low",
+    "energy": "stores",
+    "needsMetalMarble": true,
+    "batteries": "2 AA in the body, screw cover on the back; three-way Off/Music+SFX/SFX switch and Music Selection button",
+    "behaviour": "Stunt and marble store. Marbles fly into the mouth. A metal marble is detected by the magnetic trigger: the mouth snaps, the body straightens with a dino sound, and every marble inside rolls out down the tail to the block under the tip. A plain marble does not trigger it: yellow light and a sound, and it stays inside until a metal marble fires it. A hand lifts the head to rearm it. Gravity moves the marbles; electronics make only light and sound. Without batteries the trigger state is unknown."
+  },
+  "stacking": {
+    "stacksOnTop": false,
+    "canHoldStackAbove": false,
+    "marbleCrossesTop": false,
+    "usableAsHeightOnly": false
+  },
+  "evidence": [
+    {
+      "source": "trex.pdf p9",
+      "shows": "Magnetic trigger; mouth snaps and body straightens for Magic Stunt marbles; marbles roll down the tail; plain marbles do not snap, yellow light and sound"
+    },
+    {
+      "source": "trex.pdf p2, p4, p6",
+      "shows": "Switch and button, 2 AA, legs snap to the body"
+    },
+    {
+      "source": "trex_plans_02.png T-Rex panel",
+      "shows": "Marble up M-10 into mouth; head down; metal marble in, plain marble rolling off tail; hand lifts head with tail rising; lock icons"
+    },
+    {
+      "source": "trex_plans_07.png step 1-6 with trex_plans_05.png step 1-2",
+      "shows": "Level 1: M-10 lip at mouth; tail tip over B4 height 2, leading to T-05, T-02 and the M-61 foot"
+    },
+    {
+      "source": "trex_plans_12.png step 2-8 with trex_plans_10.png step 2-4",
+      "shows": "Level 2: M-10 lip at mouth, tail tip over E2 height 2, in front of the M-61 tray"
+    },
+    {
+      "source": "trex_plans_19.png step 3-11 with trex_plans_15.png step 3-3",
+      "shows": "Level 3: M-10 lip at mouth; tail tip over A5 height 2, leading to T-02, A3 and M-56"
+    },
+    {
+      "source": "IMG_0946, IMG_0951",
+      "shows": "Real body from behind: orange and brown ribbed back, speaker grille, square hole in head"
+    }
+  ],
+  "confidence": {
+    "shape": "high",
+    "ports": "medium",
+    "behaviour": "high"
+  },
+  "assumptions": [
+    "Head and tail are linked and a hand rearms it: read from plan page 02, third panel.",
+    "Origin is the midpoint between the feet. Mouth height 3.5 follows M-10 lip at support height plus 1.5 with feet on the floor. Level 2 lifts each foot 1 slot and also lifts M-10 by 1.",
+    "Tail tip height with body straightened is estimated.",
+    "faces uses E=+x, W=-x, S=+y, N=-y, in the piece's own frame. Heights are slots above the floor when the piece stands on the floor or, where stated, above the top of its supports."
+  ],
+  "openQuestions": [
+    "How many marbles fit inside?",
+    "Does the trigger work with the toy switched off?",
+    "A search snippet of the French manual mentions a release button for stored marbles; our English manual does not. Is there one?",
+    "Marble speed needed so a marble reaches the mouth but not past it."
+  ]
+}

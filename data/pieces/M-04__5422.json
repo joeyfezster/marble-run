@@ -1,0 +1,254 @@
+{
+  "code": "M-04",
+  "names": {
+    "plan": null,
+    "family": "orange splitter tower",
+    "spoken": "the surprise tower"
+  },
+  "sets": {
+    "5422": {
+      "count": 1,
+      "color": "#f07f1e",
+      "colorWord": "orange"
+    }
+  },
+  "role": "turn",
+  "shape": {
+    "description": "Orange open-frame tower, one cell square, two tiers: a top dished cup taking marbles from all four sides, with four small corner pegs that hold a piece stacked above, and a bottom cup with exits on two opposite sides and a ridge that sends a marble one way or the other. Arched block feet.",
+    "footprintCells": [
+      1,
+      1
+    ],
+    "heightSlots": 2,
+    "sizeMm": [
+      45,
+      45,
+      74
+    ],
+    "sizeBasis": "Not photographed. Taken from the T-Rex M-04 photo ratio (rim about 1.6 widths high) and one cell wide; same tower shape in lp manual p5."
+  },
+  "ports": [
+    {
+      "id": "inN",
+      "at": [
+        0,
+        -0.5,
+        1.68
+      ],
+      "faces": "N",
+      "type": "track-end",
+      "accepts": [
+        "track end resting in the top-tier notch"
+      ],
+      "flow": "in"
+    },
+    {
+      "id": "inE",
+      "at": [
+        0.5,
+        0,
+        1.68
+      ],
+      "faces": "E",
+      "type": "track-end",
+      "accepts": [
+        "track end resting in the top-tier notch"
+      ],
+      "flow": "in"
+    },
+    {
+      "id": "inS",
+      "at": [
+        0,
+        0.5,
+        1.68
+      ],
+      "faces": "S",
+      "type": "track-end",
+      "accepts": [
+        "track end resting in the top-tier notch"
+      ],
+      "flow": "in"
+    },
+    {
+      "id": "inW",
+      "at": [
+        -0.5,
+        0,
+        1.68
+      ],
+      "faces": "W",
+      "type": "track-end",
+      "accepts": [
+        "track end resting in the top-tier notch"
+      ],
+      "flow": "in"
+    },
+    {
+      "id": "outE",
+      "at": [
+        0.5,
+        0,
+        0.68
+      ],
+      "faces": "E",
+      "type": "track-end",
+      "accepts": [
+        "track end resting in the bottom-tier notch"
+      ],
+      "flow": "out"
+    },
+    {
+      "id": "outW",
+      "at": [
+        -0.5,
+        0,
+        0.68
+      ],
+      "faces": "W",
+      "type": "track-end",
+      "accepts": [
+        "track end resting in the bottom-tier notch"
+      ],
+      "flow": "out"
+    },
+    {
+      "id": "top",
+      "at": [
+        0,
+        0,
+        2
+      ],
+      "faces": "up",
+      "type": "stack-top",
+      "accepts": [
+        "M-05 feet",
+        "M-15 spiral funnel exit",
+        "other stacked pieces"
+      ],
+      "flow": "in"
+    },
+    {
+      "id": "foot",
+      "at": [
+        0,
+        0,
+        0
+      ],
+      "faces": "down",
+      "type": "stack-bottom",
+      "accepts": [
+        "top of a block: B-01, B-02"
+      ],
+      "flow": "both"
+    }
+  ],
+  "marblePaths": [
+    {
+      "from": "inW",
+      "to": "outE",
+      "dropSlots": 1,
+      "shape": "fall",
+      "lengthCells": 0.5
+    },
+    {
+      "from": "inN",
+      "to": "outE",
+      "dropSlots": 1,
+      "shape": "fall",
+      "lengthCells": 0.5
+    },
+    {
+      "from": "inS",
+      "to": "outE",
+      "dropSlots": 1,
+      "shape": "fall",
+      "lengthCells": 0.5
+    },
+    {
+      "from": "inE",
+      "to": "outE",
+      "dropSlots": 1,
+      "shape": "fall",
+      "lengthCells": 0.5
+    }
+  ],
+  "physics": {
+    "surface": "bowl",
+    "bank": "none",
+    "wallHeight": "high",
+    "energy": "loses",
+    "needsMetalMarble": false,
+    "batteries": null,
+    "behaviour": "Two-tier splitter. A marble comes in from any of the four sides of the top tier, drops through to the bottom tier and leaves by one of two opposite sides, at random each time. Passive; gravity only.",
+    "exitRule": "random"
+  },
+  "stacking": {
+    "stacksOnTop": true,
+    "canHoldStackAbove": true,
+    "marbleCrossesTop": false,
+    "usableAsHeightOnly": true
+  },
+  "evidence": [
+    {
+      "source": "lp_plans_06 step 3-6 and crop of it",
+      "shows": "Placement 1: M-04 on a 3-block stack. T-06 leaves its waist level, level with z 4, toward the tower that carries T-01."
+    },
+    {
+      "source": "lp_plans_07 step 3-7",
+      "shows": "Same placement: a second T-06 runs the other way from the seat of the block under M-04 (z 3) to the B-04 at z 3. This line passes under the feet of M-04."
+    },
+    {
+      "source": "lp_plans_10 step 3-10",
+      "shows": "Same placement: T-03 from the top of a 5-block tower enters at about z 5, the upper level."
+    },
+    {
+      "source": "lp_plans_12 step 3-12 and lp_plans_15",
+      "shows": "Same placement: M-05 stands on top, so its hole drops into the heart-shaped hole."
+    },
+    {
+      "source": "extreme_17 step 2-7 and extreme_19",
+      "shows": "Placement 2: M-04 on B-03. Dark red arrows run in line through M-04 and along T-07 to a B-03 tower. Step 2-8 puts the spiral funnel M-15 above it."
+    },
+    {
+      "source": "extreme_31 step 4-4 and extreme_32 map",
+      "shows": "Placement 3: T-04 enters (arrow toward M-04) and T-03 leaves west, then a B-01, then T-06 south."
+    },
+    {
+      "source": "extreme_68 step 8-4 and extreme_72",
+      "shows": "Placement 4: T-04 from a B-02 arrives (arrow), T-08 leaves near waist level to a B-01."
+    },
+    {
+      "source": "extreme_39 step 5-5",
+      "shows": "Placement 5: T-11 arrives; an arrow leaves under M-04 toward lower left along the block below."
+    },
+    {
+      "source": "lp_man_5 product page item 5",
+      "shows": "Part named M-04 with label 5 on the frame."
+    },
+    {
+      "source": "data/sets/5716_trex.json",
+      "shows": "T-Rex set also lists M-04, count 2. Same code; check whether it is the same mould."
+    },
+    {
+      "source": "data/piece_review.json M-04 (Joey, 2026-11-01)",
+      "shows": "Marbles come in from any of four directions on the top tier and fall to the bottom; one M-04 kind sends them randomly one way or the other, the other has a toggle that alternates sides"
+    }
+  ],
+  "confidence": {
+    "shape": "low",
+    "ports": "medium",
+    "behaviour": "medium"
+  },
+  "assumptions": [
+    "Which set has the random splitter: by elimination, since the photographed T-Rex M-04 has the alternating flap. Not confirmed by Joey.",
+    "Bottom exits on two opposite sides (E and W); top tier takes all four sides. Matches Level 3 use: T-03 in at the upper level, T-06 out at the lower one (lp_plans_06, lp_plans_10).",
+    "Height 2 slots: M-05 on M-04 is level with the T-06 from the rocket port, which needs M-05's seat at z 6 with M-04's feet at z 3.",
+    "Filename carries __5422 because T-Rex uses the same code.",
+    "marblePaths list the four ways into the E exit (straight through, from either side, and back out the side it came in). The W exit takes the same four, mirrored: the tower is the same turned half round, so the engine turns it instead of listing them twice."
+  ],
+  "openQuestions": [
+    "Photo the Launchpad tower beside two stacked blocks, and from above: is the divider a fixed ridge (random) as assumed?",
+    "Which two sides are the bottom exits?"
+  ]
+}

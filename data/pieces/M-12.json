@@ -1,0 +1,119 @@
+{
+  "code": "M-12",
+  "names": {
+    "plan": null,
+    "family": "paddle slide",
+    "spoken": "the spinning paddles"
+  },
+  "sets": {
+    "5422": {
+      "count": 1,
+      "color": "#8cc63f",
+      "colorWord": "green with orange paddles"
+    }
+  },
+  "role": "stunt",
+  "shape": {
+    "description": "Green three-cell chute with tall flat side walls, straight in plan. From the high end it drops steeply, then runs out flat to the low end. A bridge across the walls at the bend carries an axle with a four-bladed curved orange paddle wheel that reaches down into the channel. Tongues at both ends, as on T-06. No legs: it hangs between two supports.",
+    "footprintCells": [
+      3,
+      1
+    ],
+    "heightSlots": 1,
+    "sizeMm": [
+      190,
+      62,
+      75
+    ],
+    "sizeBasis": "Estimated, not measured: cell about 62 mm and slot about 47 mm, from block width against a hand and marbles (IMG_0951, IMG_0952) and the plan drawing proportion slot/cell about 0.76. src/catalog/parts.js uses a 50 mm cell, also an estimate. Ratios to cell and slot are better known than the millimetres."
+  },
+  "ports": [
+    {
+      "id": "high",
+      "at": [
+        -3,
+        0,
+        1
+      ],
+      "faces": "W",
+      "type": "track-end",
+      "accepts": [
+        "B-01 cup",
+        "any block seat"
+      ],
+      "flow": "in"
+    },
+    {
+      "id": "low",
+      "at": [
+        0,
+        0,
+        0
+      ],
+      "faces": "E",
+      "type": "track-end",
+      "accepts": [
+        "M-01 flank window",
+        "B-03 cup"
+      ],
+      "flow": "out"
+    }
+  ],
+  "marblePaths": [
+    {
+      "from": "high",
+      "to": "low",
+      "dropSlots": 1,
+      "shape": "S-drop",
+      "lengthCells": 3
+    }
+  ],
+  "physics": {
+    "surface": "open U",
+    "bank": "shallow",
+    "wallHeight": "high",
+    "energy": "loses",
+    "needsMetalMarble": false,
+    "batteries": null,
+    "behaviour": "A gravity slide. The marble rolls down and pushes through the orange paddles, which turn, and slows a little. Nothing adds energy."
+  },
+  "stacking": {
+    "stacksOnTop": false,
+    "canHoldStackAbove": false,
+    "marbleCrossesTop": false,
+    "usableAsHeightOnly": false
+  },
+  "evidence": [
+    {
+      "source": "lp_plans_04 step 3-4 and crop of lp_plans_15",
+      "shows": "Placement 1: high end clips to the B-01 at z 2 of the front-left tower, under its B-04. Low end enters the flank of M-01."
+    },
+    {
+      "source": "extreme_59 step 7-8 and extreme_62 map",
+      "shows": "Placement 2: high end on a B-01 at A3, low end on a B-03 at A6, spanning three cells. Dark red arrow points downhill along it. Measured drop about 1 slot."
+    },
+    {
+      "source": "reference/photos/IMG_0943, IMG_0944",
+      "shows": "An orange four-bladed paddle wheel lies loose in the pile."
+    },
+    {
+      "source": "reference/uploads/M-12_1793563400741.jpg",
+      "shows": "Real piece: straight in plan, steep drop then a flat run-out, paddle wheel on a bridge at the bend"
+    }
+  ],
+  "confidence": {
+    "shape": "medium",
+    "ports": "high",
+    "behaviour": "medium"
+  },
+  "assumptions": [
+    "Origin at footprint centre at foot level (the top plane of whatever the piece stands on). East is +x, south is +y, z in slots.",
+    "The loose four-bladed wheel in the photos is assumed to be this piece's paddle.",
+    "Free rotation is inferred from the axle hub in the drawing.",
+    "Origin at the lowest seat because the piece has no foot."
+  ],
+  "openQuestions": [
+    "Can a slow marble stall at the paddles?",
+    "Is the wheel really removable? Is it meant to come off?"
+  ]
+}

@@ -1,0 +1,181 @@
+{
+  "code": "M-60",
+  "names": {
+    "plan": null,
+    "family": "the magnet pole",
+    "spoken": "the whoosh pole"
+  },
+  "sets": {
+    "5716": {
+      "count": 1,
+      "color": "#8a4a2b",
+      "colorWord": "brown pole, green slider"
+    }
+  },
+  "role": "energy",
+  "shape": {
+    "description": "Tall brown knobbly pole with a shallow spiral groove, standing on an L-shaped brown base two cells long: one cell under the pole, one cell a pocket with a marble path through it, crossing from side to side. A flat brown cap tops the pole, with a slot for the M-64 sign. A green slider ring runs up and down the pole; it has hand grips and a cup that reaches over the pocket when down and holds a track end when up.",
+    "footprintCells": [
+      1,
+      2
+    ],
+    "heightSlots": 8,
+    "sizeMm": [
+      60,
+      130,
+      290
+    ],
+    "sizeBasis": "Rough estimate: one cell about 52 mm and one slot about 36 mm, scaled from Joey's hand in IMG_0954 and IMG_0956; no ruler measurement. Height from stack comparison, low confidence."
+  },
+  "ports": [
+    {
+      "id": "a",
+      "at": [
+        -0.5,
+        0,
+        1
+      ],
+      "faces": "W",
+      "type": "track-end",
+      "accepts": [
+        "T-06"
+      ],
+      "flow": "both"
+    },
+    {
+      "id": "b",
+      "at": [
+        0.5,
+        0,
+        1
+      ],
+      "faces": "E",
+      "type": "track-end",
+      "accepts": [
+        "M-07",
+        "T-03",
+        "T-06"
+      ],
+      "flow": "both"
+    },
+    {
+      "id": "top",
+      "at": [
+        -0.5,
+        0,
+        7.5
+      ],
+      "faces": "W",
+      "type": "track-end",
+      "accepts": [
+        "T-15"
+      ],
+      "flow": "out"
+    },
+    {
+      "id": "sign",
+      "at": [
+        0,
+        1,
+        8
+      ],
+      "faces": "E",
+      "type": "clip",
+      "accepts": [
+        "M-64"
+      ],
+      "flow": "both"
+    },
+    {
+      "id": "feet",
+      "at": [
+        0,
+        0.5,
+        0
+      ],
+      "faces": "E",
+      "type": "floor-peg",
+      "accepts": [
+        "two floor cells in a line"
+      ],
+      "flow": "both"
+    }
+  ],
+  "marblePaths": [
+    {
+      "from": "a",
+      "to": "top",
+      "dropSlots": -6.5,
+      "shape": "carried",
+      "lengthCells": 1
+    },
+    {
+      "from": "b",
+      "to": "top",
+      "dropSlots": -6.5,
+      "shape": "carried",
+      "lengthCells": 1
+    },
+    {
+      "from": "a",
+      "to": "b",
+      "dropSlots": 0,
+      "shape": "straight",
+      "lengthCells": 1
+    }
+  ],
+  "physics": {
+    "surface": "open U",
+    "bank": "none",
+    "wallHeight": "low",
+    "energy": "adds-by-hand",
+    "needsMetalMarble": true,
+    "batteries": null,
+    "behaviour": "Hand-armed magnet lift. A child pushes the green slider down until it locks at the base. A metal marble rolling into the pocket unlocks it, the magnet grips the marble, and the slider whizzes up the pole, twisting round it, and tips the marble onto the T-15 at the top. Then it stays up until a hand pushes it down again. When it is up, or for a plain marble, the marble rolls straight through the pocket and out the far side: in Level 1 into M-07. No batteries. Adds about 6.5 slots of height, once per arming."
+  },
+  "stacking": {
+    "stacksOnTop": false,
+    "canHoldStackAbove": false,
+    "marbleCrossesTop": false,
+    "usableAsHeightOnly": false
+  },
+  "evidence": [
+    {
+      "source": "trex_plans_02.png pole panel",
+      "shows": "Left: two hands push the green slider down, closed lock icon. Right: open lock icon, metal marbles arrive along T-06, slider rises with curved arrows, marble leaves along yellow T-15 at top. Only metal marbles shown"
+    },
+    {
+      "source": "trex_plans_07.png step 1-7 main view, inset and map",
+      "shows": "Level 1: pocket at D7, pole at E7. T-06 from D5 enters W side, M-07 on E side, T-15 at top leaves W toward the D3 stack"
+    },
+    {
+      "source": "trex_plans_14.png step 3-1 and trex_plans_20.png step 3-13",
+      "shows": "Level 3: pocket at B7, pole at B8. T-06 from D7 enters S side, T-03 from A6 on N side, T-15 at top runs S to the F7 stack. Same handedness as Level 1"
+    },
+    {
+      "source": "trex.pdf p4-5",
+      "shows": "Batteries only for the T-Rex and the Elevator, so this piece has none"
+    },
+    {
+      "source": "trex_plans_09.png to 12",
+      "shows": "Not used in Level 2"
+    }
+  ],
+  "confidence": {
+    "shape": "medium",
+    "ports": "medium",
+    "behaviour": "medium"
+  },
+  "assumptions": [
+    "A spring raises the slider and the metal marble's magnetism unlocks it: both inferred from the lock icons, the arrows and the need for hand arming; no text states them.",
+    "Plain marble passes through, inferred: M-07 sits past the pocket in Level 1 and no other route reaches it. Plan page 02 feeds from port b, the plans feed from port a; ports treated as equal.",
+    "Top port height about 7.5 from T-15 falling about 1.5 slots to the h6 block at D3 and F7.",
+    "Pocket port height 1 from T-06 and T-03 meeting height 1 blocks.",
+    "faces uses E=+x, W=-x, S=+y, N=-y, in the piece's own frame. Heights are slots above the floor when the piece stands on the floor or, where stated, above the top of its supports."
+  ],
+  "openQuestions": [
+    "Does a plain marble trip the lock? Does it pass through when armed?",
+    "Does a marble wait in the pocket if the slider is up, or roll on?",
+    "What does the top cup do at the T-15: does the marble roll off or get scraped off?"
+  ]
+}

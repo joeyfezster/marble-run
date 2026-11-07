@@ -1,0 +1,83 @@
+{
+  "code": "M-62",
+  "names": {
+    "plan": null,
+    "family": "the fern leaves",
+    "spoken": "the jungle leaves"
+  },
+  "sets": {
+    "5716": {
+      "count": 1,
+      "color": "#3a9e3f",
+      "colorWord": "green and orange"
+    }
+  },
+  "role": "decor",
+  "shape": {
+    "description": "Flat printed plastic plaque of jungle ferns with orange curled tips. Two pegs along the bottom edge plug into the outer rim of a T-02 half circle.",
+    "footprintCells": [
+      1,
+      1
+    ],
+    "heightSlots": 0.8,
+    "sizeMm": [
+      60,
+      8,
+      35
+    ],
+    "sizeBasis": "Rough estimate: one cell about 52 mm and one slot about 36 mm, scaled from Joey's hand in IMG_0954 and IMG_0956; no ruler measurement."
+  },
+  "ports": [
+    {
+      "id": "pegs",
+      "at": [
+        0,
+        0,
+        0
+      ],
+      "faces": "E",
+      "type": "clip",
+      "accepts": [
+        "T-02 rim"
+      ],
+      "flow": "both"
+    }
+  ],
+  "marblePaths": [],
+  "physics": {
+    "surface": "none",
+    "bank": "none",
+    "wallHeight": "low",
+    "energy": "none",
+    "needsMetalMarble": false,
+    "batteries": null,
+    "behaviour": "Decoration only. No marble touches it."
+  },
+  "stacking": {
+    "stacksOnTop": false,
+    "canHoldStackAbove": false,
+    "marbleCrossesTop": false,
+    "usableAsHeightOnly": false
+  },
+  "evidence": [
+    {
+      "source": "trex_plans_11.png step 2-6 inset",
+      "shows": "Level 2: plugged into the T-02 between A2 and M-61, red arrows down onto the rim"
+    },
+    {
+      "source": "trex_plans_15.png step 3-3 inset",
+      "shows": "Level 3: plugged into the T-02 between A3 and A5"
+    }
+  ],
+  "confidence": {
+    "shape": "medium",
+    "ports": "high",
+    "behaviour": "high"
+  },
+  "assumptions": [
+    "faces uses E=+x, W=-x, S=+y, N=-y, in the piece's own frame. Heights are slots above the floor when the piece stands on the floor or, where stated, above the top of its supports."
+  ],
+  "openQuestions": [
+    "Does it fit any curved track with rim holes, or only T-02?"
+  ]
+}
