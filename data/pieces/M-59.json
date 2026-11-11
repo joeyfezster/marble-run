@@ -21,11 +21,11 @@
     ],
     "heightSlots": 3,
     "sizeMm": [
-      105,
-      52,
-      110
+      85,
+      42,
+      119
     ],
-    "sizeBasis": "Rough estimate: one cell about 52 mm and one slot about 36 mm, scaled from Joey's hand in IMG_0954 and IMG_0956; no ruler measurement."
+    "sizeBasis": "Foot base two cells long less the gaps; thigh top under the hip at about 2.6 slots. Grid scale (2026-11-07): one cell 45 mm, one slot 45.3 mm (B-01, src/catalog/parts.js). The earlier figure used a 52 mm cell and a 36 mm slot, which disagreed with this record's own ports and heightSlots."
   },
   "ports": [
     {
@@ -98,6 +98,10 @@
     {
       "source": "trex_plans_19.png step 3-11 map",
       "shows": "Level 3: feet on the floor at rows D-E, columns 4 and 6"
+    },
+    {
+      "source": "reference/uploads/M-58_1793563512763.jpg",
+      "shows": "Grey foot base about two block widths long and one wide, hip disc about two block heights up; sizeMm was 105 x 52 x 110 at a 52 mm cell"
     }
   ],
   "confidence": {

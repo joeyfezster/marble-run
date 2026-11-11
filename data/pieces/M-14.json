@@ -14,18 +14,18 @@
   },
   "role": "start",
   "shape": {
-    "description": "Clear flared funnel, rim about 105 mm wide, seated in a round collar on a yellow house-shaped body, which stands on block-style arched legs. The funnel lifts out of the collar. The front of the body has a tall arched opening; at its top a flat orange slider gate sticks out through a slot. Below the gate a round dished bowl forms the floor of the opening, with a track clip under its lip, exactly as on a block.",
+    "description": "Clear flared funnel, rim about 58 mm wide, seated in a round collar on a yellow house-shaped body, which stands on block-style arched legs. The funnel lifts out of the collar. The front of the body has a tall arched opening; at its top a flat orange slider gate sticks out through a slot. Below the gate a round dished bowl forms the floor of the opening, with a track clip under its lip, exactly as on a block.",
     "footprintCells": [
       1,
       1
     ],
-    "heightSlots": 3.6,
+    "heightSlots": 2.75,
     "sizeMm": [
-      105,
-      105,
-      170
+      58,
+      58,
+      125
     ],
-    "sizeBasis": "Estimated, not measured: cell about 62 mm and slot about 47 mm, from block width against a hand and marbles (IMG_0951, IMG_0952) and the plan drawing proportion slot/cell about 0.76. src/catalog/parts.js uses a 50 mm cell, also an estimate. Ratios to cell and slot are better known than the millimetres."
+    "sizeBasis": "Measured on IMG_0957 and IMG_0958 against the body's own block-width foot (one cell, 45 mm, the same legs as a block): rim about 1.25 foot widths across, rim top about 2.6 to 2.8 foot widths above the legs' feet, collar top about 1.4, slider gate about 1.1 (raised to 1.25 so a marble passes under it, see evidence). No ruler in the photos; +-10%."
   },
   "ports": [
     {
@@ -33,7 +33,7 @@
       "at": [
         0,
         0,
-        3.6
+        2.75
       ],
       "faces": "up",
       "type": "open-catch",
@@ -63,7 +63,7 @@
       "at": [
         0.6,
         0,
-        1.8
+        1.25
       ],
       "faces": "E",
       "type": "clip",
@@ -91,7 +91,7 @@
     {
       "from": "funnel",
       "to": "bowl",
-      "dropSlots": 2.6,
+      "dropSlots": 1.75,
       "shape": "fall",
       "lengthCells": 0.5
     }
@@ -135,6 +135,14 @@
     {
       "source": "derived from lp_plans_01 to 15",
       "shows": "Marble lane: official Level 3 reads as a closed circuit: M-14 gate, T-03, drop through B-04, T-03, drop through B-04, T-03, T-08, T-03, M-04, T-06, T-01, T-06, T-04, T-02, M-12, M-01 (hand), T-06, M-10, jump, M-11, T-06, T-02, M-02 (hand), tube, M-06, T-08, M-13, T-06, M-05, M-04, T-06, B-04 drop, T-02, M-12, M-01 again."
+    },
+    {
+      "source": "reference/pieces/IMG_0957.jpg, IMG_0958.jpg (measured 2026-11-07)",
+      "shows": "Funnel rim about 58 mm across and about 125 mm (2.75 slots) above the feet, gate slot about 50 mm (1.1 slots) up, measured against the one-cell block legs; the old 105 x 170 mm came from a 62 mm cell estimate."
+    },
+    {
+      "source": "reference/pieces/IMG_0957.jpg (re-read 2026-11-10) and the bowl port's own level",
+      "shows": "The front opening is about 25 mm wide and a little taller than wide from the bowl lip to the underside of the slider, so a 20 mm marble rolls out under the gate. With the bowl seat at a cup seat under level 1 (0.68 slot, 31 mm), the slider must sit about 57 mm (1.25 slots) up; the 1.1 slot (50 mm) photo estimate (+-10%) would leave 18 mm, less than a marble. Gate raised to 1.25 slots."
     }
   ],
   "confidence": {

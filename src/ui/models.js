@@ -199,6 +199,8 @@ export function plate(code, color) {
     if (x === w - 1) { const m = part(g, tabG, color, x * c + e, -t, y * c); m.rotation.y = -Math.PI / 2; m.position.y = 0; m.rotation.x = 0; }
     if (y === d - 1) { const m = part(g, tabG, color, x * c, -t, y * c + e); m.rotation.y = Math.PI; }
   }
+  // Origin at the plate's centre, as in its record (scene.js poses plates there).
+  for (const m of g.children) { m.position.x -= ((w - 1) * c) / 2; m.position.z -= ((d - 1) * c) / 2; }
   return g;
 }
 
@@ -332,17 +334,19 @@ function scoop(color) {
 export const SPIRAL_OPTS = Object.freeze({ width: 0.0165, flat: true, outer: 2.0, rows: [-0.3, 0.35], slotLen: 0.045, lap: 0 });
 
 function spiral(color, footprint = [2, 2]) {
-  // T-17 (IMG_0959-0961, trex_plans_01): one wide grey band with a tall outer wall and
-  // arc slots, lying beside its host block. A straight tongue leaves the host's cup end
-  // (record port "in", at the origin, heading +x), the band winds inward about one and
-  // a half turns falling gently, and the tail dips under the band back to the host's
-  // face, one slot lower, into the block under the host. Same curve as the game path.
+  // T-17 (IMG_0959-0961, the VTech icon): one wide grey band with a tall outer wall and
+  // arc slots, about three quarters of a turn round the front corner of its host stack.
+  // Its tongue leaves the host's cup end (record port "in", heading +x);
+  // the band falls one slot and ends on the side face of the block under the host
+  // (record x -0.5, y +0.5), heading back across it, with a clip into that face's tab.
+  // Same curve as the game path.
   const g = new THREE.Group(), drop = S;
-  const pts = spiralLocal(footprint).map((p) => ({ x: (p.a - 0.5) * C, y: p.s * C, z: -drop * p.f }));
+  // In the GLB's frame (tools/blender/engine_paths.mjs): the host's centre at the origin, the
+  // band starting at the record's `in` height (1 slot) and ending one slot lower.
+  const pts = spiralLocal(footprint).map((p) => ({ x: p.a * C, y: p.s * C, z: drop * (1 - p.f) }));
   g.add(trackModel(pts, color, { ...SPIRAL_OPTS, mirror: true }));
-  endFeet(g, color, pts[0], { x: -1, y: 0 }, pts[0], { x: -1, y: 0 });
-  // Side clip that grips the host block's tab, under the tongue.
-  part(g, box(0.004, 0.012, 0.01), color, -0.002, -0.009, 0.006);
+  const e = pts.at(-1), d = pts.at(-2), len = Math.hypot(e.x - d.x, e.y - d.y) || 1;
+  endFeet(g, color, pts[0], { x: -1, y: 0 }, e, { x: (e.x - d.x) / len, y: (e.y - d.y) / len });
   return g;
 }
 
@@ -502,17 +506,19 @@ function ramp(set) {
   // posts, narrow and low at the entry, fanning wider and curving up to a jump lip
   // with a small round post at each lip corner. Launchpad green, T-Rex orange.
   const g = new THREE.Group(), trex = set === '5716', col = trex ? 0xf07f1e : 0x7ec62f, B = trex ? 0x1468b8 : 0x1c3fb0;
-  const L = trex ? C * 2.6 : C * 2.2, base = S * 0.62;
-  for (let k = 0; k < 2; k++) { const f = new THREE.Group(); blockFeet(f, B, base); f.position.x = C * k; g.add(f); }
-  part(g, box(C + W, 0.004, W), B, C / 2, base, 0);
+  // T-Rex (record frame, as its GLB): the base covers the two cells from the low port at
+  // x 0, and the trough runs from there to the lip 2.35 cells on, at the lip's seat.
+  const x0 = trex ? -mm(5) : -W / 2 - 0.004, L = trex ? C * 2.35 + mm(5) : C * 2.2, base = S * 0.62, bx = trex ? C / 2 : 0;
+  for (let k = 0; k < 2; k++) { const f = new THREE.Group(); blockFeet(f, B, base); f.position.x = bx + C * k; g.add(f); }
+  part(g, box(C + W, 0.004, W), B, bx + C / 2, base, 0);
   // Wide shallow trough, low tongue at the entry (x = -W/2), curving up along the
   // base. The far end is cut on a slant: the -z wall rises into a pointed fin with a
   // round hole; the +z wall ends lower in a curled lip resting on a post
   // (lp_plans_04 M-10 box, trex_plans_01 M-10, lp manual p5 M-11).
-  const n = 30, pos = [], idx = [], cols = 14, rise = S * 0.95, hw = mm(16);
+  const n = 30, pos = [], idx = [], cols = 14, rise = trex ? S * 1.18 - base - 0.006 : S * 0.95, hw = mm(16);
   const yAt = (u) => base + 0.006 + rise * u ** 2;
   for (let i = 0; i <= n; i++) {
-    const u = i / n, x = -W / 2 - 0.004 + u * L, y = yAt(u);
+    const u = i / n, x = x0 + u * L, y = yAt(u);
     for (let k = 0; k <= cols; k++) {
       const t = -1 + (2 * k) / cols, wall = mm(5) + (t < 0 ? mm(24) * Math.max(0, (u - 0.55) / 0.45) ** 1.5 : 0);
       pos.push(x, y + mm(5) * t * t + (Math.abs(t) > 0.85 ? wall * (Math.abs(t) - 0.85) / 0.15 : 0), t * hw);
@@ -521,19 +527,47 @@ function ramp(set) {
   for (let i = 0; i < n; i++) for (let k = 0; k < cols; k++) { const a = i * (cols + 1) + k, b = a + 1, c = a + cols + 1, d = c + 1; idx.push(a, c, b, b, c, d); }
   const geo = new THREE.BufferGeometry(); geo.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3)); geo.setIndex(idx); geo.computeVertexNormals();
   withEdges(part(g, geo, plastic(col, { side: THREE.DoubleSide })), 50);
-  const xEnd = -W / 2 - 0.004 + L, yEnd = yAt(1);
+  const xEnd = x0 + L, yEnd = yAt(1);
   part(g, new THREE.CircleGeometry(mm(3), 16), hole(), xEnd - mm(5), yEnd + mm(18), -hw - 0.0004).rotation.y = Math.PI;
   part(g, cyl(0.0024, 0.0024, yEnd - base, 10), col, xEnd - mm(10), base + (yEnd - base) / 2, hw * 0.8);
-  part(g, cyl(0.0024, 0.0024, yAt(0.55) - base, 10), col, -W / 2 + L * 0.55, base + (yAt(0.55) - base) / 2, -hw * 0.6);
-  part(g, cyl(0.0024, 0.0024, yAt(0.55) - base, 10), col, -W / 2 + L * 0.55, base + (yAt(0.55) - base) / 2, hw * 0.6);
+  part(g, cyl(0.0024, 0.0024, yAt(0.55) - base, 10), col, x0 + L * 0.55, base + (yAt(0.55) - base) / 2, -hw * 0.6);
+  part(g, cyl(0.0024, 0.0024, yAt(0.55) - base, 10), col, x0 + L * 0.55, base + (yAt(0.55) - base) / 2, hw * 0.6);
+  return g;
+}
+
+// Mirrors a finished group across its x = 0 plane in place: each part's transform is
+// baked into its geometry and its triangles reversed so faces stay outward. The game
+// batches models by baking matrices, so a negative scale would turn a model inside out.
+function mirrorX(g) {
+  g.updateMatrixWorld(true);
+  const toG = new THREE.Matrix4().copy(g.matrixWorld).invert(), flip = new THREE.Matrix4().makeScale(-1, 1, 1);
+  const items = [];
+  g.traverse((o) => { if (o !== g && (o.isMesh || o.isLineSegments)) items.push([o, flip.clone().multiply(toG).multiply(o.matrixWorld)]); });
+  for (const [o, m] of items) {
+    const geo = o.geometry.clone().applyMatrix4(m);
+    if (o.isMesh) {
+      if (geo.index) { const a = geo.index.array; for (let k = 0; k < a.length; k += 3) [a[k + 1], a[k + 2]] = [a[k + 2], a[k + 1]]; }
+      else for (const at of Object.values(geo.attributes)) {
+        const n = at.itemSize, a = at.array;
+        for (let k = 0; k < at.count; k += 3) for (let c = 0; c < n; c++) [a[(k + 1) * n + c], a[(k + 2) * n + c]] = [a[(k + 2) * n + c], a[(k + 1) * n + c]];
+      }
+    }
+    o.geometry = geo;
+    o.position.set(0, 0, 0); o.rotation.set(0, 0, 0); o.scale.set(1, 1, 1);
+  }
+  for (const [o] of items) if (o.isMesh) g.add(o);
   return g;
 }
 
 function ringRamp() {
-  // M-11 (lp manual p5, lp_plans_05): the Launchpad ramp turned to face the jump,
-  // high wide end toward the incoming marble, with an orange toothed ring standing
-  // across it and a target disc hanging inside.
-  const g = ramp('5422'), O = 0xf07f1e, x = -W / 2 + C * 2.2 - 0.01, y = S * 0.62 + 0.006 + S * 0.95 + 0.025;
+  // M-11 (lp manual p5, lp_plans_05): the Launchpad ramp turned to face the jump, high
+  // wide end toward the incoming marble, with an orange toothed ring standing across it
+  // and a target disc hanging inside. In record axes, as the GLB: the ring at the high
+  // end at x -1 (port ring, facing W, where the marble flies in), the trough falling to
+  // the low end at x +1 (port low, E), the two-cell base centred on the origin. The
+  // marble goes into the ring first, then down the slope (Joey 2026-11-09, image_06:
+  // the old drawing had the ring at the low end's far side, so it read backwards).
+  const g = ramp('5422'), O = 0xf07f1e, x = C * 1.41, y = S * 0.62 + 0.006 + S * 0.95 + 0.025;
   const ring = new THREE.Shape(); const n = 20, R = 0.034, r = 0.027;
   for (let i = 0; i <= n * 2; i++) { const a = (i / (n * 2)) * Math.PI * 2, rr = i % 2 ? R : R + 0.005; i ? ring.lineTo(rr * Math.cos(a), rr * Math.sin(a)) : ring.moveTo(rr, 0); }
   const hp = new THREE.Path(); hp.absarc(0, 0, r, 0, Math.PI * 2, true); ring.holes.push(hp);
@@ -541,8 +575,11 @@ function ringRamp() {
   const disc = part(g, cyl(0.022, 0.022, 0.003, 32), O, x, y - 0.002, 0); disc.rotation.z = Math.PI / 2;
   for (const [rr, c] of [[0.017, 0xffffff], [0.012, 0x3b8ee0], [0.007, 0xf7c600]]) { const t = part(g, cyl(rr, rr, 0.0034, 28), c, x, y - 0.002, 0); t.rotation.z = Math.PI / 2; }
   part(g, box(0.006, 0.03, 0.006), O, x, y - 0.034, 0);
-  g.rotation.y = 0;
-  return g;
+  // ramp() builds the low end at -x with its base's first block at x 0: centre the base on
+  // the origin, then mirror so the high end and ring sit at -x like the record.
+  g.position.x = -C / 2;
+  const out = new THREE.Group(); out.add(g);
+  return mirrorX(out);
 }
 
 function paddles() {
@@ -614,75 +651,98 @@ function openTower(set) {
 }
 
 function tray(color = 0xc98a3a) {
-  // M-07 (pieces/IMG_0956, trex_plans_01, lp manual p5): a flat tray with LOW side
-  // walls and two long slots in its floor. Each end curves up into a taller end wall
-  // with a U notch in its top edge and a small downward hook at each top corner; the
-  // hooks hang the end on a block's cup end, the notch in line with its channel.
-  const g = new THREE.Group(), L = C * 2.4, hw = mm(22), Hs = S * 0.33, He = S * 0.9, R = mm(12), mat = plastic(color, { side: THREE.DoubleSide });
-  const fy = (x) => { const d = Math.abs(x) - (L / 2 - R); return 0.002 + (d > 0 ? R - Math.sqrt(Math.max(0, R * R - d * d)) : 0); };
-  const slot = (x, z) => Math.abs(z) < 0.0018 && ((x > -L * 0.36 && x < -L * 0.05) || (x > L * 0.05 && x < L * 0.36));
-  withEdges(part(g, heightField(-L / 2, L / 2, -hw, hw, 80, 16, (x) => fy(x), (x, z) => slot(x, z + hw * 0.0)), mat), 50);
-  // Side walls: low in the middle, rising into the end walls over the curve.
-  const prof = [[-L / 2, 0]];
-  for (let i = 0; i <= 30; i++) { const x = -L / 2 + (L * i) / 30, d = Math.max(0, Math.abs(x) - (L / 2 - R - mm(6))) / (R + mm(6)); prof.push([x, Hs + (He - Hs) * d ** 1.6]); }
-  prof.push([L / 2, 0]);
-  for (const s of [1, -1]) { const w = withEdges(part(g, extrude(shape(prof), 0.0022, 0.0003), color), 40); w.position.z = s > 0 ? hw - 0.0022 : -hw; }
-  // End walls with the U notch, and the hooks.
-  const nw = mm(9), end = new THREE.Shape();
-  end.moveTo(-hw, 0); end.lineTo(hw, 0); end.lineTo(hw, He); end.lineTo(nw, He); end.absarc(0, He, nw, 0, Math.PI, true); end.lineTo(-hw, He); end.closePath();
+  // M-07 (pieces/IMG_0956, trex_plans_01, lp manual p5; Joey 2026-11-09 image_02): a flat
+  // tray with LOW side walls and two long slots in its floor, lying between two blocks 3
+  // cells apart: the record's ports at x -1 and +1 are the block faces. Its floor's underside
+  // rests on the plate frames (3 mm up, the record's restHeightMm); at each end the floor
+  // sweeps steeply up to the cup seat and a short U lip reaches 9 mm past the face, lying
+  // ON the block's cup end; two small hooks hang in the gap at the face. Nothing goes into
+  // the block or the floor.
+  const g = new THREE.Group(), hw = mm(23), T = mm(2.2), base = mm(3), seat = S * (1 - 0.32), ramp = mm(20), lip = mm(9), uw = mm(25);
+  const mat = plastic(color, { side: THREE.DoubleSide }), side = mm(11), top = seat + mm(9);
+  const sm = (u) => u * u * (3 - 2 * u);
+  const fy = (x) => base + T + (seat - base - T) * sm(Math.min(1, Math.max(0, Math.abs(x) - (C - ramp)) / ramp));
+  const slot = (x, z) => Math.abs(z) < 0.0016 && ((x > -C * 0.68 && x < -C * 0.06) || (x > C * 0.06 && x < C * 0.68));
+  withEdges(part(g, heightField(-C, C, -hw, hw, 80, 16, (x) => fy(x), slot), mat), 50);
+  // Side walls: from the floor's underside, low in the middle, up past the seat at the ends.
+  const prof = [];
+  for (let k = 0; k <= 40; k++) { const x = -C + (2 * C * k) / 40; prof.push([x, fy(x) - T + 0.0003]); } // over the extrude's bevel
+  prof.push([C, top], [C - ramp, base + T + side], [-C + ramp, base + T + side], [-C, top]);
+  for (const s of [1, -1]) { const w = withEdges(part(g, extrude(shape(prof), T, 0.0003), color), 40); w.position.z = s > 0 ? hw - T : -hw; }
+  // End walls at the faces with a U notch down to the seat; the lip on the cup end; hooks.
+  const end = new THREE.Shape();
+  end.moveTo(-hw, seat - T); end.lineTo(hw, seat - T); end.lineTo(hw, top); end.lineTo(uw / 2, top); end.lineTo(uw / 2, seat);
+  end.lineTo(-uw / 2, seat); end.lineTo(-uw / 2, top); end.lineTo(-hw, top); end.closePath();
   for (const s of [1, -1]) {
-    const e = withEdges(part(g, extrude(end, 0.0024, 0.0003), color), 40); e.rotation.y = Math.PI / 2; e.position.x = s > 0 ? L / 2 : -L / 2 + 0.0024;
-    for (const z of [1, -1]) {
-      part(g, box(0.006, 0.003, 0.004), color, s * (L / 2 + 0.003), He - 0.0005, z * (hw - 0.004));
-      part(g, box(0.0025, 0.006, 0.004), color, s * (L / 2 + 0.0055), He - 0.0035, z * (hw - 0.004));
-    }
+    const e = withEdges(part(g, extrude(end, T, 0.0003), color), 40); e.rotation.y = Math.PI / 2; e.position.x = s > 0 ? C - T : -C;
+    part(g, box(lip, T, uw + 2 * T), color, s * (C + lip / 2), seat - T / 2, 0);
+    for (const z of [1, -1]) part(g, box(lip, mm(5), T), color, s * (C + lip / 2), seat + mm(2.5), z * (uw / 2 + T / 2));
+    for (const z of [1, -1]) part(g, box(mm(1), mm(6), mm(3)), color, s * (C + mm(0.65)), seat - T - mm(3), z * mm(9));
   }
   return g;
 }
 
 function truck() {
-  // M-28 (trex_plans_01): red launcher shaped like a little truck: a long body
-  // three cells long, a white dome cab in the middle, a rounded window in each
-  // side, an open-topped channel at the front, a ribbed white knob out the back,
-  // white-tipped legs at both ends.
-  const g = new THREE.Group(), R = 0xe0262c, Wt = 0xf6f6f2, h0 = S * 0.45;
-  // Low open-topped nose (the barrel's front), tall cab in the middle, narrower
-  // tapered tail out to the knob.
-  const nose = withEdges(part(g, extrude(shape([[-C * 1.45, 0], [-C * 0.45, 0], [-C * 0.45, S * 0.3], [-C * 1.45, S * 0.3]]), W * 0.86, 0.002), R)); nose.position.set(0, h0, -W * 0.43);
-  const cab = withEdges(part(g, extrude(shape([[-C * 0.5, 0], [C * 0.35, 0], [C * 0.35, S * 0.8], [C * 0.1, S * 0.9], [-C * 0.5, S * 0.9]]), W * 0.86, 0.003), R)); cab.position.set(0, h0, -W * 0.43);
-  const tail = withEdges(part(g, extrude(shape([[C * 0.3, 0], [C * 0.75, S * 0.08], [C * 0.75, S * 0.62], [C * 0.3, S * 0.72]]), W * 0.62, 0.002), R)); tail.position.set(0, h0, -W * 0.31);
-  const chPts = line(10, (u) => ({ x: -C * 1.47 + u * C * 1.0, y: 0, z: h0 + S * 0.3 + 0.002 }));
+  // M-28 (trex_plans_01, uploads/M-28): red launcher shaped like a little truck: a long
+  // body, a white dome closing the cab in the middle, a rounded window in each side (the
+  // two entries) at the muzzle's level, an open-topped channel at the front on the
+  // plunger axis (the exit), a ribbed white knob out the back. White arched leg caps at
+  // record x -1 and +1 stand on the tops of two stacks; the body rests on them (Joey
+  // 2026-11-09: it sat in the air with its back feet over the empty middle cell).
+  const g = new THREE.Group(), R = 0xe0262c, Wt = 0xf6f6f2, h0 = mm(20);
+  // The muzzle channel and the side windows share one level: seat 0.68 slot over the stand tops.
+  const seat = S * (1 - 0.32), ap = mm(25);
+  const nose = withEdges(part(g, extrude(shape([[-C * 1.76, 0], [-C * 0.36, 0], [-C * 0.36, seat - h0 - mm(1)], [-C * 1.76, seat - h0 - mm(1)]]), W * 0.94, 0.002), R)); nose.position.set(0, h0, -W * 0.47);
+  // The cab with the window tunnel through it, side to side: a round top over a square
+  // bottom whose sill is the seat. The extrude's bevel closes a hole by its size, so the
+  // cut is that much wider.
+  const cabShape = shape([[-C * 0.36, 0], [C * 0.5, 0], [C * 0.5, seat - h0 + mm(49)], [C * 0.32, seat - h0 + mm(55)], [-C * 0.36, seat - h0 + mm(55)]]);
+  const wr = ap / 2 + 0.003, wx = C * 0.05, wy = seat - h0 + ap / 2, win = new THREE.Path();
+  win.moveTo(wx - wr, wy); win.lineTo(wx - wr, wy - wr); win.lineTo(wx + wr, wy - wr); win.lineTo(wx + wr, wy); win.absarc(wx, wy, wr, 0, Math.PI, false); cabShape.holes.push(win);
+  const cab = withEdges(part(g, extrude(cabShape, W, 0.003), R)); cab.position.set(0, h0, -W / 2);
+  const tail = withEdges(part(g, extrude(shape([[C * 0.5, 0], [C * 1.92, 0], [C * 1.92, seat - h0 + mm(26)], [C * 0.5, seat - h0 + mm(34)]]), W * 0.88, 0.002), R)); tail.position.set(0, h0, -W * 0.44);
+  const chPts = line(10, (u) => ({ x: -C * 1.78 + u * C * 1.42, y: 0, z: seat + 0.001 }));
   g.add(trackModel(chPts, R, { lap: 0, width: W * 0.43, flat: true, slots: false, depth: mm(10) }));
-  part(g, new THREE.SphereGeometry(mm(17), 24, 12, 0, Math.PI * 2, 0, Math.PI / 2), Wt, -C * 0.12, h0 + S * 0.9, 0).scale.set(1.3, 0.8, 1);
+  part(g, new THREE.SphereGeometry(mm(17), 24, 12, 0, Math.PI * 2, 0, Math.PI / 2), Wt, C * 0.05, seat + mm(54), 0).scale.set(1.3, 0.8, 1);
   for (const z of [1, -1]) {
-    const w = part(g, new THREE.CircleGeometry(mm(9), 24), hole(0x5e070b), C * 0.05, h0 + S * 0.4, z * (W * 0.43 + 0.0035)); if (z < 0) w.rotation.y = Math.PI;
-    part(g, new THREE.TorusGeometry(mm(9), 0.0014, 8, 24), R, C * 0.05, h0 + S * 0.4, z * (W * 0.43 + 0.0032)).rotation.y = z < 0 ? Math.PI : 0;
+    part(g, new THREE.TorusGeometry(ap / 2 + 0.0014, 0.0014, 8, 24), R, C * 0.05, seat + ap / 2, z * (W / 2 + 0.004)).rotation.y = z < 0 ? Math.PI : 0;
   }
-  const k = part(g, cyl(mm(7), mm(7), mm(18), 20), 0xd9dbd6, C * 0.75 + mm(9), h0 + S * 0.36, 0); k.rotation.z = Math.PI / 2;
-  for (let i = 0; i < 5; i++) part(g, new THREE.TorusGeometry(mm(7.2), 0.0008, 6, 20), 0xb9bbb6, C * 0.75 + mm(2 + i * 3.4), h0 + S * 0.36, 0).rotation.y = Math.PI / 2;
-  // White curved hook feet that clip over the blocks under each end.
-  for (const x of [-C, C * 0.5]) for (const z of [1, -1]) {
-    const hk = part(g, new THREE.TorusGeometry(mm(6), mm(2), 8, 16, Math.PI), Wt, x, h0 - mm(1), z * W * 0.33); hk.rotation.z = Math.PI;
+  const kz = seat + mm(12), k = part(g, cyl(mm(8.5), mm(8.5), mm(14), 20), 0xd9dbd6, C * 1.92 + mm(7), kz, 0); k.rotation.z = Math.PI / 2;
+  for (let i = 0; i < 5; i++) part(g, new THREE.TorusGeometry(mm(8.8), 0.0008, 6, 20), 0xb9bbb6, C * 1.92 + mm(1.5 + i * 2.8), kz, 0).rotation.y = Math.PI / 2;
+  // White arched leg caps, open underneath: the walls stand on the stack's top (y 0)
+  // and the cap's roof carries the body at h0.
+  for (const x of [-C, C]) {
+    part(g, box(C * 0.9, mm(3), W * 0.98), Wt, x, h0 - mm(1.5), 0);
+    for (const z of [1, -1]) part(g, box(C * 0.9, h0, mm(2.4)), Wt, x, h0 / 2, z * (W * 0.49 - mm(1.2)));
+    for (const dx of [1, -1]) part(g, box(mm(2.4), h0, W * 0.98), Wt, x + dx * (C * 0.45 - mm(1.2)), h0 / 2, 0);
   }
   return g;
 }
 
-// M-56 drawn between two points in record axes (x E, y S, z up): the beam rides a
-// marble's diameter above the marble's path, which hangs under its magnet strip.
+// M-56 drawn between two points in record axes (x E, y S, z up), the marble's lowest
+// point at each end: the strip's underside rides a marble's diameter plus the record's
+// hang lift (5 mm) above them, and a hoop at each end, axis along the travel and 30 mm
+// open (the ports' apertureMm), rings the cup end so the marble passes through it.
 export function hangingBeam(a, b, color = 0xf2a81d) {
-  const g = new THREE.Group(), lift = 0.0215;
+  const g = new THREE.Group(), lift = mm(20 + 5), ri = mm(15), tube = mm(2);
   const pa = new THREE.Vector3(a.x, a.z + lift, a.y), pb = new THREE.Vector3(b.x, b.z + lift, b.y);
-  const len = pa.distanceTo(pb), mid = pa.clone().add(pb).multiplyScalar(0.5);
+  const len = pa.distanceTo(pb) + mm(6), mid = pa.clone().add(pb).multiplyScalar(0.5), dir = pb.clone().sub(pa).normalize();
   const beam = new THREE.Group(); beam.position.copy(mid); g.add(beam);
-  beam.quaternion.setFromUnitVectors(new THREE.Vector3(1, 0, 0), pb.clone().sub(pa).normalize());
+  beam.quaternion.setFromUnitVectors(new THREE.Vector3(1, 0, 0), dir);
   const amber = plastic(color, { transmission: 0.25, transparent: true, opacity: 0.85 });
-  withEdges(part(beam, box(len, 0.004, mm(16)), amber, 0, mm(8), 0));
-  for (const s of [1, -1]) withEdges(part(beam, box(len, mm(9), 0.0022), amber, 0, mm(3.5), s * mm(7)));
-  part(beam, box(len * 0.94, 0.0018, mm(7)), 0x2a2d31, 0, -0.0005, 0);
-  for (const s of [1, -1]) {
-    const x = s * (len / 2 - mm(3));
-    withEdges(part(beam, box(mm(8), mm(22), mm(22)), amber, x, mm(2), 0));
-    const r = part(beam, new THREE.TorusGeometry(mm(9), mm(2.2), 10, 28), amber, x + s * mm(4), -mm(6), 0); r.rotation.y = Math.PI / 2;
+  withEdges(part(beam, box(len, 0.003, mm(16)), amber, 0, mm(19), 0));
+  withEdges(part(beam, box(len, mm(15), 0.003), amber, 0, mm(10), 0));
+  part(beam, box(len, 0.002, mm(11)), amber, 0, mm(2.5), 0);
+  part(beam, box(len * 0.97, 0.0018, mm(7)), 0x2a2d31, 0, mm(0.9), 0);
+  // Hoops just outside each block face (2.5 mm into the gap), centred on the marble at
+  // the cup seat, with the buckle from the hoop's top up to the beam.
+  const flat = new THREE.Vector3(dir.x, 0, dir.z).normalize();
+  for (const [p, s] of [[a, 1], [b, -1]]) {
+    const cx = p.x + flat.x * s * mm(2.5), cz = p.y + flat.z * s * mm(2.5), cy = p.z + mm(10);
+    const ring = part(g, new THREE.TorusGeometry(ri + tube, tube, 10, 32), amber, cx, cy, cz);
+    ring.rotation.y = Math.atan2(flat.x, flat.z);
+    const top = p.z + lift + mm(20), bottom = cy + ri + 2 * tube;
+    withEdges(part(g, box(mm(8), top - bottom, mm(16)), amber, cx, (top + bottom) / 2, cz)).rotation.y = -Math.atan2(flat.z, flat.x);
   }
   return g;
 }
@@ -690,9 +750,11 @@ export function hangingBeam(a, b, color = 0xf2a81d) {
 function bridge() {
   // M-56 (uploads/M-56, trex_plans_01, trex_plans_02): straight see-through amber beam
   // between blocks three cells apart, sloping down one slot; a black magnet strip
-  // underneath, buckle rings at both ends. A metal marble is shown hanging under it.
-  const g = hangingBeam({ x: C * 0.5, y: 0, z: S * 0.7 }, { x: C * 2.5, y: 0, z: S * -0.3 });
-  const m = part(g, new THREE.SphereGeometry(0.0095, 20, 14), new THREE.MeshPhysicalMaterial({ color: 0xc9ced3, metalness: 0.9, roughness: 0.2 }), C * 1.4, S * 0.25 + 0.0095, 0);
+  // underneath, hoops at both ends. A metal marble is shown hanging under it.
+  // Ends where the engine puts them (the GLB's frame): the block faces at x 0.5 and 2.5,
+  // the marble's lowest point at the ports' heights, 0 and -1 slot.
+  const g = hangingBeam({ x: C * 0.5, y: 0, z: 0 }, { x: C * 2.5, y: 0, z: -S });
+  const m = part(g, new THREE.SphereGeometry(0.0095, 20, 14), new THREE.MeshPhysicalMaterial({ color: 0xc9ced3, metalness: 0.9, roughness: 0.2 }), C * 1.5, -S * 0.5 + mm(5) + 0.0095, 0);
   void m;
   return g;
 }
@@ -867,7 +929,75 @@ const MODELS = {
   'M-28': truck, 'M-56': bridge, 'M-57': () => legPart(false), 'M-58': dinoBody, 'M-59': () => legPart(true), 'M-60': liftPole, 'M-61': elevator,
 };
 
+// ---------------------------------------------------------------- Blender models
+// models/<name>.glb, built by tools/blender (docs/blender_models.md), in the record frame.
+// Materials are colour slots: body takes the set colour, shade a darker body, hole and
+// metal are fixed, c_rrggbb is that colour. Port empties (port_<id>) and the engine path
+// the model was swept along (marble_path, record axes) come along as userData.
+// A GLB with an animation (moving parts kept as their own nodes: scoop arms, a jaw, a
+// flap) plays it by time through userData.animate, which the library and the game call.
+const GLB = new Map(), CLIPS = new Map();
+
+export async function loadModels(base = '') {
+  try {
+    const { GLTFLoader } = await import('../../vendor/GLTFLoader.js');
+    const loader = new GLTFLoader();
+    const names = await fetch(`${base}models/index.json`).then((r) => (r.ok ? r.json() : []));
+    await Promise.all(names.map(async (name) => {
+      try {
+        const gl = await loader.loadAsync(`${base}models/${name}.glb`);
+        GLB.set(name, gl.scene);
+        if (gl.animations?.length) CLIPS.set(name, gl.animations);
+      } catch (e) { console.warn(`model ${name}:`, e.message); }
+    }));
+  } catch (e) { console.warn('Blender models not loaded, using the code models:', e.message); }
+  return [...GLB.keys()];
+}
+
+const glbName = (code, set) => (set && GLB.has(`${code}__${set}`) ? `${code}__${set}` : GLB.has(code) ? code : null);
+export const isBlenderModel = (code, set = null) => glbName(code, set) !== null;
+
+const slotMaterial = (name, color) => {
+  if (name === 'body') return plastic(hex(color));
+  if (name === 'shade') return plastic(hex(color).multiplyScalar(0.6));
+  if (name === 'hole') return new THREE.MeshStandardMaterial({ color: DARK, roughness: 0.9 });
+  if (name === 'metal') return new THREE.MeshPhysicalMaterial({ color: 0xc9ced3, metalness: 0.9, roughness: 0.2 });
+  // Clear plastic (the M-14 funnel): see-through, so the game draws it on its own.
+  if (name === 'glass') return new THREE.MeshPhysicalMaterial({ color: 0xffffff, roughness: 0.05, transparent: true, opacity: 0.32, side: THREE.DoubleSide, clearcoat: 1, envMapIntensity: 1.6, depthWrite: false });
+  if (/^c_[0-9a-f]{6}$/i.test(name)) return plastic(hex(`#${name.slice(2)}`));
+  return plastic(hex(color));
+};
+
+function fromGlb(name, color) {
+  const g = GLB.get(name).clone(), mats = new Map(), ports = {};
+  g.traverse((o) => {
+    if (o.isMesh) {
+      const key = o.material.name;
+      if (!mats.has(key)) mats.set(key, slotMaterial(key, color));
+      o.material = mats.get(key); o.castShadow = o.receiveShadow = true;
+      withEdges(o, 40);
+    } else if (o.name.startsWith('port_')) ports[o.name.slice(5)] = o.position.clone();
+  });
+  // A paddle wheel (M-12) is its own node, origin on its axle (record y): it turns.
+  const wheel = g.getObjectByName('paddles');
+  if (wheel) wheel.userData.animate = (t) => { wheel.rotation.z = -t * 1.2; };
+  const path = g.getObjectByName('marble_path')?.userData.points;
+  g.userData.ports = ports;
+  if (path) g.userData.path = Array.from({ length: path.length / 3 }, (_, i) => ({ x: path[3 * i], y: path[3 * i + 1], z: path[3 * i + 2] }));
+  g.userData.blender = name;
+  const clips = CLIPS.get(name);
+  if (clips) {
+    const mixer = new THREE.AnimationMixer(g), len = Math.max(...clips.map((c) => c.duration));
+    for (const c of clips) mixer.clipAction(c).play();
+    g.userData.animate = (t) => mixer.setTime(((t % len) + len) % len);
+    g.userData.animate(0);
+  }
+  return g;
+}
+
 export function modelFor(code, color = '#999999', set = null) {
+  const name = glbName(code, set);
+  if (name) return fromGlb(name, color);
   if (code[0] === 'B') return block(code, hex(color));
   if (code[0] === 'P') return plate(code, hex(color));
   if (code === 'M-10') return ramp(set ?? '5422');

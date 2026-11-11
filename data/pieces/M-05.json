@@ -80,7 +80,30 @@
       "to": "hole",
       "dropSlots": 1,
       "shape": "spiral",
-      "lengthCells": 0.75
+      "lengthCells": 0.75,
+      "via": [
+        [
+          0.37,
+          0,
+          0.68
+        ],
+        [
+          0.3,
+          0,
+          0.636
+        ],
+        [
+          0.25,
+          0,
+          0.636
+        ],
+        [
+          0,
+          0,
+          0.636
+        ]
+      ],
+      "viaBasis": "The funnel floor, measured on models/M-05.glb with tools/floor.mjs: flat at 0.636 slot (a vertical ray and a resting 20 mm marble agree) out to the hole, whose rim stands 0.25 cell from the middle; the floor is 2 mm under the 0.68 seat a track meets. The marble rolls off the arriving tongue (6 mm into the port, to 0.37 cell), down 2 mm onto that floor and along it to the middle, where it drops: a marble resting on the rim pivots into the hole (tools/floor.mjs contactLine finds every contact point on the rim), so from about 0.13 cell in it is falling (rule rests counts that as the start of the drop). Drawn at the 0.68 seat it rolled 2 mm over the plastic (round 3, rule rests)."
     }
   ],
   "physics": {

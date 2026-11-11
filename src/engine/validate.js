@@ -3,10 +3,19 @@
 // stacks hold what stands on them, the marble suits every piece, nothing collides.
 import { DIM, TRACKS, LIB, byKey, names, back } from '../catalog/parts.js';
 import { level } from '../catalog/frame.js';
-import { trackPath, postPath, coveredCells, standing, stackHeight } from './geometry.js';
+import { trackPath, postPath, coveredCells, standing, stackHeight, buildPath } from './geometry.js';
+import { tossShot } from './ballistic.js';
+import { runAfterProblems } from './runafter.js';
 import { portAt, cellsOf, feetOf, tallOf, frameFor } from './fit.js';
 import { leaves, enters } from './ports.js';
 import { routeProblems } from './routes.js';
+import { physicalProblems, RULES, checkAll, buildWorld } from './physical.js';
+import { judge } from './judge.js';
+
+// The five physical rules on the models' solids (physical.js) and judge() for any layout.
+// validate() runs them by default; { physical: false } leaves them out.
+export { RULES, checkAll, buildWorld, judge, physicalProblems };
+export const { overlaps, support, joints, freePath, rests, flights } = RULES;
 
 const block = (key) => LIB.blocks[key];
 
@@ -62,7 +71,7 @@ function checkPost(p, i, say) {
       else if (p.hIn - p.hOut !== sp.drop) say(`post ${i}: the spiral drops the wrong height`);
       if (h !== p.hIn || block(top)?.cross !== 'straight') say(`post ${i}: the spiral needs a plain stack as tall as its top`);
       const under = p.stack.at(-2);
-      if (!under || stackHeight(p.stack.slice(0, -1)) !== p.hOut || !(blockPasses(under, back(p.in), p.out) || (block(under)?.catcher && blockExits(under, p.out)))) say(`post ${i}: the block under the spiral cannot send the marble out that way`);
+      if (!under || stackHeight(p.stack.slice(0, -1)) !== p.hOut || !(blockPasses(under, back(p.tailFace ?? p.in), p.out) || (block(under)?.catcher && blockExits(under, p.out)))) say(`post ${i}: the block under the spiral cannot send the marble out that way`);
       if (p.out === back(p.in)) say(`post ${i}: the spiral would send the marble out under its own track`);
       return;
     }
@@ -83,7 +92,9 @@ function checkPost(p, i, say) {
       const r = checkFit(p.ramp, p.ramp.from, p.ramp.to, p, i, say, ramp), c = checkFit(p.catcher, p.catcher.from, p.catcher.to, p, i, say, ct);
       if (!r || !c) return;
       if (r.a.face !== back(p.in) || r.a.level !== p.hIn || !sameCell(r.a, p.entry)) say(`post ${i}: the track does not meet the ramp`);
-      if (Math.abs(r.b.z - c.a.z) > 0.26) say(`post ${i}: the catcher is not level with the lip`);
+      // The catcher stands on whole blocks, within a slot of the lip's height; whether the
+      // marble's arc reaches its mouth is the flights rule's (physical.js).
+      if (Math.abs(r.b.z - c.a.z) > 1) say(`post ${i}: the catcher is more than a slot off the lip's height`);
       const dx = c.a.x - r.b.x, dy = c.a.y - r.b.y, [ax, ay] = [[1, 0], [0, 1], [-1, 0], [0, -1]][p.in];
       if (dx * ax + dy * ay < -0.01 || Math.abs(dx * ay - dy * ax) > 0.01) say(`post ${i}: the catcher is not in front of the lip`);
       if (p.drops) {
@@ -98,8 +109,8 @@ function checkPost(p, i, say) {
       const ends = checkFit(p.fit, p.fit.from, p.fit.to, p, i, say, st);
       if (!ends) return;
       if (ends.a.face !== back(p.in) || ends.a.level !== p.hIn) say(`post ${i}: the track does not meet the launcher`);
-      const mouth = frameFor(p.hood.key).ports[p.hood.from];
-      if (Math.abs(ends.b.z - st.drop - mouth.z - p.hood.base) > 0.6) say(`post ${i}: the catcher is not where the throw goes`);
+      // The throw flies along the launcher's aim (ballistic.js); it must enter the hood's mouth.
+      if (!tossShot({ ...p.fit, from: st.from, to: st.to }, { ...p.hood, from: p.hood.from }).hit) say(`post ${i}: the launcher is not aimed at the hood: the throw misses its mouth`);
       if (h !== p.hood.base || !block(top)?.catcher || !blockExits(top, p.out) || p.hOut !== h) say(`post ${i}: the tower under the catcher is wrong`);
       checkStands(p.fit, p.stands, say, i);
       return;
@@ -127,11 +138,17 @@ function checkPost(p, i, say) {
 
 const TOPSOK = (top, p) => block(top)?.cross === (p.in === p.out ? 'straight' : 'corner');
 
+// The marble types a run uses: the track's list, else its one marble.
+export const marblesOf = (track) => (track.marbles?.length ? track.marbles : [track.marble ?? 'plain']);
+
 // Pieces the run's marble must suit.
 const metalPieces = (track) => [...track.segs.map((s) => s.code), ...track.posts.flatMap((p) => [p.fit, p.ramp, p.catcher, p.hood].filter(Boolean).map((f) => f.key))]
   .filter((k) => byKey(k)?.physics?.needsMetalMarble);
 
-export function validate(track, floorCells) {
+// physical: the five rules on the models' plastic (physical.js). runAfter: the run after
+// a strong launcher (runafter.js), Joey's rule for every generated track; VTech's own
+// published layouts are checked without it where they break it (tests/official.test.js).
+export function validate(track, floorCells, { physical = true, runAfter = true } = {}) {
   const problems = [], say = (m) => problems.push(m);
   track.segs.forEach((seg, i) => {
     const from = track.posts[i], to = track.posts[i + 1];
@@ -142,11 +159,18 @@ export function validate(track, floorCells) {
   });
   track.posts.forEach((p, i) => { if (i > 0 || p.kind !== 'station') checkPost(p, i, say); else checkPost({ ...p, first: true }, i, say); });
   if (track.posts.at(-1).kind !== 'end') say('the run has no end piece');
-  const metal = metalPieces(track);
-  if (metal.length && track.marble !== 'metal') say(`only a metal marble works ${[...new Set(metal)].join(', ')}`);
+  // Every route must work for every marble the run uses (D5): a piece that holds only a
+  // metal marble drops a plain one; a store keeps marbles until a metal one triggers it.
+  const marbles = marblesOf(track);
+  for (const k of new Set(metalPieces(track))) {
+    const stores = byKey(k)?.physics?.energy === 'stores';
+    if (stores ? !marbles.includes('metal') : marbles.some((m) => m !== 'metal')) say(`${stores ? 'a metal marble must trigger' : 'only a metal marble works'} ${byKey(k)?.code ?? k}`);
+  }
   if (floorCells) for (const [c, r] of standing(track)) if (!floorCells.some(([x, y]) => x === c && y === r)) say(`nothing under ${c},${r}`);
   problems.push(...collisions(track));
   problems.push(...routeProblems(track));
+  if (physical) problems.push(...physicalProblems(track));
+  if (runAfter) problems.push(...runAfterProblems(track.posts, buildPath(track)));
   return [...new Set(problems)];
 }
 

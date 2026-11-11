@@ -1,6 +1,6 @@
 // Turns a finished track into steps a parent and a four-year-old can follow.
 import { TRACKS, COLOR_WORDS, LIB, spokenName, byKey } from '../catalog/parts.js';
-import { standing } from '../engine/geometry.js';
+import { standing, placements } from '../engine/geometry.js';
 import { tile } from '../engine/floor.js';
 
 const word = (hex) => COLOR_WORDS[hex] ?? '';
@@ -46,9 +46,22 @@ export function makeSteps(track, placed, floor) {
     const at = here.find((p) => p.c !== null && p.seg === undefined);
     steps.push({ kind: 'run', stage: g + 2, post: g, items, line: line.join(' '), cell: at ? [Math.round(at.c), Math.round(at.r)] : null });
   }
-  const start = byKey(track.posts[0].piece);
-  steps.push({ kind: 'done', items: [], line: `You did it! Put a marble in the ${(start.names?.spoken ?? 'start').replace(/^the /, '')} and let go!` });
+  const start = byKey(track.posts[0].piece), marbles = marbleTypesOf(track);
+  steps.push({ kind: 'done', items: marbles.map((t) => ({ code: `marble_${t}`, color: t === 'metal' ? '#c9ccd2' : '#e0262c', set: null, count: 1 })), marbles, line: marbleLine(track, marbles, (start.names?.spoken ?? 'start').replace(/^the /, '')) });
   return steps;
+}
+
+const marbleTypesOf = (track) => (track.marbles?.length ? track.marbles : [track.marble ?? 'plain']);
+const marbleWord = (type) => spokenName(`marble_${type}`).replace(/^the /, '');
+// Which marbles to use, in words a four-year-old understands spoken aloud (D5). With both
+// kinds, the plain ones go first and a magnet marble last: a magnet trigger on the run
+// (the T-Rex) keeps the plain ones until a magnet marble wakes it up.
+function marbleLine(track, marbles, startName) {
+  const [only] = marbles;
+  if (marbles.length === 1) return `You did it! Put a ${marbleWord(only)} in the ${startName} and let go!`;
+  const store = placements(track).map((p) => byKey(p.key)).find((r) => r?.physics?.needsMetalMarble && r.physics.energy === 'stores');
+  const wake = store ? ` It wakes up the ${(store.names?.spoken ?? store.code).replace(/^the /, '')}!` : '';
+  return `You did it! Put a ${marbleWord('plain')} in the ${startName} and let go. Then send a shiny ${marbleWord('metal')}, last.${wake}`;
 }
 
 export const cellName = (c, r, b) => `${String.fromCharCode(65 + r - b.r0)}${c - b.c0 + 1}`;

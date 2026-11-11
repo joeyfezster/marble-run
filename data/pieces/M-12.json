@@ -21,11 +21,11 @@
     ],
     "heightSlots": 1,
     "sizeMm": [
-      190,
-      62,
+      115,
+      34,
       75
     ],
-    "sizeBasis": "Estimated, not measured: cell about 62 mm and slot about 47 mm, from block width against a hand and marbles (IMG_0951, IMG_0952) and the plan drawing proportion slot/cell about 0.76. src/catalog/parts.js uses a 50 mm cell, also an estimate. Ratios to cell and slot are better known than the millimetres."
+    "sizeBasis": "Length measured on reference/uploads/M-12_1793563400741.jpg against the light-blue blocks beside it: the chute, tongue to tongue, is about 2.5 block widths (about 115 mm at 45 mm a cell), its high end clipped to a block one slot above its low end. Width from the channel against a marble; height includes the paddle wheel. No ruler; +-10%."
   },
   "ports": [
     {
@@ -99,6 +99,10 @@
     {
       "source": "reference/uploads/M-12_1793563400741.jpg",
       "shows": "Real piece: straight in plan, steep drop then a flat run-out, paddle wheel on a bridge at the bend"
+    },
+    {
+      "source": "reference/uploads/M-12_1793563400741.jpg (measured 2026-11-07)",
+      "shows": "Chute about 2.5 block widths long overall; the old 190 mm came from a 62 mm cell estimate. A tall flat side panel over the steep part, a bracket over the bend carrying a four-bladed curved orange wheel, a flat run-out with lower walls ending in a hooked tongue."
     }
   ],
   "confidence": {

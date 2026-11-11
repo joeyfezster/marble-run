@@ -19,7 +19,15 @@ export function facesOf(port) {
   return FACE[f] === undefined ? [] : [FACE[f]];
 }
 
+// One height convention for a side port (a track end, port hole or cup facing a side):
+// its z names the track level it meets, and the marble rolls on that level's seat, SEAT
+// under it. A record may write z as the seat itself (a block cup, k + 0.68) or as the
+// level (k, the Blender scripts read it the same way); both name one floor. Any other z
+// says neither, and such a port meets no track (onLevel).
 export const level = (z) => Math.round(z + SEAT);
+export const seatOf = (z) => level(z) - SEAT;
+export const LEVEL_TOL = 0.066; // slots, 3 mm
+export const onLevel = (z) => Math.abs(z - seatOf(z)) < LEVEL_TOL || Math.abs(z - level(z)) < LEVEL_TOL;
 export const rotFace = (f, rot) => (f + rot) % 4;
 
 export function rotXY([x, y], rot) {

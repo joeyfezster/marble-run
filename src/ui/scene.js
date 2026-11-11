@@ -3,9 +3,30 @@ import * as THREE from '../../vendor/three.module.min.js';
 import { OrbitControls } from '../../vendor/OrbitControls.js';
 import { RoomEnvironment } from '../../vendor/RoomEnvironment.js';
 import { DIM, TRACKS, spokenName, byKey } from '../catalog/parts.js';
+import { fitPath } from './pathfit.js';
+import { marbleAt } from './marbleat.js';
 import { modelFor, trackModel, trackOpts, plastic, SPIRAL_OPTS, hangingBeam } from './models.js';
 
-const SKY = 0xd3edfb, MARBLE = 0.01;
+const SKY = 0xd3edfb, MARBLE = 0.01, MARBLE_GAP = 0.9; // s between one marble and the next
+
+// A marble of one type: the Blender model when it loaded, else a plain red marble with a
+// white stripe or a shiny metal one.
+function makeMarble(type) {
+  const glb = modelFor(`marble_${type}`, type === 'metal' ? '#c9ccd2' : '#e0262c');
+  let g = null;
+  if (glb) {
+    // Rolled about its middle, wherever the model's origin sits.
+    glb.position.sub(new THREE.Box3().setFromObject(glb).getCenter(new THREE.Vector3()));
+    g = new THREE.Group(); g.add(glb);
+  }
+  const m = g ?? new THREE.Mesh(new THREE.SphereGeometry(MARBLE, 32, 24), type === 'metal'
+    ? new THREE.MeshPhysicalMaterial({ color: 0xc9ccd2, metalness: 0.9, roughness: 0.18 })
+    : plastic(0xe0262c, { roughness: 0.12, clearcoat: 1 }));
+  if (!g) m.add(new THREE.Mesh(new THREE.TorusGeometry(MARBLE * 1.0, 0.0016, 8, 32), new THREE.MeshStandardMaterial({ color: type === 'metal' ? 0x2a6fd6 : 0xffffff })));
+  m.traverse((o) => { o.castShadow = true; });
+  m.visible = false;
+  return m;
+}
 
 // ---------------------------------------------------------------- batching
 // A long track is thousands of small meshes. Every part that never moves is copied
@@ -167,7 +188,8 @@ export const pieceObject = (code, color, set) => modelFor(code, color, set);
 
 export class PieceViewer {
   constructor(canvas) {
-    const r = this.renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+    // The library copies each preview off this canvas, so it must keep what it drew.
+    const r = this.renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true, preserveDrawingBuffer: true });
     r.toneMapping = THREE.ACESFilmicToneMapping; r.toneMappingExposure = 0.72; r.setPixelRatio(Math.min(devicePixelRatio, 2));
     this.scene = new THREE.Scene();
     this.scene.environment = new THREE.PMREMGenerator(r).fromScene(new RoomEnvironment(), 0.03).texture;
@@ -219,11 +241,10 @@ export class World {
     this.scene.add(ground);
     this.root = new THREE.Group(); this.scene.add(this.root);
     this.kinds = new Map(); this.batches = []; this.groups = [];
-    this.marble = new THREE.Mesh(new THREE.SphereGeometry(MARBLE, 32, 24), plastic(0xe0262c, { roughness: 0.12, clearcoat: 1 }));
-
-    const stripe = new THREE.Mesh(new THREE.TorusGeometry(MARBLE * 1.0, 0.0016, 8, 32), new THREE.MeshStandardMaterial({ color: 0xffffff }));
-    this.marble.add(stripe); this.marble.castShadow = true; this.marble.visible = false;
-    this.scene.add(this.marble);
+    // One marble of each type a run uses (D5): a plain one and a magnet one look different.
+    this.marbles = new Map(['plain', 'metal'].map((type) => [type, makeMarble(type)]));
+    for (const m of this.marbles.values()) this.scene.add(m);
+    this.marble = this.marbles.get('plain');
     this.rain = [];
     this.thumbs = new Map();
     addEventListener('resize', () => this.resize());
@@ -258,9 +279,26 @@ export class World {
     if (this.kinds.has(key)) return this.kinds.get(key);
     const obj = modelFor(code, color, set);
     if (!obj) return null;
+    const path = obj.userData.path;
     const k = splitModel(obj);
+    k.path = path;
     if (!k.rest) { k.shared = true; this.kinds.set(key, k); }
     return k;
+  }
+
+  // A Blender track or spiral is swept along the engine's own path in its record frame
+  // (models.js userData.path). This finds the quarter turn and mirror that lay that path
+  // on the game's path for one piece; null when no pose fits within 1.5 mm, and the
+  // piece is then swept along the game's path as before.
+  fitted(code, color, pts) {
+    const k = this.kind(code, color, null);
+    // A kind with moving parts (a paddle wheel) is built fresh for each piece, so it fits too.
+    if (!k?.path) return null;
+    const f = fitPath(k.path, pts);
+    if (!f) return null;
+    const at = new THREE.Object3D();
+    at.position.set(f.t.x, f.t.z, f.t.y); at.rotation.set(0, -f.r * (Math.PI / 2), 0); at.scale.set(1, 1, f.m);
+    return { k, at };
   }
 
   // Queues a model's parts for batching at pose `at` (an Object3D giving position and
@@ -269,7 +307,7 @@ export class World {
     at.updateMatrix();
     this.pending.push({ step: g.userData.step, label, k, matrix: at.matrix.clone() });
     if (!k.shared) this.oneOff.push(...[...k.parts, ...k.lines].map((x) => x.geo));
-    if (k.rest) { k.rest.position.copy(at.position); k.rest.quaternion.copy(at.quaternion); k.rest.userData.label = label; g.add(k.rest); }
+    if (k.rest) { k.rest.position.copy(at.position); k.rest.quaternion.copy(at.quaternion); k.rest.scale.copy(at.scale); k.rest.userData.label = label; g.add(k.rest); }
   }
 
   // Builds the batches from everything queued, in build-step order.
@@ -329,8 +367,9 @@ export class World {
     const floorG = this.group(0), at = new THREE.Object3D();
     const pose = (x, y, z, ry = 0) => { at.position.set(x, y, z); at.rotation.set(0, ry, 0); return at; };
     for (const p of floor.plates) {
-      const k = this.kind(p.code, p.color);
-      if (p.w < p.d) pose(p.c * DIM.cell, 0, p.r * DIM.cell, -Math.PI / 2); else pose(p.c * DIM.cell, 0, p.r * DIM.cell);
+      // A plate model's origin is its centre (the record's frame).
+      const k = this.kind(p.code, p.color), cx = (p.c + (p.w - 1) / 2) * DIM.cell, cz = (p.r + (p.d - 1) / 2) * DIM.cell;
+      pose(cx, 0, cz, p.w < p.d ? -Math.PI / 2 : 0);
       this.place(floorG, k, at, `${p.code} floor plate`);
     }
     const groups = new Map();
@@ -340,15 +379,21 @@ export class World {
       if (p.seg !== undefined) {
         const pts = points.filter((q) => q.piece === `t${p.seg}`);
         if (pts.length < 3) continue;
-        // A piece the marble hangs under (a magnet beam) is drawn above the path, not under it.
-        const m = byKey(p.key)?.physics?.marbleHangs
+        const hangs = byKey(p.key)?.physics?.marbleHangs;
+        // A Blender model built on the engine's path (a hanging piece's beam rides above it).
+        const fit = this.fitted(p.code, p.color ?? '#b9bdc2', pts);
+        if (fit) { this.place(g, fit.k, fit.at, `${p.code} ${TRACKS[p.code].name}`); continue; }
+        // Otherwise a piece the marble hangs under (a magnet beam) is drawn above the path, not under it.
+        const m = hangs
           ? hangingBeam(pts[0], pts.at(-1), p.color ?? '#f2a81d')
           : trackModel(pts, p.color ?? '#b9bdc2', trackOpts(p.code));
         this.place(g, splitModel(m), pose(0, 0, 0), `${p.code} ${TRACKS[p.code].name}`);
         continue;
       }
       if (p.spiral) {
-        // Drawn along the marble's own path, so the two can never disagree.
+        // The Blender band when it lies on the marble's path, else swept along that path.
+        const fit = this.fitted(p.code, p.color ?? '#a9adb2', points.filter((q) => q.piece === p.spiral));
+        if (fit) { this.place(g, fit.k, fit.at, `${p.code} ${spokenName(p.code)}`); continue; }
         const m = trackModel(points.filter((q) => q.piece === p.spiral), p.color ?? '#a9adb2', { ...SPIRAL_OPTS, mirror: (p.spiralSide ?? 1) > 0 });
         this.place(g, splitModel(m), pose(0, 0, 0), `${p.code} ${spokenName(p.code)}`);
         continue;
@@ -435,14 +480,19 @@ export class World {
     }
   }
 
-  drop(trace, speed, onPiece, onDone) {
-    this.run = { trace, speed, i: 0, t: 0, last: null, onPiece, onDone };
+  // Drops one marble of each type in `types`, one after another down the same run (plain
+  // first, a magnet marble last: it is the one that fires a magnet trigger). onPiece
+  // hears the first marble; onDone fires when the last one has finished.
+  drop(trace, speed, onPiece, onDone, types = ['plain']) {
+    const order = ['plain', 'metal'].filter((t) => types.includes(t));
+    this.runs = (order.length ? order : ['plain']).map((type, k) => ({ type, mesh: this.marbles.get(type), trace, speed, i: 0, t: -k * MARBLE_GAP, last: null }));
+    this.run = { onPiece, onDone };
     this.controls.autoRotate = false;
-    this.marble.visible = true;
-    this.marble.quaternion.identity();
+    for (const m of this.marbles.values()) m.visible = false;
+    for (const r of this.runs) r.mesh.quaternion.identity();
   }
 
-  stopRun() { this.run = null; this.marble.visible = false; this.requestRender(); }
+  stopRun() { this.run = null; this.runs = []; for (const m of this.marbles.values()) m.visible = false; this.requestRender(); }
 
   celebrate() {
     const colors = [0xe0262c, 0x1468b8, 0xf7c600, 0x43a93a, 0xf07f1e], { c, s } = this.bounds;
@@ -480,19 +530,22 @@ export class World {
     this.dirty = false;
     const run = this.run;
     if (run) {
-      run.t += dt * run.speed;
-      const tr = run.trace;
-      while (run.i < tr.length - 1 && tr[run.i + 1].t <= run.t) run.i++;
-      const a = tr[run.i], b = tr[Math.min(run.i + 1, tr.length - 1)], f = b.t > a.t ? Math.min(1, (run.t - a.t) / (b.t - a.t)) : 0;
-      const p = new THREE.Vector3(a.x + (b.x - a.x) * f, a.z + (b.z - a.z) * f + MARBLE + 0.001, a.y + (b.y - a.y) * f);
-      const d = p.clone().sub(this.marble.position);
-      if (d.length() > 1e-6 && d.length() < 0.2) {
-        const axis = new THREE.Vector3(d.z, 0, -d.x);
-        if (axis.lengthSq() > 1e-10) this.marble.rotateOnWorldAxis(axis.normalize(), d.length() / MARBLE);
+      for (const [k, m] of (this.runs ?? []).entries()) {
+        m.t += dt * m.speed;
+        if (m.t < 0) continue;
+        const tr = m.trace, mesh = m.mesh, at = marbleAt(tr, m.t, m.i), a = tr[at.i];
+        m.i = at.i;
+        const p = new THREE.Vector3(at.at[0], at.at[2], at.at[1]);
+        const d = p.clone().sub(mesh.position);
+        if (mesh.visible && d.length() > 1e-6 && d.length() < 0.2) {
+          const axis = new THREE.Vector3(d.z, 0, -d.x);
+          if (axis.lengthSq() > 1e-10) mesh.rotateOnWorldAxis(axis.normalize(), d.length() / MARBLE);
+        }
+        mesh.position.copy(p); mesh.visible = true;
+        if (k === 0 && a.piece !== m.last) { m.last = a.piece; run.onPiece?.(a.piece); }
+        m.done = m.i >= tr.length - 1;
       }
-      this.marble.position.copy(p);
-      if (a.piece !== run.last) { run.last = a.piece; run.onPiece?.(a.piece); }
-      if (run.i >= tr.length - 1) { const done = run.onDone; this.run = null; done?.(); }
+      if ((this.runs ?? []).every((m) => m.done)) { const done = run.onDone; this.run = null; done?.(); }
     }
     if (this.rain.length) {
       for (const m of this.rain) {

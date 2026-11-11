@@ -1,0 +1,545 @@
+{
+ "about": "How deep each pair of models goes into the other where the builders seat them, on the models' triangles: mm (the overlap's thickness) and mm3 (the volume both fill, 2 mm grid). Written by tools/seats.mjs; src/engine/physical.js holds every pair to its seat. Each seat over the skin is an open model fault: docs/physics_rework.md, round 4. Measured 2026-11-10 on 76 tracks (sweep seeds 1 to 2, the fixtures and VTech's layouts).",
+ "pairs": {
+  "B-01|B-01": {
+   "mm": 1.4,
+   "mm3": 568,
+   "seen": 994,
+   "deepestIn": "both sets/household exclusions/1/2: B-01 (step 12) and B-01 (step 12)"
+  },
+  "B-01|B-02": {
+   "mm": 1.4,
+   "mm3": 672,
+   "seen": 278,
+   "deepestIn": "both sets/household exclusions/0/2: B-01 (step 2) and B-02 (step 2)"
+  },
+  "B-01|B-03": {
+   "mm": 1.2,
+   "mm3": 568,
+   "seen": 4,
+   "deepestIn": "fixture T-Rex alone/0/8: B-03 (step 4) and B-01 (step 4)"
+  },
+  "B-01|B-05": {
+   "mm": 1.4,
+   "mm3": 568,
+   "seen": 60,
+   "deepestIn": "both sets/household exclusions/0/1: B-01 (step 4) and B-05 (step 4)"
+  },
+  "B-01|M-01": {
+   "mm": 0.6,
+   "mm3": 544,
+   "seen": 23,
+   "deepestIn": "both sets/household exclusions/0/1: B-01 (step 1) and M-01 (step 1)"
+  },
+  "B-01|M-02": {
+   "mm": 1.6,
+   "mm3": 2536,
+   "seen": 4,
+   "deepestIn": "both sets/nothing put aside/1/1: B-01 (step 4) and M-02 (step 4)"
+  },
+  "B-01|M-04__5422": {
+   "mm": 1,
+   "mm3": 112,
+   "seen": 43,
+   "deepestIn": "both sets/household exclusions/0/1: M-04 (step 2) and B-01 (step 2)"
+  },
+  "B-01|M-04__5716": {
+   "mm": 1.4,
+   "mm3": 856,
+   "seen": 96,
+   "deepestIn": "both sets/household exclusions/0/2: M-04 (step 1) and B-01 (step 1)"
+  },
+  "B-01|M-07": {
+   "mm": 0.8,
+   "mm3": 640,
+   "seen": 73,
+   "deepestIn": "both sets/household exclusions/0/1: B-01 (step 8) and M-07 (step 8)"
+  },
+  "B-01|M-10__5422": {
+   "mm": 0.5,
+   "mm3": 472,
+   "seen": 12,
+   "deepestIn": "both sets/nothing put aside/1/1: B-01 (step 2) and M-10 (step 2)"
+  },
+  "B-01|M-10__5716": {
+   "mm": 0.9,
+   "mm3": 488,
+   "seen": 34,
+   "deepestIn": "both sets/household exclusions/0/1: B-01 (step 2) and M-10 (step 2)"
+  },
+  "B-01|M-11": {
+   "mm": 0.6,
+   "mm3": 360,
+   "seen": 12,
+   "deepestIn": "both sets/nothing put aside/1/1: B-01 (step 2) and M-11 (step 2)"
+  },
+  "B-01|M-12": {
+   "mm": 0.7,
+   "mm3": 328,
+   "seen": 5,
+   "deepestIn": "both sets/household exclusions/0/2: B-01 (step 4) and M-12 (track 4)"
+  },
+  "B-01|M-13": {
+   "mm": 1,
+   "mm3": 536,
+   "seen": 1,
+   "deepestIn": "VTech Launchpad Level 3 rocket: B-01 (step 3) and M-13 (step 3)"
+  },
+  "B-01|M-14": {
+   "mm": 0.6,
+   "mm3": 504,
+   "seen": 33,
+   "deepestIn": "both sets/household exclusions/0/2: B-01 (step 1) and M-14 (step 1)"
+  },
+  "B-01|M-28": {
+   "mm": 1,
+   "mm3": 632,
+   "seen": 46,
+   "deepestIn": "both sets/household exclusions/2/2: B-01 (step 12) and M-28 (step 12)"
+  },
+  "B-01|M-57": {
+   "mm": 1.2,
+   "mm3": 440,
+   "seen": 22,
+   "deepestIn": "both sets/household exclusions/0/1: B-01 (step 2) and M-57 (step 2)"
+  },
+  "B-01|M-58": {
+   "mm": 1,
+   "mm3": 1624,
+   "seen": 17,
+   "deepestIn": "both sets/household exclusions/0/1: B-01 (step 2) and M-58 (step 2)"
+  },
+  "B-01|M-59": {
+   "mm": 1,
+   "mm3": 448,
+   "seen": 22,
+   "deepestIn": "both sets/household exclusions/0/1: B-01 (step 2) and M-59 (step 2)"
+  },
+  "B-01|T-02": {
+   "mm": 0.7,
+   "mm3": 184,
+   "seen": 29,
+   "deepestIn": "both sets/household exclusions/1/1: B-01 (step 3) and T-02 (track 3)"
+  },
+  "B-01|T-03": {
+   "mm": 0.7,
+   "mm3": 184,
+   "seen": 196,
+   "deepestIn": "both sets/household exclusions/0/1: B-01 (step 7) and T-03 (track 7)"
+  },
+  "B-01|T-04": {
+   "mm": 0.7,
+   "mm3": 240,
+   "seen": 62,
+   "deepestIn": "both sets/household exclusions/0/2: B-01 (step 4) and T-04 (track 3)"
+  },
+  "B-01|T-05": {
+   "mm": 0.7,
+   "mm3": 184,
+   "seen": 23,
+   "deepestIn": "both sets/nothing put aside/1/1: B-01 (step 10) and T-05 (track 10)"
+  },
+  "B-01|T-06": {
+   "mm": 0.8,
+   "mm3": 200,
+   "seen": 231,
+   "deepestIn": "both sets/household exclusions/1/1: B-01 (step 5) and T-06 (track 5)"
+  },
+  "B-01|T-07": {
+   "mm": 0.8,
+   "mm3": 200,
+   "seen": 23,
+   "deepestIn": "both sets/household exclusions/0/1: B-01 (step 6) and T-07 (track 6)"
+  },
+  "B-01|T-08": {
+   "mm": 0.7,
+   "mm3": 272,
+   "seen": 150,
+   "deepestIn": "both sets/household exclusions/0/2: B-01 (step 3) and T-08 (track 2)"
+  },
+  "B-01|T-17": {
+   "mm": 0.8,
+   "mm3": 440,
+   "seen": 44,
+   "deepestIn": "both sets/household exclusions/1/2: B-01 (step 12) and T-17 (step 12)"
+  },
+  "B-02|B-02": {
+   "mm": 1.4,
+   "mm3": 672,
+   "seen": 19,
+   "deepestIn": "both sets/household exclusions/2/2: B-02 (step 14) and B-02 (step 14)"
+  },
+  "B-02|B-03": {
+   "mm": 1.4,
+   "mm3": 672,
+   "seen": 87,
+   "deepestIn": "both sets/household exclusions/0/2: B-02 (step 2) and B-03 (step 2)"
+  },
+  "B-02|B-04": {
+   "mm": 1.4,
+   "mm3": 672,
+   "seen": 84,
+   "deepestIn": "both sets/household exclusions/1/2: B-02 (step 4) and B-04 (step 4)"
+  },
+  "B-02|B-05": {
+   "mm": 1.4,
+   "mm3": 648,
+   "seen": 14,
+   "deepestIn": "both sets/household exclusions/2/2: B-02 (step 18) and B-05 (step 18)"
+  },
+  "B-02|M-05": {
+   "mm": 0.6,
+   "mm3": 720,
+   "seen": 35,
+   "deepestIn": "both sets/nothing put aside/2/1: B-02 (step 6) and M-05 (step 6)"
+  },
+  "B-02|M-06": {
+   "mm": 0.5,
+   "mm3": 296,
+   "seen": 18,
+   "deepestIn": "both sets/nothing put aside/1/1: B-02 (step 4) and M-06 (step 4)"
+  },
+  "B-02|M-12": {
+   "mm": 0.7,
+   "mm3": 328,
+   "seen": 6,
+   "deepestIn": "both sets/household exclusions/2/1: B-02 (step 6) and M-12 (track 6)"
+  },
+  "B-02|M-28": {
+   "mm": 1,
+   "mm3": 760,
+   "seen": 2,
+   "deepestIn": "both sets/nothing put aside/2/1: B-02 (step 8) and M-28 (step 8)"
+  },
+  "B-02|T-02": {
+   "mm": 0.7,
+   "mm3": 184,
+   "seen": 12,
+   "deepestIn": "Launchpad alone/household exclusions/0/1: B-02 (step 2) and T-02 (track 2)"
+  },
+  "B-02|T-03": {
+   "mm": 0.7,
+   "mm3": 184,
+   "seen": 43,
+   "deepestIn": "both sets/household exclusions/1/2: B-02 (step 4) and T-03 (track 4)"
+  },
+  "B-02|T-04": {
+   "mm": 0.7,
+   "mm3": 184,
+   "seen": 24,
+   "deepestIn": "both sets/household exclusions/2/1: B-02 (step 19) and T-04 (track 19)"
+  },
+  "B-02|T-05": {
+   "mm": 0.7,
+   "mm3": 176,
+   "seen": 15,
+   "deepestIn": "both sets/household exclusions/2/1: B-02 (step 4) and T-05 (track 4)"
+  },
+  "B-02|T-06": {
+   "mm": 0.8,
+   "mm3": 200,
+   "seen": 52,
+   "deepestIn": "both sets/household exclusions/2/1: B-02 (step 17) and T-06 (track 17)"
+  },
+  "B-02|T-07": {
+   "mm": 0.8,
+   "mm3": 200,
+   "seen": 16,
+   "deepestIn": "both sets/household exclusions/1/1: B-02 (step 4) and T-07 (track 4)"
+  },
+  "B-02|T-08": {
+   "mm": 0.6,
+   "mm3": 216,
+   "seen": 52,
+   "deepestIn": "both sets/household exclusions/0/2: B-02 (step 2) and T-08 (track 2)"
+  },
+  "B-03|B-05": {
+   "mm": 1.4,
+   "mm3": 568,
+   "seen": 5,
+   "deepestIn": "T-Rex alone/household exclusions/2/2: B-03 (step 12) and B-05 (step 12)"
+  },
+  "B-03|M-12": {
+   "mm": 0.5,
+   "mm3": 216,
+   "seen": 8,
+   "deepestIn": "both sets/household exclusions/1/2: B-03 (step 10) and M-12 (track 9)"
+  },
+  "B-03|T-02": {
+   "mm": 0.7,
+   "mm3": 160,
+   "seen": 1,
+   "deepestIn": "T-Rex alone/nothing put aside/1/1: B-03 (step 6) and T-02 (track 5)"
+  },
+  "B-03|T-03": {
+   "mm": 0.7,
+   "mm3": 184,
+   "seen": 12,
+   "deepestIn": "both sets/household exclusions/2/2: B-03 (step 8) and T-03 (track 7)"
+  },
+  "B-03|T-04": {
+   "mm": 0.7,
+   "mm3": 240,
+   "seen": 6,
+   "deepestIn": "both sets/nothing put aside/2/1: B-03 (step 7) and T-04 (track 6)"
+  },
+  "B-03|T-05": {
+   "mm": 0.7,
+   "mm3": 184,
+   "seen": 11,
+   "deepestIn": "both sets/household exclusions/2/1: B-03 (step 5) and T-05 (track 4)"
+  },
+  "B-03|T-06": {
+   "mm": 0.8,
+   "mm3": 200,
+   "seen": 20,
+   "deepestIn": "both sets/household exclusions/2/1: B-03 (step 21) and T-06 (track 20)"
+  },
+  "B-03|T-07": {
+   "mm": 0.8,
+   "mm3": 200,
+   "seen": 9,
+   "deepestIn": "both sets/household exclusions/2/2: B-03 (step 4) and T-07 (track 3)"
+  },
+  "B-03|T-08": {
+   "mm": 0.7,
+   "mm3": 272,
+   "seen": 18,
+   "deepestIn": "both sets/household exclusions/0/2: B-03 (step 2) and T-08 (track 1)"
+  },
+  "B-04|B-05": {
+   "mm": 1.2,
+   "mm3": 568,
+   "seen": 3,
+   "deepestIn": "both sets/household exclusions/2/2: B-04 (step 24) and B-05 (step 24)"
+  },
+  "B-04|T-02": {
+   "mm": 0.7,
+   "mm3": 160,
+   "seen": 6,
+   "deepestIn": "both sets/household exclusions/1/1: B-04 (step 4) and T-02 (track 3)"
+  },
+  "B-04|T-03": {
+   "mm": 0.7,
+   "mm3": 184,
+   "seen": 18,
+   "deepestIn": "Launchpad alone/household exclusions/0/2: B-04 (step 5) and T-03 (track 4)"
+  },
+  "B-04|T-04": {
+   "mm": 0.7,
+   "mm3": 240,
+   "seen": 10,
+   "deepestIn": "both sets/household exclusions/2/2: B-04 (step 3) and T-04 (track 2)"
+  },
+  "B-04|T-05": {
+   "mm": 0.6,
+   "mm3": 176,
+   "seen": 4,
+   "deepestIn": "both sets/household exclusions/1/2: B-04 (step 4) and T-05 (track 3)"
+  },
+  "B-04|T-06": {
+   "mm": 0.8,
+   "mm3": 200,
+   "seen": 24,
+   "deepestIn": "both sets/household exclusions/0/1: B-04 (step 5) and T-06 (track 4)"
+  },
+  "B-04|T-07": {
+   "mm": 0.8,
+   "mm3": 200,
+   "seen": 3,
+   "deepestIn": "both sets/household exclusions/2/1: B-04 (step 4) and T-07 (track 3)"
+  },
+  "B-04|T-08": {
+   "mm": 0.7,
+   "mm3": 272,
+   "seen": 17,
+   "deepestIn": "both sets/household exclusions/2/2: B-04 (step 15) and T-08 (track 14)"
+  },
+  "B-05|M-12": {
+   "mm": 0.7,
+   "mm3": 320,
+   "seen": 6,
+   "deepestIn": "both sets/household exclusions/1/2: B-05 (step 9) and M-12 (track 9)"
+  },
+  "B-05|T-02": {
+   "mm": 0.7,
+   "mm3": 176,
+   "seen": 6,
+   "deepestIn": "T-Rex alone/household exclusions/2/1: B-05 (step 10) and T-02 (track 10)"
+  },
+  "B-05|T-03": {
+   "mm": 0.7,
+   "mm3": 184,
+   "seen": 79,
+   "deepestIn": "both sets/household exclusions/0/2: B-05 (step 6) and T-03 (track 6)"
+  },
+  "B-05|T-04": {
+   "mm": 0.7,
+   "mm3": 240,
+   "seen": 19,
+   "deepestIn": "both sets/household exclusions/1/2: B-05 (step 11) and T-04 (track 10)"
+  },
+  "B-05|T-05": {
+   "mm": 0.7,
+   "mm3": 184,
+   "seen": 3,
+   "deepestIn": "T-Rex alone/nothing put aside/1/1: B-05 (step 7) and T-05 (track 7)"
+  },
+  "B-05|T-06": {
+   "mm": 0.8,
+   "mm3": 200,
+   "seen": 124,
+   "deepestIn": "both sets/household exclusions/0/1: B-05 (step 4) and T-06 (track 4)"
+  },
+  "B-05|T-07": {
+   "mm": 0.8,
+   "mm3": 200,
+   "seen": 14,
+   "deepestIn": "both sets/nothing put aside/2/2: B-05 (step 7) and T-07 (track 6)"
+  },
+  "B-05|T-08": {
+   "mm": 0.7,
+   "mm3": 272,
+   "seen": 59,
+   "deepestIn": "both sets/household exclusions/0/1: B-05 (step 3) and T-08 (track 2)"
+  },
+  "M-01|T-06": {
+   "mm": 0.2,
+   "mm3": 32,
+   "seen": 33,
+   "deepestIn": "both sets/household exclusions/0/1: M-01 (step 1) and T-06 (track 1)"
+  },
+  "M-02|M-04__5422": {
+   "mm": 0.7,
+   "mm3": 264,
+   "seen": 4,
+   "deepestIn": "Launchpad alone/household exclusions/1/1: M-04 (step 4) and M-02 (step 4)"
+  },
+  "M-02|T-02": {
+   "mm": 0.7,
+   "mm3": 48,
+   "seen": 4,
+   "deepestIn": "both sets/household exclusions/1/2: M-02 (step 8) and T-02 (track 7)"
+  },
+  "M-02|T-03": {
+   "mm": 0.7,
+   "mm3": 40,
+   "seen": 1,
+   "deepestIn": "fixture both sets/1/1: M-02 (step 6) and T-03 (track 5)"
+  },
+  "M-02|T-06": {
+   "mm": 0.8,
+   "mm3": 160,
+   "seen": 5,
+   "deepestIn": "both sets/household exclusions/2/2: M-02 (step 11) and T-06 (track 10)"
+  },
+  "M-04__5716|M-07": {
+   "mm": 0.8,
+   "mm3": 432,
+   "seen": 2,
+   "deepestIn": "T-Rex alone/household exclusions/2/1: M-04 (step 2) and M-07 (step 14)"
+  },
+  "M-04__5716|T-04": {
+   "mm": 0.7,
+   "mm3": 64,
+   "seen": 2,
+   "deepestIn": "T-Rex alone/household exclusions/2/1: M-04 (step 2) and T-04 (track 2)"
+  },
+  "M-04__5716|T-06": {
+   "mm": 0.8,
+   "mm3": 160,
+   "seen": 15,
+   "deepestIn": "both sets/household exclusions/2/1: M-04 (step 3) and T-06 (track 2)"
+  },
+  "M-04__5716|T-07": {
+   "mm": 0.5,
+   "mm3": 96,
+   "seen": 3,
+   "deepestIn": "both sets/household exclusions/2/1: M-04 (step 3) and T-07 (track 3)"
+  },
+  "M-04__5716|T-08": {
+   "mm": 0.3,
+   "mm3": 48,
+   "seen": 4,
+   "deepestIn": "T-Rex alone/household exclusions/2/2: M-04 (step 2) and T-08 (track 2)"
+  },
+  "M-05|T-06": {
+   "mm": 0.8,
+   "mm3": 200,
+   "seen": 4,
+   "deepestIn": "both sets/household exclusions/1/2: M-05 (step 6) and T-06 (track 5)"
+  },
+  "M-05|T-08": {
+   "mm": 0.2,
+   "mm3": 120,
+   "seen": 31,
+   "deepestIn": "both sets/household exclusions/2/1: M-05 (step 6) and T-08 (track 5)"
+  },
+  "M-10__5716|T-06": {
+   "mm": 0.2,
+   "mm3": 136,
+   "seen": 10,
+   "deepestIn": "both sets/household exclusions/0/1: M-10 (step 2) and T-06 (track 1)"
+  },
+  "M-10__5716|T-07": {
+   "mm": 0.2,
+   "mm3": 136,
+   "seen": 7,
+   "deepestIn": "T-Rex alone/household exclusions/0/2: M-10 (step 2) and T-07 (track 1)"
+  },
+  "M-11|T-03": {
+   "mm": 0.6,
+   "mm3": 192,
+   "seen": 8,
+   "deepestIn": "Launchpad alone/household exclusions/1/1: M-11 (step 2) and T-03 (track 2)"
+  },
+  "M-13|T-08": {
+   "mm": 0.7,
+   "mm3": 200,
+   "seen": 2,
+   "deepestIn": "VTech Launchpad Level 3 rocket: M-13 (step 3) and T-08 (track 3)"
+  },
+  "M-14|T-04": {
+   "mm": 0.7,
+   "mm3": 136,
+   "seen": 3,
+   "deepestIn": "both sets/household exclusions/2/1: M-14 (step 1) and T-04 (track 1)"
+  },
+  "M-14|T-06": {
+   "mm": 0.2,
+   "mm3": 144,
+   "seen": 3,
+   "deepestIn": "both sets/household exclusions/2/2: M-14 (step 1) and T-06 (track 1)"
+  },
+  "M-14|T-08": {
+   "mm": 0.3,
+   "mm3": 104,
+   "seen": 27,
+   "deepestIn": "both sets/household exclusions/0/2: M-14 (step 1) and T-08 (track 1)"
+  },
+  "M-28|T-03": {
+   "mm": 0.6,
+   "mm3": 32,
+   "seen": 3,
+   "deepestIn": "both sets/household exclusions/2/2: M-28 (step 12) and T-03 (track 11)"
+  },
+  "M-28|T-06": {
+   "mm": 0.8,
+   "mm3": 720,
+   "seen": 15,
+   "deepestIn": "both sets/household exclusions/2/2: M-28 (step 12) and T-06 (track 12)"
+  },
+  "M-28|T-07": {
+   "mm": 0.8,
+   "mm3": 720,
+   "seen": 11,
+   "deepestIn": "T-Rex alone/household exclusions/0/2: M-28 (step 1) and T-07 (track 1)"
+  },
+  "M-61|T-06": {
+   "mm": 0.8,
+   "mm3": 240,
+   "seen": 9,
+   "deepestIn": "T-Rex alone/household exclusions/1/2: M-61 (step 1) and T-06 (track 1)"
+  }
+ }
+}

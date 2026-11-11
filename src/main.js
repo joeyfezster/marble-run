@@ -1,14 +1,17 @@
 import { World } from './ui/scene.js';
+import { loadModels } from './ui/models.js';
 import { say, blip } from './ui/voice.js';
 import { layFloor, makeSteps, cellName } from './ui/guide.js';
 import { renderPanel } from './ui/panel.js';
 import { pileOf, colourPieces, partsUsed } from './engine/generator.js';
-import { SETS, hasMetalMarble } from './catalog/sets.js';
-import { validate } from './engine/validate.js';
+import { SETS, marbleTypes } from './catalog/sets.js';
+import { validate, marblesOf } from './engine/validate.js';
 import { buildPath } from './engine/geometry.js';
 import { samplePath, verify, simulate } from './engine/physics.js';
 
 const $ = (id) => document.getElementById(id);
+// Blender models first, so every piece drawn below can use them.
+await loadModels();
 const world = new World($('world'));
 const worker = new Worker('src/engine/worker.js', { type: 'module' });
 
@@ -35,7 +38,7 @@ function newTrack() {
   const id = ++state.job;
   $('thinking').hidden = false;
   $('goBtn').disabled = $('buildBtn').disabled = true;
-  worker.postMessage({ id, stock: pileOf(active()), metal: hasMetalMarble(active()), seed: (Math.random() * 1e9) | 0, size: state.size });
+  worker.postMessage({ id, stock: pileOf(active()), marbles: marbleTypes(active()), seed: (Math.random() * 1e9) | 0, size: state.size });
 }
 
 worker.onmessage = ({ data }) => {
@@ -78,7 +81,7 @@ function dropMarble(after) {
     $('goBtn').disabled = false;
     world.controls.autoRotate = spinning();
     after?.();
-  });
+  }, marblesOf(state.current.track));
 }
 
 function setMode(mode) {

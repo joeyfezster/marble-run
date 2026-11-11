@@ -21,11 +21,11 @@
     ],
     "heightSlots": 2.4,
     "sizeMm": [
-      115,
-      65,
-      115
+      83,
+      47,
+      111
     ],
-    "sizeBasis": "Estimated, not measured: cell about 62 mm and slot about 47 mm, from block width against a hand and marbles (IMG_0951, IMG_0952) and the plan drawing proportion slot/cell about 0.76. src/catalog/parts.js uses a 50 mm cell, also an estimate. Ratios to cell and slot are better known than the millimetres."
+    "sizeBasis": "Rescaled from an earlier estimate of a 62 mm cell and 47 mm slot (IMG_0951, IMG_0952) to the grid scale (2026-11-07): one cell 45 mm, one slot 45.3 mm (B-01, src/catalog/parts.js). Lengths and widths times 45/62, height times 45.3/47; ratios to cell and slot are kept, the millimetres stay estimates."
   },
   "ports": [
     {
@@ -33,7 +33,7 @@
       "at": [
         0.5,
         0,
-        0.75
+        0.68
       ],
       "faces": "E",
       "type": "port-hole",
@@ -47,7 +47,7 @@
       "at": [
         0,
         -0.5,
-        0.75
+        0.68
       ],
       "faces": "N",
       "type": "port-hole",
@@ -63,7 +63,7 @@
       "at": [
         0,
         0.5,
-        0.75
+        0.68
       ],
       "faces": "S",
       "type": "port-hole",
@@ -110,14 +110,50 @@
       "to": "front",
       "dropSlots": 0,
       "shape": "quarter-turn",
-      "lengthCells": 0.5
+      "lengthCells": 0.5,
+      "via": [
+        [
+          0,
+          -0.2,
+          0.675
+        ],
+        [
+          0,
+          0,
+          0.61
+        ],
+        [
+          0.2,
+          0,
+          0.675
+        ]
+      ],
+      "viaBasis": "The seat in the bowl, measured on models/M-01.glb with tools/floor.mjs sphere (a 20 mm marble lowered over each point until it touches): flat at 0.675 slot 0.2 cell from the middle, falling to the hole, where a resting marble sits on the rim with its centre a radius over 0.589 (behaviour: the hole is narrower than the marble and acts as a seat). The floor line through the middle is drawn at 0.61: scanning 0.589 to 0.65 slot and 0.1 to 0.2 cell wide, it is the one where the marble the rules place (centre.js centreAt) sinks no more than 0.2 mm into the bowl and floats no more than 1.24 mm over it. Drawn at 0.68 straight through, the waiting marble floated 3.7 mm over the plastic (round 3, rule rests)."
     },
     {
       "from": "right",
       "to": "front",
       "dropSlots": 0,
       "shape": "quarter-turn",
-      "lengthCells": 0.5
+      "lengthCells": 0.5,
+      "via": [
+        [
+          0,
+          0.2,
+          0.675
+        ],
+        [
+          0,
+          0,
+          0.61
+        ],
+        [
+          0.2,
+          0,
+          0.675
+        ]
+      ],
+      "viaBasis": "The seat in the bowl, measured on models/M-01.glb with tools/floor.mjs sphere (a 20 mm marble lowered over each point until it touches): flat at 0.675 slot 0.2 cell from the middle, falling to the hole, where a resting marble sits on the rim with its centre a radius over 0.589 (behaviour: the hole is narrower than the marble and acts as a seat). The floor line through the middle is drawn at 0.61: scanning 0.589 to 0.65 slot and 0.1 to 0.2 cell wide, it is the one where the marble the rules place (centre.js centreAt) sinks no more than 0.2 mm into the bowl and floats no more than 1.24 mm over it. Drawn at 0.68 straight through, the waiting marble floated 3.7 mm over the plastic (round 3, rule rests)."
     }
   ],
   "physics": {
@@ -125,6 +161,7 @@
     "bank": "none",
     "wallHeight": "high",
     "energy": "adds-by-hand",
+    "launchSpeed": 2.15,
     "needsMetalMarble": false,
     "batteries": null,
     "behaviour": "A marble rolling in through either flank arch settles in the low bowl and waits at the front outlet, under the yellow tongue. It does not fall through the hole: the hole is narrower than the marble and acts as a seat. Pressing the raised lever tail down pivots the lever, and its toothed section drives the mechanism behind the tongue, which shoves the marble out of the front. It is a holding point as well as a launcher, and two tracks can merge into it. The launch is strong enough to climb M-10 and jump to M-11."
@@ -175,6 +212,10 @@
     {
       "source": "reference/pieces/2026_11_01_IMG_0962.jpg, 0963, 0964",
       "shows": "Tall tapered yellow housing on block feet, flank and front arches over a bowl, small hood over the front arch, long thick orange paddle lever pivoting near the front with its tail raised behind"
+    },
+    {
+      "source": "data/pieces/B-01.json (grid scale)",
+      "shows": "sizeMm was 115 x 65 x 115 at a 62 mm cell; at the 45 mm cell it is 83 x 47 x 111, which matches footprintCells 1 x 1 and heightSlots 2.4"
     }
   ],
   "confidence": {
@@ -187,13 +228,16 @@
     "Port height 0.75 slot: IMG_0962 shows the bowl floor about 0.6 slot above the leg feet, and T-06 runs about level to the M-10 low seat at 0.75 in step 3-4. Estimated, not measured. It replaces the 1 slot first read from the drawing's window.",
     "Hole narrower than the marble is judged from photos: hole about 125 px against a marble about 170 px at the same depth, scaled from the channel width. The marble was not tested on it.",
     "Which part strikes the marble is inferred: the toothed lever section and the tongue teeth suggest a geared hammer, but no photo shows the inside. The tongue may instead be a keeper that lifts away.",
-    "Inlet to outlet are assumed to share one bowl, since all three arches open onto it (IMG_0962, IMG_0963)."
+    "Inlet to outlet are assumed to share one bowl, since all three arches open onto it (IMG_0962, IMG_0963).",
+    "Outlets at z 0.68, the seat of track level 1: the drawings read about 0.75 (3 mm higher), the model is built at the seat a track meets (Blender M-01.py).",
+    "launchSpeed 2.15 m/s (2026-11-10, round 3): VTech's Launchpad Level 3 jump (M-01, T-06, M-10, one empty cell, M-11, all on the floor) reaches the ring at every corner of the speed model, weak push included, from 2.15 m/s up (checked 1.6 to 2.5 m/s in 0.05 steps; below 2.15 the draggy or weak-push corner falls short, not always both, so the bound is the least speed from which every faster one flies). It was 1.7 while the flight started a radius straight over the lip and the marble waited 3.7 mm over its seat; now the marble leaves the lip with its centre a radius off the ramp's floor (centre.js lipCentre), 5 mm further back on M-10's slope, and waits in the seat. Up to 2.5 m/s no second jump flies after the first (image_06, tests/joey_faults.test.js). Calibrated on the plan, not measured: a press-speed measurement would settle it."
   ],
   "openQuestions": [
     "Drop a marble on the hole with M-01 lifted off the floor: does it stay in the bowl?",
     "Press slowly with the marble seated: does the tongue swing forward, or does something behind the marble move?",
     "Can the front arch accept an inlet, or a flank arch act as an outlet?",
     "Do two marbles waiting from the two flanks jam, or queue?",
-    "How far does a full press send a marble on the flat?"
+    "How far does a full press send a marble on the flat?",
+    "How fast does the marble leave the lever on a gentle press, and on a hard one?"
   ]
 }

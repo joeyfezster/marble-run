@@ -14,7 +14,7 @@
   },
   "role": "energy",
   "shape": {
-    "description": "Long dark blue box, one cell by two, low and flat. At one end a thick orange mushroom button stands on a round collar. At the other end a blue ring stands across the box, open at both ends, and a straight orange tube rises from its middle, leaning back away from the button by about 25 degrees, about one slot taller than the box. The tube is open at the top.",
+    "description": "Long dark blue box, one cell by two, low and flat. At one end a thick orange mushroom button stands on a round collar. At the other end a blue ring stands across the box, open at both ends, and a straight orange tube rises upright from its middle, about one slot taller than the box. The tube is open at the top.",
     "footprintCells": [
       1,
       2
@@ -70,7 +70,7 @@
       "faces": "up",
       "type": "open-drop",
       "accepts": [
-        "M-06 hood mouth above it"
+        "M-06 mouth, directly over the tube, its tower one cell from the tube (extreme_61)"
       ],
       "flow": "out"
     },
@@ -113,7 +113,14 @@
     "energy": "adds-by-hand",
     "needsMetalMarble": false,
     "batteries": null,
-    "behaviour": "A marble rolling in either end of the cross cylinder stops under the tube and waits. Pressing the orange button fires it straight up out of the tube, about 5 to 6 slots, into the M-06 hood. It is the set's elevator: no other piece in Level 3 lifts a marble that high."
+    "behaviour": "A marble rolling in either end of the cross cylinder stops under the tube and waits. Pressing the orange button fires it straight up out of the tube, about 5 to 6 slots, into the M-06 hood whose mouth hangs over the tube from a tower one cell away. It is the set's elevator: no other piece in Level 3 lifts a marble that high.",
+    "aim": {
+      "vector": [
+        0,
+        0,
+        1
+      ]
+    }
   },
   "stacking": {
     "stacksOnTop": true,
@@ -144,7 +151,15 @@
     },
     {
       "source": "reference/uploads/M-02_1793563229817.jpg",
-      "shows": "Real piece: low box, orange mushroom button, open blue ring, orange tube leaning back"
+      "shows": "Real piece: low box, orange mushroom button, open blue ring, orange tube. Hand-held and seen from above at an angle, the tube looks tilted back; the photo cannot give its angle to the box."
+    },
+    {
+      "source": "extreme_61 step 7-10; lp_plans_15",
+      "shows": "M-02 at B6-C6 (tube B6, button C6), M-06 on the A6 tower with its hood over B6: the hood stands one cell from the tube on the side away from the button"
+    },
+    {
+      "source": "extreme_61 step 7-10 and extreme_62 map (VTech plan, a drawing)",
+      "shows": "The hood's tower stands one cell from the tube at six slots and its mouth overhangs one cell, so the mouth hangs over the tube itself: only a throw within a few degrees of vertical reaches it (a 25 degree lean misses it by about 100 mm). The plan outranks the estimate from the hand-held photo, so the tube is upright."
     }
   ],
   "confidence": {
@@ -158,11 +173,12 @@
     "Lift of 5 to 6 slots is the gap from tube top (z about 2) to the hood (z about 7.5) in Level 3.",
     "Side port height of 1 slot from one-block feeders in steps 1-4 and 3-5.",
     "dropSlots is negative here because the marble rises.",
-    "The tube's lean is read from the photo; the launch is still treated as straight up into the M-06 hood, as the plans show."
+    "The tube is upright (physics.aim straight up), from VTech's extreme_61 hood position; the 25 degree lean once read from the hand-held photo is not supported by the plans (2026-11-10)."
   ],
   "openQuestions": [
     "Fire the real button: how high does the marble go, and does it need the hood to stay on course?",
     "Spring plunger or air?",
-    "Can both side ports be used at once?"
+    "Can both side ports be used at once?",
+    "Stand the real piece on a flat floor: is the tube upright, or does it lean, and by how much?"
   ]
 }

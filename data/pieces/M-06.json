@@ -21,26 +21,36 @@
     ],
     "heightSlots": 1.5,
     "sizeMm": [
-      100,
-      155,
-      75
+      73,
+      113,
+      72
     ],
-    "sizeBasis": "Estimated, not measured: cell about 62 mm and slot about 47 mm, from block width against a hand and marbles (IMG_0951, IMG_0952) and the plan drawing proportion slot/cell about 0.76. src/catalog/parts.js uses a 50 mm cell, also an estimate. Ratios to cell and slot are better known than the millimetres."
+    "sizeBasis": "Rescaled from an earlier estimate of a 62 mm cell and 47 mm slot (IMG_0951, IMG_0952) to the grid scale (2026-11-07): one cell 45 mm, one slot 45.3 mm (B-01, src/catalog/parts.js). Lengths and widths times 45/62, height times 45.3/47; ratios to cell and slot are kept, the millimetres stay estimates."
   },
   "ports": [
     {
       "id": "mouth",
       "at": [
-        1.5,
+        1,
         0,
         0.5
       ],
       "faces": "down",
       "type": "open-catch",
       "accepts": [
-        "marble launched up from the M-02 tube"
+        "marble launched up from below by the M-02 tube, which stands one cell from the tower"
       ],
-      "flow": "in"
+      "flow": "in",
+      "catch": {
+        "radiusMm": 9.6,
+        "halfAngleDeg": 30,
+        "axis": [
+          0,
+          0,
+          1
+        ]
+      },
+      "catchBasis": "radiusMm measured on models/M-06.glb (tests/models.test.js): the side walls' inner faces are 19.6 mm from the mouth axis over the marble's height at the mouth plane; less the marble's 10 mm radius, a marble centre up to 9.6 mm off the axis passes clear. halfAngleDeg is not measured."
     },
     {
       "id": "throat",
@@ -77,7 +87,15 @@
       "to": "throat",
       "dropSlots": 0,
       "shape": "carried",
-      "lengthCells": 1.5
+      "lengthCells": 1.5,
+      "via": [
+        [
+          0,
+          0,
+          0.5
+        ]
+      ],
+      "viaBasis": "The marble rises into the mouth, the sloped roof turns it back over the block, and it drops through the throat (behaviour). Drawn level at the mouth's height to over the throat, then down: the diagonal from mouth to throat ran through the rim of the B-02 under the hood."
     }
   ],
   "physics": {
@@ -87,7 +105,7 @@
     "energy": "loses",
     "needsMetalMarble": false,
     "batteries": null,
-    "behaviour": "A catcher. Stands on top of a tower and hangs over the M-02 tube. A marble fired up hits the inside of the hood and is steered back to the block under it, then rolls off down the next track. Does nothing for a rolling marble."
+    "behaviour": "A catcher, entered only from below. Stands on top of a tower one cell from the M-02 tube, its open underside over the tube's aim. A marble fired up into the overhang hits the roof, is turned back and falls through the throat into the B-02 under the hood, then rolls out its mouth. Does nothing for a rolling marble, and a marble dropped onto the roof from above bounces off."
   },
   "stacking": {
     "stacksOnTop": true,
@@ -111,6 +129,18 @@
     {
       "source": "launchpad.pdf p5 render of M-06",
       "shows": "flat sticker-covered sides, sloping roof, block-style legs at the back"
+    },
+    {
+      "source": "data/pieces/B-01.json (grid scale)",
+      "shows": "sizeMm was 100 x 155 x 75 at a 62 mm cell; at the 45 mm cell it is 73 x 113 x 72, which matches footprintCells 1 x 2.5 and heightSlots 1.5"
+    },
+    {
+      "source": "Joey 2026-11-09 (reference/feedback/2026_11_09 image_10)",
+      "shows": "the hood has an entrance from below; balls shoot up into it and fall out the other side; the cannon must point at it"
+    },
+    {
+      "source": "extreme_61 step 7-10; lp_plans_15",
+      "shows": "hood tower directly beside the M-02 tube, on the side away from the button: mouth one cell from the throat"
     }
   ],
   "confidence": {
@@ -126,6 +156,7 @@
   ],
   "openQuestions": [
     "Photo of the underside: is there an internal rib or slope?",
-    "Does the marble need to hit a certain spot to land in the B-02?"
+    "Does the marble need to hit a certain spot to land in the B-02?",
+    "How far off the mouth's middle may a marble arrive and still be caught (halfAngleDeg)?"
   ]
 }

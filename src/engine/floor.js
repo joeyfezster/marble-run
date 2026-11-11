@@ -30,15 +30,21 @@ export const platesIn = (stock) => PLATES.flatMap((p) => Array(stock[p.key] ?? 0
 
 // The best rectangle these plates really cover. Modes: near the wanted width (default),
 // the roomiest ("room"), or the longest that is still roomy ("long", for long lines of pieces).
-export function floorRect(stock, wantWidth = 10, mode = false) {
+// A long floor for the whole pile still lays every plate it can ("long" keeps the
+// roomiest area), since every plate left in the box is a piece the build does not use.
+// minWidth: the floor must be at least this many cells long (a jump's straight line).
+export function floorRect(stock, wantWidth = 10, mode = false, minWidth = 0) {
   const biggest = mode === true || mode === 'room';
-  const list = platesIn(stock), area = list.reduce((n, p) => n + plateOf(p.key).w * plateOf(p.key).d, 0), options = [];
+  const list = platesIn(stock), area = list.reduce((n, p) => n + plateOf(p.key).w * plateOf(p.key).d, 0);
+  let options = [];
   for (let width = 4; width <= 18; width++) for (let depth = 2; depth <= 12; depth++) {
-    if (width * depth > area || depth > width) continue;
+    if (width * depth > area || depth > width || width < minWidth) continue;
     if (tile(0, width - 1, 0, depth - 1, list).cells.length === width * depth) options.push({ width, depth });
   }
+  const most = Math.max(0, ...options.map((o) => o.width * o.depth));
+  if (mode === 'long') options = options.filter((o) => o.width * o.depth === most);
   const rank = (o) => (mode === 'long' ? o.width * 4 + o.width * o.depth
     : biggest ? o.width * o.depth * 3 - Math.abs(o.width - o.depth * 1.3) * 2
       : o.width * o.depth - Math.abs(o.width - wantWidth) * 2 - Math.abs(o.width - o.depth * 1.4));
-  return options.sort((a, b) => rank(b) - rank(a))[0] ?? { width: 8, depth: 6 };
+  return options.sort((a, b) => rank(b) - rank(a))[0] ?? (minWidth ? null : { width: 8, depth: 6 });
 }

@@ -21,11 +21,11 @@
     ],
     "heightSlots": 3,
     "sizeMm": [
-      124,
-      93,
-      140
+      90,
+      68,
+      135
     ],
-    "sizeBasis": "Estimated, not measured: cell about 62 mm and slot about 47 mm, from block width against a hand and marbles (IMG_0951, IMG_0952) and the plan drawing proportion slot/cell about 0.76. src/catalog/parts.js uses a 50 mm cell, also an estimate. Ratios to cell and slot are better known than the millimetres."
+    "sizeBasis": "Rescaled from an earlier estimate of a 62 mm cell and 47 mm slot (IMG_0951, IMG_0952) to the grid scale (2026-11-07): one cell 45 mm, one slot 45.3 mm (B-01, src/catalog/parts.js). Lengths and widths times 45/62, height times 45.3/47; ratios to cell and slot are kept, the millimetres stay estimates."
   },
   "ports": [
     {
@@ -33,21 +33,30 @@
       "at": [
         -1,
         0,
-        1.3
+        1.93
       ],
       "faces": "W",
       "type": "open-catch",
       "accepts": [
         "marble flying from the M-10 lip"
       ],
-      "flow": "in"
+      "flow": "in",
+      "catch": {
+        "radiusMm": 14.2,
+        "axis": [
+          1,
+          0,
+          0
+        ]
+      },
+      "catchBasis": "The ring's opening, from tools/blender/M-11.py (the build prints it): centre 2.15 slots over the base, 27.5 mm inner radius, the disc's hinge bracket hanging 3 mm into it (24.2 mm clear, measured on models/M-11.glb by tests/oracle.test.js). z is the floor under a marble centred in it (2.15 less the 10 mm radius); a marble centre up to 14.2 mm off the ring's middle passes clear. The old z 1.3 put the marble through the ring's lower bar."
     },
     {
       "id": "low",
       "at": [
         1,
         0,
-        0.75
+        0.68
       ],
       "faces": "E",
       "type": "track-end",
@@ -79,7 +88,51 @@
       "to": "low",
       "dropSlots": 0.55,
       "shape": "straight",
-      "lengthCells": 2
+      "lengthCells": 2,
+      "via": [
+        [
+          -0.55,
+          0,
+          1.93
+        ],
+        [
+          -0.55,
+          0,
+          1.055
+        ],
+        [
+          -0.4,
+          0,
+          0.94
+        ],
+        [
+          -0.2,
+          0,
+          0.854
+        ],
+        [
+          0,
+          0,
+          0.785
+        ],
+        [
+          0.2,
+          0,
+          0.734
+        ],
+        [
+          0.4,
+          0,
+          0.699
+        ],
+        [
+          0.6,
+          0,
+          0.682
+        ]
+      ],
+      "viaBasis": "Joey (2026-11-09, image_06): the marble goes first into the ring, then down the slope. Through the ring at its middle, into the hinged target disc (a moving part, it swings back), down onto the ramp behind the ring (landing on the 32 degree floor, its centre 1.6 mm higher than a radius over the floor point under it), and down the trough floor (points read from models/M-11.glb) to the low end. From the mouth to the ring's middle the marble is still flying (behaviour: a marble flying from M-10 reaches the ring and target disc, then drops), so that stretch is drawn in the air (airTo 0): the ring's floor is 5 mm under it there.",
+      "airTo": 0
     }
   ],
   "physics": {
@@ -125,6 +178,10 @@
     {
       "source": "lp_plans_04 M-10 parts box and trex_plans_01 M-10",
       "shows": "trough of near-constant width; pointed fin with hole on one side of the high end, curled lip on a post on the other"
+    },
+    {
+      "source": "data/pieces/B-01.json (grid scale)",
+      "shows": "sizeMm was 124 x 93 x 140 at a 62 mm cell; at the 45 mm cell it is 90 x 68 x 135, which matches footprintCells 2 x 1 and heightSlots 3"
     }
   ],
   "confidence": {
@@ -136,11 +193,13 @@
     "Origin at footprint centre at foot level (the top plane of whatever the piece stands on). East is +x, south is +y, z in slots.",
     "A hanging, swinging disc is inferred from it sitting off centre and tilted in IMG_0950. It may be fixed.",
     "Marble flight stopping at the disc is inferred. If the disc is fixed, a marble rebounds down the ramp; if hinged, it may pass and land behind.",
-    "Ring height 3 slots above the base foot taken from the drawing."
+    "Ring height 3 slots above the base foot taken from the drawing.",
+    "Low end at z 0.68, the seat of track level 1: the drawings read about 0.75 (3 mm higher), the model is built at the seat a track meets (Blender lp_kit.py)."
   ],
   "openQuestions": [
     "Does the disc swing, and which way? Film one jump.",
     "Does a marble ever miss the ring? What happens then?",
-    "What stops a marble bouncing off sideways, given the low ramp walls?"
+    "What stops a marble bouncing off sideways, given the low ramp walls?",
+    "How far back does the target disc swing, and does a slow marble drop straight down behind the ring?"
   ]
 }

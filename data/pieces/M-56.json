@@ -14,7 +14,7 @@
   },
   "role": "stunt",
   "shape": {
-    "description": "Straight see-through amber beam, a flat top bar with a black magnetic strip along its underside, snapped at each end into a buckle with a round ring and clip. Each ring clips to the end face of a block near its top, so the ring lines up with the block's channel. It spans 2 cells of air between blocks 3 apart and slopes down one slot. There is no channel: a metal marble hangs from the magnet strip underneath.",
+    "description": "Straight see-through amber beam, a flat top bar with a black magnetic strip along its underside, snapped at each end into a buckle over a round hoop. Each hoop rings the cup end of a block, its axis along the marble's travel and its opening about 30 mm, so the marble rolls out of the cup through it. The beam spans 2 cells of air between blocks 3 apart and slopes down one slot, its strip about a marble's diameter plus 5 mm over the cup seats. There is no channel: a metal marble hangs from the magnet strip underneath.",
     "footprintCells": [
       2,
       1
@@ -38,9 +38,10 @@
       "faces": "W",
       "type": "block-side-slot",
       "accepts": [
-        "top block end at the upper stack: B-01, B-05 seen"
+        "hoop over the cup end of the upper block: B-01, B-05 seen"
       ],
-      "flow": "in"
+      "flow": "in",
+      "apertureMm": 30
     },
     {
       "id": "low",
@@ -52,21 +53,22 @@
       "faces": "E",
       "type": "block-side-slot",
       "accepts": [
-        "top block end at the lower stack: B-01, B-02, B-03 seen"
+        "hoop over the cup end of the lower block: B-01, B-02, B-03 seen"
       ],
-      "flow": "out"
+      "flow": "out",
+      "apertureMm": 30
     },
     {
       "id": "dropPoint",
       "at": [
-        0.2,
+        0.8,
         0,
         -0.3
       ],
-      "faces": "E",
+      "faces": "down",
       "type": "open-drop",
       "accepts": [
-        "plain marbles fall from here to a catcher below"
+        "plain marbles fall from here to an open-catch or a track cup directly below"
       ],
       "flow": "out"
     }
@@ -77,14 +79,20 @@
       "to": "low",
       "dropSlots": 1,
       "shape": "straight",
-      "lengthCells": 3
+      "lengthCells": 3,
+      "marbles": [
+        "metal"
+      ]
     },
     {
       "from": "high",
       "to": "dropPoint",
       "dropSlots": 0.3,
       "shape": "fall",
-      "lengthCells": 0.2
+      "lengthCells": 0.3,
+      "marbles": [
+        "plain"
+      ]
     }
   ],
   "physics": {
@@ -94,8 +102,12 @@
     "energy": "none",
     "needsMetalMarble": true,
     "batteries": null,
-    "behaviour": "Magnet zip line, metal marbles only. A metal marble leaving the upper block's end is pulled up against the magnet strip and hangs from it, sliding under the beam down to the lower block, where it drops into the cup and carries on. A plain marble is not held and falls straight down at the start of the beam.",
-    "marbleHangs": true
+    "behaviour": "Magnet zip line, a sorter. A metal marble leaving the upper block's cup passes through the hoop, is lifted a few mm against the magnet strip and hangs under the beam, slides down to the lower block, passes through that hoop and drops into the cup. A plain marble is not held: it falls straight down just past the upper block (dropPoint), so a track or catcher must sit under that point or the run must use metal marbles only.",
+    "marbleHangs": true,
+    "exitRule": "by-marble",
+    "hang": {
+      "liftMm": 5
+    }
   },
   "stacking": {
     "stacksOnTop": false,
@@ -135,6 +147,10 @@
     {
       "source": "data/piece_review.json M-56 (Joey, 2026-11-01)",
       "shows": "This piece is just for magnetic balls and the balls kind of hang from it"
+    },
+    {
+      "source": "Joey 2026-11-09 (reference/feedback/2026_11_09 image_01, image_07)",
+      "shows": "metal balls hang almost omega under the magnet bar; plastic ones fall off; the balls need room to get in; plain balls would fall to the floor"
     }
   ],
   "confidence": {
@@ -146,7 +162,8 @@
     "Rides under, not on top: read from page 02, where the marble sits below the beam; a shop listing's phrase magnetic zipline agrees but that source is weak.",
     "Port z values are relative to the upper block's top, with the 1 slot drop as the default.",
     "Level 2 drop of 2 depends on M-04 being 2 slots tall.",
-    "faces uses E=+x, W=-x, S=+y, N=-y, in the piece's own frame. Heights are slots above the floor when the piece stands on the floor or, where stated, above the top of its supports."
+    "faces uses E=+x, W=-x, S=+y, N=-y, in the piece's own frame. Heights are slots above the floor when the piece stands on the floor or, where stated, above the top of its supports.",
+    "Hoop opening about 30 mm (0.75 block width) and a 5 mm lift to the strip, read from uploads/M-56; not measured."
   ],
   "openQuestions": [
     "Largest and smallest drop that still works, and does the beam tilt freely on its rings?",

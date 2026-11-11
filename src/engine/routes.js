@@ -99,8 +99,9 @@ export function traversals(track) {
       case 'spiral':
         blockAt(top, side(back(p.in), p.hIn), side(p.in, p.hIn));
         out.push({ i, key: p.piece, spiral: true, rot: p.in, cell: [p.c, p.r], enter: { face: back(p.in), level: p.hIn }, leave: { drop: true } });
-        // The tail comes back into the block under the host through the face the band hangs on.
-        if (top >= 1) blockAt(top - 1, side(p.in, p.hOut), side(p.out, p.hOut));
+        // The band's end hands the marble into the block under the host through the side
+        // face it lies on (IMG_0960), and the marble crosses it to the far face.
+        if (top >= 1) blockAt(top - 1, side(p.tailFace, p.hOut), side(p.out, p.hOut));
         return;
       case 'station':
         fitOf(p.fit, p.first ? { port: p.fit.from, hand: true } : { ...side(back(p.in), p.hIn), port: p.fit.from }, { ...side(p.out, p.hOut), port: p.fit.to });

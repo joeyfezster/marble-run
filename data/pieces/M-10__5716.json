@@ -14,18 +14,18 @@
   },
   "role": "stunt",
   "shape": {
-    "description": "Orange ramp (same mould as the Launchpad green one, T-Rex colours): a wide shallow trough on a blue two-cell base that looks like two fused low blocks, carried on short posts. The low end is a tongue at base height where a track arrives; the trough curves up along the base. Its far end is cut on a slant: one side wall rises into a pointed fin with a small round hole, the other ends lower in a curled lip resting on a post. Three cells long overall; only the low cell of the base sits on a stack.",
+    "description": "Orange ramp (same mould as the Launchpad green one, T-Rex colours): a wide shallow trough on a blue two-cell base that looks like two fused low blocks, carried on short posts. The low end is a tongue at the base's W edge where a track arrives; the trough curves up along the base and overhangs its E end by about a third of a cell. Its far end is cut on a slant: one side wall rises into a pointed fin with a small round hole, the other ends lower in a curled lip resting on a post. The base covers two cells; the lip reaches 0.35 cell into a third, under the T-Rex's lower jaw.",
     "footprintCells": [
       3,
       1
     ],
     "heightSlots": 1.5,
     "sizeMm": [
-      156,
-      70,
-      55
+      106,
+      42,
+      87
     ],
-    "sizeBasis": "Rough estimate: one cell about 52 mm and one slot about 36 mm, scaled from Joey's hand in IMG_0954 and IMG_0956; no ruler measurement. Footprint from the maps of steps 1-6, 2-8, 3-11."
+    "sizeBasis": "Measured against the two block stacks under the same mould in uploads/M-10_1793563353953 (Launchpad green): base two cells (520 px at 260 px a cell), trough from the base's W edge to the lip curl 610 px, 2.35 cells, so the lip overhangs the base by 0.35 cell; fin top about 1.6 block heights over the stacks. Grid scale (2026-11-07): one cell 45 mm, one slot 45.3 mm (B-01, src/catalog/parts.js). The earlier figure used a 52 mm cell and a 36 mm slot, which disagreed with this record's own ports and heightSlots."
   },
   "ports": [
     {
@@ -47,28 +47,29 @@
     {
       "id": "lip",
       "at": [
-        3,
+        2.35,
         0,
-        1.5
+        1.23
       ],
       "faces": "E",
       "type": "open-drop",
       "accepts": [
         "a flying marble toward the M-58 mouth"
       ],
-      "flow": "out"
+      "flow": "out",
+      "atBasis": "z is the trough floor at the lip, read from models/M-10__5716.glb (1.21 slots at x 2.3, rising 0.37 a cell): the marble leaves the lip from the plastic, not 12 mm over it as the earlier 1.5 had it."
     },
     {
       "id": "base",
       "at": [
-        0.5,
+        1,
         0,
         0
       ],
-      "faces": "E",
+      "faces": "down",
       "type": "stack-bottom",
       "accepts": [
-        "top of a block stack under the low cell"
+        "two supports side by side, as two block stacks, one under each cell of the base"
       ],
       "flow": "both"
     }
@@ -79,7 +80,65 @@
       "to": "lip",
       "dropSlots": -0.5,
       "shape": "straight",
-      "lengthCells": 3
+      "lengthCells": 2.35,
+      "via": [
+        [
+          0.2,
+          0,
+          0.697
+        ],
+        [
+          0.4,
+          0,
+          0.718
+        ],
+        [
+          0.6,
+          0,
+          0.747
+        ],
+        [
+          0.8,
+          0,
+          0.782
+        ],
+        [
+          1.0,
+          0,
+          0.823
+        ],
+        [
+          1.2,
+          0,
+          0.87
+        ],
+        [
+          1.4,
+          0,
+          0.921
+        ],
+        [
+          1.6,
+          0,
+          0.978
+        ],
+        [
+          1.8,
+          0,
+          1.039
+        ],
+        [
+          2.0,
+          0,
+          1.106
+        ],
+        [
+          2.2,
+          0,
+          1.176
+        ]
+      ],
+      "viaBasis": "Points on the trough floor along the ramp's middle, read from the model (vertical rays through models/M-10__5716.glb, dist/scratch/floor.mjs): the drawn ramp follows the plastic instead of a straight chord over the concave trough, which left the marble up to 8.5 mm in the air."
     }
   ],
   "physics": {
@@ -121,6 +180,18 @@
     {
       "source": "lp_plans_04 M-10 parts box and trex_plans_01 M-10",
       "shows": "trough of near-constant width; pointed fin with hole on one side of the high end, curled lip on a post on the other"
+    },
+    {
+      "source": "reference/uploads/M-10_1793563353953.jpg",
+      "shows": "Same mould on two stacks: base two cells, trough about 2.3 cells long, fin about 1.6 block heights over the stack tops; sizeMm was 156 x 70 x 55"
+    },
+    {
+      "source": "uploads/M-10_1793563353953.jpg with trex_plans_07 step 1-6, 12 step 2-8, 19 step 3-11 (2026-11-10)",
+      "shows": "The trough runs 2.35 cells from the base's W edge, not 3: the lip at x 3 put it on the T-Rex mouth and the drawn ramp out of the trough. In all three levels the low stack stands three cells in front of the feet, the base covers that cell and the next, and the lip reaches just into the cell in front of the feet, under the lower jaw; the plans' 'three cells' count that cell."
+    },
+    {
+      "source": "Joey, 2026-11-01 (M-10__5422 record), same mould",
+      "shows": "Ramps need two supports side by side: the base stands on a stack under each of its two cells. VTech's T-Rex plans draw one stack under the low cell; Joey outranks the drawings, and with the lip's overhang one stack does not hold the piece's middle."
     }
   ],
   "confidence": {
@@ -131,6 +202,7 @@
   "assumptions": [
     "Split as a T-Rex file because Launchpad also has M-10, in green; same shape by appearance only. Family build uses the Launchpad one rising and it may also run downhill.",
     "The lip rises about half a slot, read from the side view on plan page 02.",
+    "The lip is 2.35 cells from the low end (the photo of the Launchpad mould); the T-Rex mouth's catch, at the front of the feet (data/assemblies/trex_body.json), is 0.65 cell beyond it at the same height, so the marble rises off the lip into the open mouth.",
     "faces uses E=+x, W=-x, S=+y, N=-y, in the piece's own frame. Heights are slots above the floor when the piece stands on the floor or, where stated, above the top of its supports."
   ],
   "openQuestions": [

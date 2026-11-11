@@ -39,6 +39,8 @@ function compose(a) {
     ...lead.rec, key: a.key, file: a.file, assembly: true, names: a.names ?? lead.rec.names,
     shape: { ...lead.rec.shape, heightSlots: Math.max(...parts.map((p) => (p.rec.shape?.heightSlots ?? 0) + (p.at[2] ?? 0))) },
     ports, parts: parts.map((p) => ({ key: p.rec.key, code: p.rec.code, at: p.at, rot: p.rot ?? 0 })),
+    // The lead's route points, shifted into the assembly's frame as its ports are.
+    marblePaths: lead.rec.marblePaths?.map((m) => (m.via ? { ...m, via: m.via.map((v) => shift({ at: v }, lead)) } : m)),
     evidence: a.evidence ?? lead.rec.evidence, assumptions: a.assumptions ?? [],
   };
 }

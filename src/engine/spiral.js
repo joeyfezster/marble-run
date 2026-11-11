@@ -1,29 +1,30 @@
 // The centreline of a spiral track, in its host block's frame: a cells ahead of the
 // host's centre, s cells to the spiral's side, f the share of the drop already fallen.
-// The real spiral (reference/pieces IMG_0959-0961) is one flat band beside its host: a
-// short straight tongue out of the host's cup end, about one and a half turns winding
-// inward over the footprint while falling gently, then a tail that dips under the band
-// and comes back into the block under the host through the same face. The game's
-// marble path and the 3D model both use this, so they always agree. Pure arithmetic.
-export function spiralLocal([fa, fs] = [2, 2], n = 220) {
-  const ca = 0.5 + fa / 2, cs = (fs - 1) / 2 + 0.1, R0 = Math.min(fa, fs) / 2 - 0.28;
-  const pts = [], lead = 0.03, wind = 0.4;
-  const p0 = [ca, cs - R0];
-  // Tongue: straight on from the host's face to where the turn begins.
-  for (let i = 0; i <= 8; i++) { const u = i / 8; pts.push({ a: 0.5 + (p0[0] - 0.5) * u, s: p0[1] * u, f: lead * u, part: 'band' }); }
-  // Winding: one and a half turns toward the spiral side, the radius closing in.
-  const turns = 1.5;
+// The real spiral (reference/pieces IMG_0959-0961, the VTech icon) is one wide band of
+// about three quarters of a turn wrapped round the front corner of its host stack: its
+// tongue lies on the host's cup end (a 0.5, s 0), the band turns toward the spiral side
+// and falls one slot, and its far end lies on the cup end of the block under the host,
+// on that side face (a 0, s 0.5), heading back across it. That lower block is turned
+// 90 degrees, so the marble crosses it and leaves through the opposite side face.
+// The game's marble path and the 3D models both use this, so they always agree.
+// Pure arithmetic.
+export const SPIRAL_TURNS = 0.75;
+
+export function spiralLocal([fa, fs] = [2, 2], n = 160) {
+  // A straight lead of t at each end, then three quarters of a circle of radius 0.5 + t
+  // centred on (0.5 + t, 0.5 + t): it starts at the host face heading ahead and ends on
+  // the side face heading back toward the host. IMG_0959 puts the band's outer wall about
+  // 1.9 block widths across, so a 31 mm band has a centreline radius of about 0.6 cell.
+  const t = Math.max(0, Math.min(fa, fs) / 2 - 0.9), R = 0.5 + t, c = 0.5 + t;
+  const lead = t, arc = R * SPIRAL_TURNS * 2 * Math.PI, total = 2 * lead + arc;
+  const pts = [];
+  const at = (len) => len / total;
+  for (let i = 0; i <= 6; i++) { const u = (i / 6) * t; pts.push({ a: 0.5 + u, s: 0, f: at(u), part: 'band' }); }
   for (let i = 1; i <= n; i++) {
-    const u = i / n, phi = -Math.PI / 2 + u * turns * 2 * Math.PI, r = R0 * (1 - 0.55 * u);
-    pts.push({ a: ca + r * Math.cos(phi), s: cs + r * Math.sin(phi), f: lead + wind * u, part: 'band' });
+    const u = i / n, phi = -Math.PI / 2 + u * SPIRAL_TURNS * 2 * Math.PI;
+    pts.push({ a: c + R * Math.cos(phi), s: c + R * Math.sin(phi), f: at(lead + u * arc), part: 'band' });
   }
-  // Tail: leaves the inner curl heading back toward the host and dips under the band
-  // to the host's face (Hermite curve, both ends heading back along the host's axis).
-  const e = pts.at(-1), L = Math.hypot(e.a - 0.5, e.s);
-  const h = (t) => [2 * t ** 3 - 3 * t ** 2 + 1, t ** 3 - 2 * t ** 2 + t, -2 * t ** 3 + 3 * t ** 2, t ** 3 - t ** 2];
-  for (let i = 1; i <= 40; i++) {
-    const t = i / 40, [h0, h1, h2, h3] = h(t), k = L * 1.1;
-    pts.push({ a: h0 * e.a + h1 * -k + h2 * 0.5 + h3 * -k, s: h0 * e.s + h2 * 0, f: lead + wind + (1 - lead - wind) * (t * t * (3 - 2 * t)), part: 'tail' });
-  }
-  return pts;
+  for (let i = 1; i <= 6; i++) { const u = (i / 6) * t; pts.push({ a: 0, s: c - u, f: at(lead + arc + u), part: 'band' }); }
+  pts.at(-1).f = 1;
+  return pts.filter((p, i) => i === 0 || Math.hypot(p.a - pts[i - 1].a, p.s - pts[i - 1].s) > 1e-9 || p.f !== pts[i - 1].f);
 }

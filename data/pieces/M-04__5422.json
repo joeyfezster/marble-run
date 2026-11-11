@@ -149,28 +149,100 @@
       "to": "outE",
       "dropSlots": 1,
       "shape": "fall",
-      "lengthCells": 0.5
+      "lengthCells": 0.5,
+      "via": [
+        [
+          0,
+          0,
+          1.68
+        ],
+        [
+          0,
+          0,
+          0.801
+        ],
+        [
+          0.18,
+          0,
+          0.68
+        ]
+      ],
+      "viaBasis": "Falls through the top tier's centre hole onto the low hub's small cone (its top 0.801 slot, models/M-04__5422.glb), rolls off it and out over the flat floor (0.68): the marble's floor line meets the flat floor 0.18 cell out, where a 20 mm marble rests on both the floor and the cone's foot."
     },
     {
       "from": "inN",
       "to": "outE",
       "dropSlots": 1,
       "shape": "fall",
-      "lengthCells": 0.5
+      "lengthCells": 0.5,
+      "via": [
+        [
+          0,
+          0,
+          1.68
+        ],
+        [
+          0,
+          0,
+          0.801
+        ],
+        [
+          0.18,
+          0,
+          0.68
+        ]
+      ],
+      "viaBasis": "Falls through the top tier's centre hole onto the low hub's small cone (its top 0.801 slot, models/M-04__5422.glb), rolls off it and out over the flat floor (0.68): the marble's floor line meets the flat floor 0.18 cell out, where a 20 mm marble rests on both the floor and the cone's foot."
     },
     {
       "from": "inS",
       "to": "outE",
       "dropSlots": 1,
       "shape": "fall",
-      "lengthCells": 0.5
+      "lengthCells": 0.5,
+      "via": [
+        [
+          0,
+          0,
+          1.68
+        ],
+        [
+          0,
+          0,
+          0.801
+        ],
+        [
+          0.18,
+          0,
+          0.68
+        ]
+      ],
+      "viaBasis": "Falls through the top tier's centre hole onto the low hub's small cone (its top 0.801 slot, models/M-04__5422.glb), rolls off it and out over the flat floor (0.68): the marble's floor line meets the flat floor 0.18 cell out, where a 20 mm marble rests on both the floor and the cone's foot."
     },
     {
       "from": "inE",
       "to": "outE",
       "dropSlots": 1,
       "shape": "fall",
-      "lengthCells": 0.5
+      "lengthCells": 0.5,
+      "via": [
+        [
+          0,
+          0,
+          1.68
+        ],
+        [
+          0,
+          0,
+          0.801
+        ],
+        [
+          0.18,
+          0,
+          0.68
+        ]
+      ],
+      "viaBasis": "Falls through the top tier's centre hole onto the low hub's small cone (its top 0.801 slot, models/M-04__5422.glb), rolls off it and out over the flat floor (0.68): the marble's floor line meets the flat floor 0.18 cell out, where a 20 mm marble rests on both the floor and the cone's foot."
     }
   ],
   "physics": {

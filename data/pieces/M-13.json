@@ -21,11 +21,11 @@
     ],
     "heightSlots": 4.5,
     "sizeMm": [
-      85,
-      85,
+      66,
+      66,
       205
     ],
-    "sizeBasis": "Scaled from the floor cell (about 45 mm, one block width) against VTech parts drawings and Joey's photos; +-10%. No ruler in any photo. Rocket height about 4.5 block widths and width about 1.8 in IMG_0952/0953."
+    "sizeBasis": "Scaled from the floor cell (about 45 mm, one block width) against VTech parts drawings and Joey's photos; +-10%. No ruler in any photo. Rocket height about 4.5 block widths in IMG_0952/0953. Width re-read 2026-11-10: about 1.45 to 1.55 times the face of the light-blue block under it at the widest (about 66 mm), about 50 mm just over the skirt where the ports are; the earlier 1.8 (85 mm) put the body over the T-08 that VTech's Launchpad Level 3 (lp_plans_12 step 3-12) brings down into the port. The block sits lower and further from the camera than the rocket's widest part, so the height (measured the same way) may also be high."
   },
   "ports": [
     {
@@ -81,14 +81,60 @@
       "to": "east",
       "dropSlots": 0,
       "shape": "straight",
-      "lengthCells": 1
+      "lengthCells": 1,
+      "via": [
+        [
+          -0.37,
+          0,
+          0.68
+        ],
+        [
+          -0.3,
+          0,
+          0.637
+        ],
+        [
+          0.3,
+          0,
+          0.637
+        ],
+        [
+          0.37,
+          0,
+          0.68
+        ]
+      ],
+      "viaBasis": "The tunnel's floor, measured on models/M-13.glb with tools/floor.mjs: 0.636 slot by a vertical ray, 0.637 where a 20 mm marble rests (sphere), flat end to end. The model's tunnel is a 24 mm bore round the marble's centre over the 0.68 seat (M-13.py), so its floor is 2 mm under the seat a track's end meets: the marble rolls off the arriving tongue's tip (6 mm into the port, 0.37 cell from the middle), down 2 mm, and back up onto the leaving tongue. Drawn at 0.68 the marble rolled 2 mm over the plastic (round 3, rule rests)."
     },
     {
       "from": "east",
       "to": "west",
       "dropSlots": 0,
       "shape": "straight",
-      "lengthCells": 1
+      "lengthCells": 1,
+      "via": [
+        [
+          0.37,
+          0,
+          0.68
+        ],
+        [
+          0.3,
+          0,
+          0.637
+        ],
+        [
+          -0.3,
+          0,
+          0.637
+        ],
+        [
+          -0.37,
+          0,
+          0.68
+        ]
+      ],
+      "viaBasis": "The tunnel's floor, measured on models/M-13.glb with tools/floor.mjs: 0.636 slot by a vertical ray, 0.637 where a 20 mm marble rests (sphere), flat end to end. The model's tunnel is a 24 mm bore round the marble's centre over the 0.68 seat (M-13.py), so its floor is 2 mm under the seat a track's end meets: the marble rolls off the arriving tongue's tip (6 mm into the port, 0.37 cell from the middle), down 2 mm, and back up onto the leaving tongue. Drawn at 0.68 the marble rolled 2 mm over the plastic (round 3, rule rests)."
     }
   ],
   "physics": {

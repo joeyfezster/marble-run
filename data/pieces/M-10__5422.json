@@ -21,11 +21,11 @@
     ],
     "heightSlots": 1.4,
     "sizeMm": [
-      124,
-      93,
-      65
+      90,
+      68,
+      63
     ],
-    "sizeBasis": "Estimated, not measured: cell about 62 mm and slot about 47 mm, from block width against a hand and marbles (IMG_0951, IMG_0952) and the plan drawing proportion slot/cell about 0.76. src/catalog/parts.js uses a 50 mm cell, also an estimate. Ratios to cell and slot are better known than the millimetres."
+    "sizeBasis": "Rescaled from an earlier estimate of a 62 mm cell and 47 mm slot (IMG_0951, IMG_0952) to the grid scale (2026-11-07): one cell 45 mm, one slot 45.3 mm (B-01, src/catalog/parts.js). Lengths and widths times 45/62, height times 45.3/47; ratios to cell and slot are kept, the millimetres stay estimates."
   },
   "ports": [
     {
@@ -33,7 +33,7 @@
       "at": [
         -1,
         0,
-        0.75
+        0.68
       ],
       "faces": "W",
       "type": "track-end",
@@ -78,7 +78,55 @@
       "to": "lip",
       "dropSlots": -0.55,
       "shape": "flight",
-      "lengthCells": 2
+      "lengthCells": 2,
+      "via": [
+        [
+          -0.6,
+          0,
+          0.682
+        ],
+        [
+          -0.4,
+          0,
+          0.699
+        ],
+        [
+          -0.2,
+          0,
+          0.734
+        ],
+        [
+          0,
+          0,
+          0.785
+        ],
+        [
+          0.2,
+          0,
+          0.854
+        ],
+        [
+          0.4,
+          0,
+          0.94
+        ],
+        [
+          0.6,
+          0,
+          1.053
+        ],
+        [
+          0.8,
+          0,
+          1.175
+        ],
+        [
+          0.9,
+          0,
+          1.236
+        ]
+      ],
+      "viaBasis": "Points on the trough floor along the ramp's middle, read from the model (vertical rays through models/M-10__5422.glb, dist/scratch/floor.mjs): the drawn ramp follows the plastic instead of a straight chord over the concave trough, which left the marble up to 8.5 mm in the air."
     }
   ],
   "physics": {
@@ -124,6 +172,10 @@
     {
       "source": "lp_plans_04 M-10 parts box and trex_plans_01 M-10",
       "shows": "trough of near-constant width; pointed fin with hole on one side of the high end, curled lip on a post on the other"
+    },
+    {
+      "source": "data/pieces/B-01.json (grid scale)",
+      "shows": "sizeMm was 124 x 93 x 65 at a 62 mm cell; at the 45 mm cell it is 90 x 68 x 63, which matches footprintCells 2 x 1 and heightSlots 1.4"
     }
   ],
   "confidence": {
@@ -136,7 +188,8 @@
     "Flow direction low to lip: M-01 feeds it, and the only part beyond is M-11.",
     "Heights are from drawings: low seat 0.75 slot, lip 1.3 slots above the base foot. Base height and lip height were measured off lp_plans_15.",
     "dropSlots is negative because the marble climbs.",
-    "Filename carries __5422 because T-Rex uses the same code."
+    "Filename carries __5422 because T-Rex uses the same code.",
+    "Low end at z 0.68, the seat of track level 1: the drawings read about 0.75 (3 mm higher), the model is built at the seat a track meets (Blender lp_kit.py)."
   ],
   "openQuestions": [
     "What minimum press clears a 1-cell gap, and a 3-cell gap?",

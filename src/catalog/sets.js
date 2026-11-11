@@ -27,3 +27,12 @@ export const marblesOf = (sets) => sets.reduce((m, s) => {
 
 // A metal marble in the pile: the sets call it magic or metal.
 export const hasMetalMarble = (sets) => Object.entries(marblesOf(sets)).some(([k, v]) => k !== 'plain' && v > 0);
+
+// The marble types in the pile, as the engine names them: 'plain', and 'metal' for the
+// sets' magic or metal marbles (D5: every route must work for each).
+export const marbleTypes = (sets) => {
+  const m = marblesOf(sets), out = [];
+  if ((m.plain ?? 0) > 0) out.push('plain');
+  if (Object.entries(m).some(([k, v]) => k !== 'plain' && v > 0)) out.push('metal');
+  return out.length ? out : ['plain'];
+};

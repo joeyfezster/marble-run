@@ -3,6 +3,8 @@
 // resistance, curve scrub and joint losses are modelled explicitly, so the
 // energy budget along the track is the output, not an assumption.
 
+import { centreAt } from './centre.js';
+
 export const G = 9.81;
 
 export const NOMINAL = Object.freeze({
@@ -95,10 +97,57 @@ function indexAt(path, pos, hint) {
   return i;
 }
 
+// A marble leaving flight.from along flight.dir at v m/s, against the catcher's mouth
+// (flight.cone: at, axis, radius, cos), as ballistic.js fly() does: { miss, t } where miss
+// is null when it enters the mouth, 'stuck' when it arrives low or never reaches it,
+// 'too-fast' when it arrives high, and t the time it crosses the mouth's plane.
+function catchMiss({ from, dir, cone }, v) {
+  const ax = cone.axis, plane = (p) => (p[0] - cone.at.x) * ax[0] + (p[1] - cone.at.y) * ax[1] + (p[2] - cone.at.z) * ax[2];
+  let prev = [from.x, from.y, from.z];
+  for (let t = 0.001; t < 2; t += 0.001) {
+    const p = [from.x + dir[0] * v * t, from.y + dir[1] * v * t, from.z + dir[2] * v * t - (G / 2) * t * t];
+    if (plane(prev) < 0 && plane(p) >= 0) {
+      // The crossing between the last two steps, on the straight between them.
+      const a = plane(prev), b = plane(p), tc = t - 0.001 * (b / (b - a || 1));
+      const vel = [dir[0] * v, dir[1] * v, dir[2] * v - G * t], cosA = (vel[0] * ax[0] + vel[1] * ax[1] + vel[2] * ax[2]) / Math.hypot(...vel);
+      const d = [p[0] - cone.at.x, p[1] - cone.at.y, p[2] - cone.at.z], along = d[0] * ax[0] + d[1] * ax[1] + d[2] * ax[2];
+      if (Math.hypot(d[0] - along * ax[0], d[1] - along * ax[1], d[2] - along * ax[2]) <= cone.radius && cosA >= cone.cos) return { miss: null, t: tc };
+      return { miss: p[2] < cone.at.z ? 'stuck' : 'too-fast', t: tc };
+    }
+    if (p[2] < Math.min(from.z, cone.at.z) - 0.3) break;
+    prev = p;
+  }
+  return { miss: 'stuck', t: null };
+}
+
+// The marble's centre in a launched flight (flight.from along flight.dir at v m/s) from the
+// lip to where it crosses the catcher's mouth at time tc, sampled every dt: the arc the
+// flights rule (physical.js) flies and judges, and the one the app shows.
+export function flightCentres({ from, dir }, v, tc, dt = 0.005) {
+  const out = [], at = (u) => [from.x + dir[0] * v * u, from.y + dir[1] * v * u, from.z + dir[2] * v * u - (G / 2) * u * u];
+  for (let u = 0; u < tc; u += dt) out.push({ u, c: at(u) });
+  out.push({ u: tc, c: at(tc) });
+  return out;
+}
+// The time a marble at v m/s takes from flight.from to its catcher's mouth, or null when it misses.
+export const flightTime = (flight, v) => { const r = catchMiss(flight, v); return r.miss ? null : r.t; };
+
+// Where a recorded run (simulate(..., { record: true }).trace) has the marble at time t:
+// its centre, between the two records around t. Records are the marble at every drawn
+// path sample (its centre as the rules check it, centre.js centreAt) and along every
+// flight's arc, so between records the marble moves on the checked path.
+export function traceAt(trace, t, hint = 0) {
+  let i = Math.max(0, Math.min(hint, trace.length - 1));
+  while (i < trace.length - 1 && trace[i + 1].t <= t) i++;
+  while (i > 0 && trace[i].t > t) i--;
+  const a = trace[i], b = trace[Math.min(i + 1, trace.length - 1)], f = b.t > a.t ? Math.min(1, Math.max(0, (t - a.t) / (b.t - a.t))) : 0;
+  return { i, piece: a.piece, at: [a.c[0] + (b.c[0] - a.c[0]) * f, a.c[1] + (b.c[1] - a.c[1]) * f, a.c[2] + (b.c[2] - a.c[2]) * f] };
+}
+
 export function simulate(path, overrides = {}, opts = {}) {
   const p = { ...NOMINAL, ...overrides };
   const dt = opts.dt ?? 0.002, tMax = opts.tMax ?? 90;
-  const record = opts.record ?? false, every = opts.every ?? 8;
+  const record = opts.record ?? false;
   const capture = (p.wallCaptureDeg * Math.PI) / 180;
   const { s, sinT, cosT, kH, kV, points, n } = path;
   const scaled = (pt, value) => (pt.source === 'hand' ? value * (p.handScale ?? 1) : value);
@@ -106,10 +155,26 @@ export function simulate(path, overrides = {}, opts = {}) {
   const sources = [];
   let minMarginSpeed = Infinity, air = 0;
   const trace = record ? [] : null;
+  // Every launched flight the marble takes: its first sample and the speed it leaves the
+  // lip with (the flights rule, physical.js, flies that speed).
+  const flights = [];
+  // The run the app animates: the marble at every drawn path sample as it passes it (its
+  // centre where the rules check it), and along every flight's arc.
+  const centres = record ? (path.centres ??= points.map((_, k) => centreAt(points, k, p.marbleRadius))) : null;
+  let next = 0;
+  const rec = (k, tk, vk) => { const q = points[k]; trace.push({ t: tk, s: s[k], v: vk, x: q.x, y: q.y, z: q.z, c: centres[k], ke: 0.5 * p.inertiaFactor * vk * vk, pe: G * q.z, piece: q.piece }); };
+  const passed = (pos0, pos1, t1, v0, v1) => {
+    for (; next < n && s[next] <= pos1 + 1e-12; next++) {
+      if (points[next].flight) continue;
+      const f = pos1 > pos0 ? Math.max(0, (s[next] - pos0) / (pos1 - pos0)) : 1;
+      rec(next, t1 - dt * (1 - f), v0 + (v1 - v0) * f);
+    }
+  };
   const fail = (kind, why) => ({
-    ok: false, kind, why, at: pos, piece: points[i].piece, t, v, vMax, trace,
+    ok: false, kind, why, at: pos, piece: points[i].piece, t, v, vMax, trace, flights,
     length: path.length, minSpeed: minMarginSpeed,
   });
+  if (record) passed(0, 0, 0, v, v);
   while (t < tMax) {
     i = indexAt(path, pos, i);
     const pt = points[i];
@@ -130,16 +195,27 @@ export function simulate(path, overrides = {}, opts = {}) {
     if (pt.flight) {
       const sin = Math.max(0.02, sinT[Math.max(0, i - 3)]), cos = Math.sqrt(1 - sin * sin);
       const vx = v * cos, vz = v * sin, air = (2 * vz) / G, range = vx * air, gap = pt.flight.gap;
-      const reach = pt.flight.into ? gap * 0.5 : gap * 0.8, limit = gap + 0.07; // the ring's flared lip catches short shots, estimate
-      if (range < reach) return fail('stuck', 'falls short of the gap');
-      if (range > limit && !pt.flight.into) return fail('too-fast', 'flies past the ring');
-      if (record) {
-        const a = pt, far = points[Math.min(n - 1, indexAt(path, pos + gap, i))];
-        for (let u = 0.05; u <= 1; u += 0.05) {
-          trace.push({ t: t + u * air, s: pos + u * gap, v, x: a.x + (far.x - a.x) * u, y: a.y + (far.y - a.y) * u, z: a.z + vz * u * air - (G / 2) * (u * air) ** 2, ke: 0.5 * p.inertiaFactor * v * v, pe: G * a.z, piece: pt.piece });
-        }
+      let k = i;
+      while (k < n - 1 && points[k + 1].flight) k++;
+      flights.push({ index: i, v, piece: pt.piece });
+      let flown = air;
+      if (pt.flight.cone) {
+        // The drawn flight knows where it leaves the lip, its direction and the catcher's
+        // mouth (ballistic.js): the marble at this speed must fly into that mouth.
+        const { miss, t: tc } = catchMiss(pt.flight, v);
+        if (miss) return fail(miss, miss === 'stuck' ? 'falls short of the catcher' : 'flies over the catcher');
+        flown = tc;
+        if (record) for (const { u, c } of flightCentres(pt.flight, v, tc)) trace.push({ t: t + u, s: pos, v, x: c[0], y: c[1], z: c[2] - p.marbleRadius, c, ke: 0.5 * p.inertiaFactor * v * v, pe: G * (c[2] - p.marbleRadius), piece: pt.piece, flight: true });
+      } else {
+        const reach = pt.flight.into ? gap * 0.5 : gap * 0.8, limit = gap + 0.07; // the ring's flared lip catches short shots, estimate
+        if (range < reach) return fail('stuck', 'falls short of the gap');
+        if (range > limit && !pt.flight.into) return fail('too-fast', 'flies past the ring');
+        // No catcher's mouth drawn: the drawn samples, spread over the time in the air.
+        if (record) for (let q = i; q <= k; q++) rec(q, t + (air * (q - i + 1)) / (k - i + 2), v);
       }
-      t += air; pos += gap + 1e-4; v *= 0.85; i = indexAt(path, pos, i);
+      if (record) next = Math.max(next, k + 1);
+      // On past the drawn flight (an arc, longer than the gap) to where it lands.
+      t += flown; pos = Math.max(pos + gap, s[k]) + 1e-4; v *= 0.85; i = indexAt(path, pos, i);
       continue;
     }
     const speed2 = v * v;
@@ -156,26 +232,22 @@ export function simulate(path, overrides = {}, opts = {}) {
     if (pt.hold) a = 0;
     if (pt.fall) a = G;                                  // free fall inside a stack
     v += a * dt;
+    const pos0 = pos, v0 = v - a * dt;
     pos += v * dt;
     t += dt;
+    if (record) passed(pos0, pos, t, v0, v);
     if (pos > peak) peak = pos;
     if (v > vMax) vMax = v;
     if (peak > 0.02 && !pt.hold && v < minMarginSpeed) minMarginSpeed = v;
-    if (v <= 0 && pt.caught) break;                      // resting inside the end piece is the goal
+    if (v <= 0 && pt.caught) { next = n; break; }       // resting inside the end piece is the goal
     if (v <= 0) return fail('stuck', 'runs out of energy');
     if (pos < 0) return fail('stuck', 'rolled back to the start');
-    if (record && (Math.round(t / dt) % every === 0)) {
-      const j = indexAt(path, pos, i), b = points[Math.min(n - 1, j + 1)], a0 = points[j];
-      const f = (pos - s[j]) / ((s[Math.min(n - 1, j + 1)] - s[j]) || 1e-9);
-      const lerp = (k) => a0[k] + (b[k] - a0[k]) * Math.min(1, Math.max(0, f));
-      const z = lerp('z');
-      trace.push({ t, s: pos, v, x: lerp('x'), y: lerp('y'), z, ke: 0.5 * p.inertiaFactor * v * v, pe: G * z, piece: a0.piece });
-    }
   }
   if (t >= tMax) return fail('stuck', 'never finished');
   const lastPoint = points[n - 1];
   if (lastPoint.maxSpeed && v > lastPoint.maxSpeed) return fail('too-fast', 'bounces out of the end piece');
-  return { ok: true, t, vMax, minSpeed: minMarginSpeed, endSpeed: v, length: path.length, trace, sources };
+  if (record) for (; next < n; next++) if (!points[next].flight) rec(next, t, v); // the last samples, passed in the final step
+  return { ok: true, t, vMax, minSpeed: minMarginSpeed, endSpeed: v, length: path.length, trace, sources, flights };
 }
 
 // Worst-case judgement: every corner must finish.

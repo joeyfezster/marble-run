@@ -21,11 +21,11 @@
     ],
     "heightSlots": 5,
     "sizeMm": [
-      300,
-      150,
-      220
+      276,
+      132,
+      226
     ],
-    "sizeBasis": "Rough estimate: one cell about 52 mm and one slot about 36 mm, scaled from Joey's hand in IMG_0954 and IMG_0956; no ruler measurement. Footprint with legs, from maps 1-6, 2-8, 3-11."
+    "sizeBasis": "With legs: mouth to tail tip from the mouth and tail ports, across both legs at the hips' y of 1 cell, height heightSlots 5 at the grid's slot. Grid scale (2026-11-07): one cell 45 mm, one slot 45.3 mm (B-01, src/catalog/parts.js). The earlier figure used a 52 mm cell and a 36 mm slot, which disagreed with this record's own ports and heightSlots."
   },
   "ports": [
     {
@@ -40,21 +40,31 @@
       "accepts": [
         "a marble flying off the M-10 lip"
       ],
-      "flow": "in"
+      "flow": "in",
+      "catch": {
+        "radiusMm": 9.5,
+        "axis": [
+          1,
+          0,
+          0
+        ]
+      },
+      "catchBasis": "Measured on models/M-58.glb (dist/scratch/sidemouth.mjs, 2026-11-10): along the mouth's axis at the centre of a marble flying in at the port (z 3.72 slots, y 0), from the snout (x -1.5 cells) to the port (x -1), the nearest body plastic (the front upper teeth) is at least 19.5 mm away; less the marble's 10 mm radius, a marble centre up to 9.5 mm off the axis passes clear. The lower jaw moves and is left out. halfAngleDeg is not measured."
     },
     {
       "id": "tail",
       "at": [
         3.5,
         0,
-        2.5
+        2.68
       ],
       "faces": "E",
       "type": "open-drop",
       "accepts": [
         "top of a block under the tail tip"
       ],
-      "flow": "out"
+      "flow": "out",
+      "atBasis": "z is the floor at the tail tip, the seat of the cup it lies over (level 3; models/M-58.glb runs its floor level over that cup to the tip at 2.66 to 2.68 slots). The earlier 2.5 named the same level but put the route's end 8 mm under the tail's floor."
     },
     {
       "id": "hipLeft",
@@ -91,7 +101,55 @@
       "to": "tail",
       "dropSlots": 1,
       "shape": "straight",
-      "lengthCells": 4.5
+      "lengthCells": 4.5,
+      "via": [
+        [
+          -0.6,
+          0,
+          3.397
+        ],
+        [
+          0,
+          0,
+          3.295
+        ],
+        [
+          0.5,
+          0,
+          3.195
+        ],
+        [
+          1,
+          0,
+          3.069
+        ],
+        [
+          1.5,
+          0,
+          2.971
+        ],
+        [
+          2,
+          0,
+          2.868
+        ],
+        [
+          2.5,
+          0,
+          2.766
+        ],
+        [
+          3,
+          0,
+          2.67
+        ],
+        [
+          3.35,
+          0,
+          2.662
+        ]
+      ],
+      "viaBasis": "The T-Rex's floor along its middle, read from models/M-58.glb by vertical rays (tools/floor.mjs ray, 0.25 slot over each point): from just inside the mouth down the back channel to the tail over the block under its tip. Regenerated with the tool in round 3 (the points just inside the mouth had been 0.8 to 0.9 mm under the model's floor)."
     }
   ],
   "physics": {
@@ -137,6 +195,10 @@
     {
       "source": "IMG_0946, IMG_0951",
       "shows": "Real body from behind: orange and brown ribbed back, speaker grille, square hole in head"
+    },
+    {
+      "source": "M-58 record ports with the grid (2026-11-07)",
+      "shows": "Mouth at x -1 and tail tip at x 3.5 cells, hips 1 cell either side, 5 slots tall: about 276 x 132 x 226 mm; sizeMm was 300 x 150 x 220 at a 52 mm cell"
     }
   ],
   "confidence": {
@@ -148,6 +210,7 @@
     "Head and tail are linked and a hand rearms it: read from plan page 02, third panel.",
     "Origin is the midpoint between the feet. Mouth height 3.5 follows M-10 lip at support height plus 1.5 with feet on the floor. Level 2 lifts each foot 1 slot and also lifts M-10 by 1.",
     "Tail tip height with body straightened is estimated.",
+    "The mouth port is the catch, at the front edge of the feet, about 20 mm inside the open mouth: the snout overhangs the feet by about 0.47 cell, over the cell in front of them, where the M-10 lip ends (trex_plans_07 step 1-6, 12 step 2-8, 19 step 3-11). The model's marble floor follows the engine's: the mouth's z less a seat at the mouth (level with the M-10 lip's floor), down to the seat of the level the tail names at the near edge of the block under the tip (tools/blender/M-58.py).",
     "faces uses E=+x, W=-x, S=+y, N=-y, in the piece's own frame. Heights are slots above the floor when the piece stands on the floor or, where stated, above the top of its supports."
   ],
   "openQuestions": [
