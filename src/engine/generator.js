@@ -15,6 +15,7 @@ import { solidOf } from './validate.js';
 import { tossSetup, speedThrough, fly, bestShot, CATCH } from './ballistic.js';
 import { localSolid, V as VOX } from './solids.js';
 import { blockTurns, dropInto } from './routes.js';
+import { fun } from './fun.js';
 
 export function mulberry(seed) {
   let a = seed >>> 0;
@@ -480,6 +481,7 @@ function flightSpeed(pts, label, speeds) {
 }
 
 const FEATURE = new Set(['station', 'jump', 'toss', 'fall', 'spiral']);
+const THEMES = ['jump', 'spiral', 'rest', 'toss', 'fall', 'inline', 'carry'];
 // A random splitter is never on a generated route: half the marbles would leave it the other way.
 const STATIONS = LIB.stations.filter((s) => !s.start && ['inline', 'rest', 'carry'].includes(s.kind) && exitChance(byKey(s.key)) >= 1);
 const RAMPS = LIB.stations.filter((s) => s.kind === 'ramp');
@@ -495,7 +497,13 @@ function candidates(state, stock, rng, world, plan) {
   const out = [], post = state.posts[state.posts.length - 1], here = post.hOut ?? post.h, i = state.segs.length;
   const used = state.used, fresh = (k) => (used.has(k) ? 0 : 1);
   const feature = i - (state.lastFeature ?? -9) >= plan.spacing;
-  const add = (m, w) => { const z = zoneBias(state.launch, m); if (z > -Infinity) out.push({ ...m, w: w + rng() * plan.noise + z }); };
+  // Plain straight crossings in a row are the dull part of a run (fun.js): one more weighs less.
+  let plainRun = 0;
+  for (let k = state.posts.length - 1; k > 0 && state.posts[k].kind === 'cross' && state.posts[k].in === state.posts[k].out; k--) plainRun++;
+  const dull = plan.fun * 0.6 * Math.max(0, plainRun - 1);
+  // The seed's theme (plan.theme): a kind of special move this track leans on until it has one.
+  const themed = (m) => plan.theme && (m.kind === 'station' ? m.opt.st.kind : m.kind) === plan.theme && !state.posts.some((p) => !p.first && (p.act ?? p.kind) === plan.theme);
+  const add = (m, w) => { const z = zoneBias(state.launch, m); if (z > -Infinity) out.push({ ...m, w: w + rng() * plan.noise + z + (themed(m) ? plan.themeW : 0) }); };
   // What the box still holds is the same for every track tried here, so it is asked once.
   // The builders take the parts again, so a move this lets through can still be refused.
   const stations = STATIONS.filter((st) => takeable(stock, st.parts)), tosses = TOSSES.filter((st) => takeable(stock, st.parts));
@@ -511,11 +519,11 @@ function candidates(state, stock, rng, world, plan) {
       const pace = plan.pace(here, h, i), base = pace + fresh(t.key) * plan.freshTrack + room(land.c, land.r, land.heading);
       const m = { code: t.key, side, drop, h, land };
       if (h >= 1) {
-        add({ ...m, kind: 'cross', opt: {} }, base);
+        add({ ...m, kind: 'cross', opt: {} }, base - dull);
         for (const turn of [right(land.heading), left(land.heading)]) add({ ...m, kind: 'cross', opt: { turn } }, base - 0.3 + room(land.c, land.r, turn) - room(land.c, land.r, land.heading));
       }
       if (!feature) continue;
-      const bonus = (k) => plan.fresh * fresh(k) + plan.feature;
+      const bonus = (k) => plan.fresh * fresh(k) + plan.feature + plan.taste(k);
       for (const top of LIB.dropTops) if (count(stock, top.key) > 0 && h >= 2) for (const turn of [land.heading, right(land.heading), left(land.heading)]) {
         add({ ...m, kind: 'fall', opt: { top, turn } }, base + bonus(top.key) * 0.8 + room(land.c, land.r, turn) + plan.drop(here));
       }
@@ -552,7 +560,12 @@ function score(track, plan) {
   const kinds = new Set(track.posts.map((p) => p.act ?? p.kind));
   // A whole-pile run counts on a lift, launcher or lever starting the marble again mid-run.
   const again = track.posts.some((p) => !p.first && RESTART_KINDS.has(p.act ?? p.kind)) ? plan.restarted : 0;
-  return Math.min(track.segs.length, plan.target) * 3 + parts.length * plan.perPart + keys.size * 2 + kinds.size * 5 + again;
+  // And what a child would rather watch and build (fun.js): kinds of special piece, flights,
+  // drops, height, a route that wanders, no long plain runs.
+  // A whole-pile run wants three kinds of special move at least (a lift, a jump, a pass-through...).
+  const moves = new Set(track.posts.filter((p) => !p.first && p.kind !== 'cross' && p.kind !== 'end').map((p) => p.act ?? p.kind));
+  return Math.min(track.segs.length, plan.target) * 3 + parts.length * plan.perPart + keys.size * 2 + kinds.size * 5 + again
+    + plan.varied * Math.min(moves.size, 3) + plan.fun * fun(track);
 }
 
 // Levels a marble must arrive at for each ramp and catcher pair in the pile to fit:
@@ -627,14 +640,14 @@ const STARTS = [
 ];
 
 export const SIZES = Object.freeze([
-  { name: 'little', moves: 6, height: 5, spacing: 3, fresh: 1.2, deadlineMs: 1500 },
-  { name: 'big', moves: 12, height: 7, spacing: 2, fresh: 2.2, deadlineMs: 2500 },
+  { name: 'little', moves: 6, height: 5, spacing: 3, fresh: 1.2, deadlineMs: 1500, polish: 60 },
+  { name: 'big', moves: 12, height: 7, spacing: 2, fresh: 2.2, deadlineMs: 2500, polish: 60 },
   // Super long aims at the whole pile: as many tracks as the box holds, every special piece it can fit.
-  { name: 'super', moves: Infinity, height: 8, spacing: 1, fresh: 4, deadlineMs: 4500, whole: true },
+  { name: 'super', moves: Infinity, height: 10, spacing: 1, fresh: 4, deadlineMs: 4500, whole: true },
 ]);
 
 // Search counters; with detail, physical rejections are counted by their reason too.
-export const stats = { attempts: 0, nodes: 0, reject: {}, detail: false };
+export const stats = { attempts: 0, nodes: 0, reject: {}, detail: false, log: [] };
 const NOISE = [1.2, 3, 6];
 
 // Where a clip-on sits on its host: its own clip port on the host's clip port that names
@@ -692,13 +705,23 @@ export function generate({ stock: given, size = 1, moves, seed = 1, startHeight,
   let { width, depth } = rects[0];
   const plan = {
     target, spacing: spec.spacing, fresh: spec.fresh, feature: spec.whole ? 1.5 : 0.6, freshTrack: spec.whole ? 0.8 : 0.3, perPart: spec.whole ? 2 : 0.1,
-    goal: 1, noise: 1.2, restarted: spec.whole ? 40 : 0,
+    goal: 1, noise: 1.2, restarted: spec.whole ? 40 : 0, varied: spec.whole ? 25 : 0, fun: spec.whole ? 0.5 : 1.5,
     pace(here, h, i) {
       const left = Math.max(2, (target - i) * 0.5), want = (here - this.goal) / left;
       return (here - h) > 0 ? Math.min(2.5, want * 1.6) - 0.4 : -Math.min(2, want * 0.8) + 0.2;
     },
     drop(here) { return here > this.goal + 1 ? 0.6 : -2; },
     restart(h) { return h <= 2 ? 6 : -1; },
+    // Each seed has its own taste in special pieces (a fixed bonus per piece), so two seeds
+    // of one size lead with different pieces instead of the same favourite shape.
+    // A shorter run takes a theme from the seed, one of the special moves the pile can make,
+    // so seeds of one size do not all come out as the same favourite shape.
+    theme: spec.whole ? null : THEMES[seed % THEMES.length], themeW: 4,
+    tastes: new Map(),
+    taste(k) {
+      if (!this.tastes.has(k)) this.tastes.set(k, mulberry([...k].reduce((a, ch) => (a * 31 + ch.charCodeAt(0)) >>> 0, (seed * 2654435761) >>> 0))() * (spec.whole ? 0 : 3));
+      return this.tastes.get(k);
+    },
     // A lift or lever that gains height is kept for the bottom: used high up it wastes the height it gives.
     lift(h, fresh) { return h <= 2 ? fresh + 6 : -3; },
   };
@@ -707,7 +730,7 @@ export function generate({ stock: given, size = 1, moves, seed = 1, startHeight,
     const from = state.posts[state.posts.length - 1], here = from.hOut ?? from.h;
     // Most of an end's worth is known before trying it: one more track, its stack, the
     // end piece and a new kind. Skip the ends when even the best of them cannot win.
-    if (best && score(state, plan) + 3 + plan.perPart * (2 * here + 6) + 2 * 5 + 5 + plan.restarted <= best.score) return;
+    if (best && score(state, plan) + 3 + plan.perPart * (2 * here + 6) + 2 * 5 + 5 + plan.restarted + plan.fun * 2 <= best.score) return;
     const why = (stage) => { stats.reject[`end:${stage}`] = (stats.reject[`end:${stage}`] ?? 0) + 1; };
     const ends = endings(from, stock, world, rng, state.metalOk);
     for (const o of ends.slice(0, 24)) {
@@ -730,18 +753,28 @@ export function generate({ stock: given, size = 1, moves, seed = 1, startHeight,
       const kept = JSON.parse(JSON.stringify(track));
       decorate(kept, st);
       // The whole track once more from scratch, clip-ons included: nothing else is kept.
-      if (checkAll(kept).failures.length) { why('final'); continue; }
+      const last = checkAll(kept).failures;
+      if (last.length) { why('final'); for (const f of last) { const k = `final:${f.rule}: ${f.why.replace(/-?[\d.]+ mm3?/g, 'N mm')}`; stats.reject[k] = (stats.reject[k] ?? 0) + 1; } continue; }
       best = { score: s, track: kept, width, depth };
+      stats.log.push({ ms: Date.now() - began, attempt, nodes: stats.nodes, segs: track.segs.length, score: s });
       return;
     }
   };
-  const satisfied = () => best && best.track.segs.length >= Math.min(target, trackCount - 1);
+  // A track long enough is not the end at once: the search looks on for a while (spec.polish
+  // nodes) for a more fun one of that length (fun.js), then stops.
+  let longAt = null;
+  const satisfied = () => {
+    if (!best || best.track.segs.length < Math.min(target, trackCount - 1)) return false;
+    longAt ??= stats.nodes;
+    return stats.nodes - longAt >= (spec.polish ?? 0);
+  };
 
   let budget = 0;
   const dfs = (state, stock, world) => {
     if (budget-- <= 0 || late()) return;
     stats.nodes++;
     const i = state.segs.length;
+    stats.depth = Math.max(stats.depth ?? 0, i);
     if (i >= 2) finish(state, stock, world);
     if (i >= target) return;
     const post = state.posts[state.posts.length - 1], here = post.hOut ?? post.h;
@@ -753,17 +786,27 @@ export function generate({ stock: given, size = 1, moves, seed = 1, startHeight,
     // these, and the run counts on one).
     const wantRestart = plan.restarted > 0 && !state.posts.some((p) => !p.first && RESTART_KINDS.has(p.act ?? p.kind));
     const isRestart = (m) => m.kind === 'toss' || (m.kind === 'station' && (m.opt.st.kind === 'carry' || m.opt.st.kind === 'rest'));
+    // Likewise a whole-pile run with fewer than three kinds of special move so far tries one
+    // move of a kind it does not have yet (a jump, a pass-through, a spiral...) past its few.
+    const kindOf = (m) => (m.kind === 'station' ? m.opt.st.kind : m.kind);
+    const have = new Set(state.posts.filter((p) => !p.first && p.kind !== 'cross' && p.kind !== 'end').map((p) => p.act ?? p.kind));
+    const wantKind = plan.varied > 0 && have.size < 3;
+    let kindTried = false;
+    const isNew = (m) => m.kind !== 'cross' && !have.has(kindOf(m));
     for (const m of candidates(state, stock, rng, world, plan)) {
       // Out of time or steps: stop here too, not only in the child, or every level
       // keeps physics-testing its remaining candidates on the way back up.
       if (budget <= 0 || late()) return;
-      if (explored >= (i < 2 ? 2 : 3) && !(wantRestart && !restartTried && isRestart(m))) {
-        if (!wantRestart || restartTried) break;
-        continue;
+      if (explored >= (i < 2 ? 2 : 3)) {
+        const extra = (wantRestart && !restartTried && isRestart(m)) || (wantKind && !kindTried && isNew(m));
+        if (!extra) {
+          if ((!wantRestart || restartTried) && (!wantKind || kindTried)) break;
+          continue;
+        }
       }
       const st = clone(stock);
       if (!take(st, m.code)) continue;
-      const why = (stage) => { const k = `${m.kind}:${stage}`; stats.reject[k] = (stats.reject[k] ?? 0) + 1; };
+      const why = (stage) => { const k = `${m.kind}${stats.detail && m.opt.st ? ` ${m.opt.st.key}` : ''}:${stage}`; stats.reject[k] = (stats.reject[k] ?? 0) + 1; };
       const built = BUILD[m.kind](m.land, m.h, st, m.opt, world);
       if (!built) { why('build'); continue; }
       const r = attach(state, m, built, world);
@@ -777,6 +820,7 @@ export function generate({ stock: given, size = 1, moves, seed = 1, startHeight,
       why('ok');
       explored++;
       if (isRestart(m)) restartTried = true;
+      if (isNew(m)) kindTried = true;
       const used = new Set(state.used);
       for (const p of placementsOfPost(r.post)) used.add(p);
       used.add(m.code);
@@ -797,6 +841,7 @@ export function generate({ stock: given, size = 1, moves, seed = 1, startHeight,
   let attempt = 0;
   while (attempts ? attempt < attempts : !late()) {
     stats.attempts++;
+    stats.log.push({ ms: Date.now() - began, start: attempt, nodes: stats.nodes });
     // A whole-pile run tries a lift as the start last, so first it stays free to lift the marble again mid-run.
     const startsHere = STARTS.filter((s) => takeable(given, s.parts) && (metalOk || !s.needsMetal))
       .sort((a, b) => (spec.whole ? (a.kind === 'carry') - (b.kind === 'carry') : 0));
@@ -814,7 +859,7 @@ export function generate({ stock: given, size = 1, moves, seed = 1, startHeight,
     const stock = clone(given), world = new World(width, depth);
     // Later rounds of a whole-pile run shake the move order harder, so they dive somewhere new.
     if (spec.whole) plan.noise = NOISE[Math.floor(k / (startsHere.length * rects.length)) % NOISE.length];
-    const made = startPost(st, stock, world, rng, Math.min(top, 8), spec.whole);
+    const made = startPost(st, stock, world, rng, Math.min(top, 10), spec.whole);
     if (!made) continue;
     world.add({ solid: [...solidOf(made.post), ...made.solid], cells: [] });
     budget = 80 + Math.min(target, 60) * 30;

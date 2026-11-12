@@ -92,8 +92,9 @@ export function nearestTri(m, x, y, z, reach, withMovers = true) {
     cache.set(id, near);
   }
   if (near - LB_HALF >= reach) return null;
-  return scan(m, x, y, z, reach, withMovers);
+  return remembered(m, `near${withMovers ? 1 : 0}`, `${x},${y},${z}`, reach, () => scan(m, x, y, z, reach, withMovers));
 }
+export const nearestScan = (m, x, y, z, reach) => scan(m, x, y, z, reach, true);
 function scan(m, x, y, z, reach, withMovers) {
   let best = reach, mv = 0;
   const tick = ++m.tick;
@@ -149,7 +150,24 @@ export function closestOnTri(px, py, pz, t, o) {
 // the way straight down (0.3: within about 72 degrees of the vertical, so the walls of a
 // channel or a 57 degree slope hold the marble, a wall beside it does not), within reach.
 // Moving parts count: a scoop or a flap holds the marble it carries. Distance or null.
+// The search asks the same points again and again (a piece in the same pose carries the
+// marble along the same samples, 9 in 10 asks a repeat), so each model remembers its
+// answers by the exact local point: { reach asked, answer or null }. An answer nearer
+// than the reach asked is the nearest at any reach; no answer holds for any smaller reach.
+// An answer is a distance or { d, ... }.
+const distOf = (a) => (typeof a === 'number' ? a : a.d);
+const remembered = (m, name, id, reach, ask) => {
+  const memo = (m[name] ??= new Map()), got = memo.get(id);
+  if (got && (got.a !== null || got.reach >= reach)) return got.a !== null && distOf(got.a) < reach ? got.a : null;
+  const a = ask();
+  if (memo.size > 1e6) memo.clear();
+  memo.set(id, { reach, a });
+  return a;
+};
 export function nearestBelow(m, x, y, z, reach, cosMin = 0.3) {
+  return remembered(m, `below${cosMin}`, `${x},${y},${z}`, reach, () => scanBelow(m, x, y, z, reach, cosMin));
+}
+function scanBelow(m, x, y, z, reach, cosMin) {
   let best = reach;
   const tick = ++m.tick;
   if (tick === 0xffffffff) { m.stamp.fill(0); m.tick = 1; }
@@ -208,16 +226,20 @@ export function insideOf(m, x, y, z, withMovers = true) {
     let cnt = 0;
     for (const t of bins[a].get(Math.floor((x * U[0] + y * U[1] + z * U[2]) / RAY_BIN) * 100003 + Math.floor((x * W[0] + y * W[1] + z * W[2]) / RAY_BIN)) ?? []) {
       if (!withMovers && m.mover[t]) continue;
-      const o = t * 9, ax = T[o], ay = T[o + 1], az = T[o + 2], e1 = [T[o + 3] - ax, T[o + 4] - ay, T[o + 5] - az], e2 = [T[o + 6] - ax, T[o + 7] - ay, T[o + 8] - az];
-      const h = [D[1] * e2[2] - D[2] * e2[1], D[2] * e2[0] - D[0] * e2[2], D[0] * e2[1] - D[1] * e2[0]], det = e1[0] * h[0] + e1[1] * h[1] + e1[2] * h[2];
+      // Moller-Trumbore, on scalars.
+      const o = t * 9, ax = T[o], ay = T[o + 1], az = T[o + 2];
+      const e1x = T[o + 3] - ax, e1y = T[o + 4] - ay, e1z = T[o + 5] - az, e2x = T[o + 6] - ax, e2y = T[o + 7] - ay, e2z = T[o + 8] - az;
+      const hx = D[1] * e2z - D[2] * e2y, hy = D[2] * e2x - D[0] * e2z, hz = D[0] * e2y - D[1] * e2x, det = e1x * hx + e1y * hy + e1z * hz;
       if (Math.abs(det) < 1e-18) continue;
-      const f = 1 / det, s = [x - ax, y - ay, z - az], u = f * (s[0] * h[0] + s[1] * h[1] + s[2] * h[2]);
+      const f = 1 / det, sx = x - ax, sy = y - ay, sz = z - az, u = f * (sx * hx + sy * hy + sz * hz);
       if (u < 0 || u > 1) continue;
-      const q = [s[1] * e1[2] - s[2] * e1[1], s[2] * e1[0] - s[0] * e1[2], s[0] * e1[1] - s[1] * e1[0]], v = f * (D[0] * q[0] + D[1] * q[1] + D[2] * q[2]);
+      const qx = sy * e1z - sz * e1y, qy = sz * e1x - sx * e1z, qz = sx * e1y - sy * e1x, v = f * (D[0] * qx + D[1] * qy + D[2] * qz);
       if (v < 0 || u + v > 1) continue;
-      if (f * (e2[0] * q[0] + e2[1] * q[1] + e2[2] * q[2]) > 1e-9) cnt++;
+      if (f * (e2x * qx + e2y * qy + e2z * qz) > 1e-9) cnt++;
     }
     odd += cnt & 1;
+    // The majority is settled once two directions agree.
+    if (a === 1 && odd !== 1) return odd === 2;
   }
   return odd >= 2;
 }

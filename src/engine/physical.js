@@ -18,7 +18,7 @@ import { fitPath } from '../ui/pathfit.js';
 import { localSolid, V, MARBLE_MM, SEATS } from './solids.js';
 import { samplePath, simulate, flightCentres } from './physics.js';
 import { aimOf, turnVec, unit, coneOf as coneAt, bestShot, tossShot, CATCH } from './ballistic.js';
-import { trianglesOf, nearestTri, nearestBelow, insideOf, centreAt } from './collide.js';
+import { trianglesOf, nearestTri, nearestScan, nearestBelow, insideOf, centreAt } from './collide.js';
 import { lipCentre } from './centre.js';
 
 export const TOL = Object.freeze({
@@ -342,6 +342,9 @@ export function solidDepth(A, B, step = 0.002) {
     const q = b.toLocal(x, y, z);
     if (!insideOf(b.m, q[0], q[1], q[2])) continue;
     n++;
+    // Only a point deeper than the deepest so far changes the answer: plastic of either
+    // part nearer than that settles it is not, without the full search.
+    if (best >= 0.01 || (best > 0 && (nearestScan(a.m, p[0], p[1], p[2], best) || nearestScan(b.m, q[0], q[1], q[2], best)))) continue;
     const ra = nearestTri(a.m, p[0], p[1], p[2], 0.01), rb = nearestTri(b.m, q[0], q[1], q[2], 0.01), d = Math.min(ra ? ra.d : 0.01, rb ? rb.d : 0.01);
     if (d > best) { best = d; at = [x, y, z]; }
   }
@@ -476,8 +479,10 @@ function tooDeep(A, B, tol) {
 // quarter of the smaller part's voxels (two parts in one place, where every corner lies
 // on the other's surface and no depth shows) fails on the voxels alone. Without triangles
 // (a box or a swept channel) the voxels decide. A failure, 'voxels', or null.
-// The growing world (the search) asks the voxels only: the triangles cost 20 to 50 ms a new
-// pair, and the kept track is judged again from scratch by checkAll.
+// The growing world (the search) asks the same: on the voxels alone, a step whose pair the
+// triangles fail passed, and every track grown from it failed checkAll at the end (a
+// both-sets start spent its whole budget under one such step). A pair in a pose seen
+// before is cached (depthOf), and the depth search skips points that cannot be deeper.
 function judgePair(A, B, n, any, smaller, tol, triangles = true) {
   if (!any) return null;
   // The parts of one assembly clip together as the toy is sold (data/assemblies/).
@@ -950,7 +955,7 @@ export class Growing {
         if (c[2] < top || mated(A, B, c)) continue;
         n++; const p = centre(...c); sx += p.x; sy += p.y; sz += p.z;
       }
-      const verdict = judgePair(B, A, n, keys.length, Math.min(A.keys.length, B.keys.length), tol, false);
+      const verdict = judgePair(B, A, n, keys.length, Math.min(A.set.size, B.set.size), tol);
       if (verdict === 'voxels') out.push(failure('overlap', 'overlap', `${B.code} and ${A.code} are in the same space: hard plastic through hard plastic`, { x: sx / n, y: sy / n, z: sz / n }, { part: tag(B), other: tag(A), data: { voxels: n } }));
       else if (verdict) out.push(verdict);
     }
